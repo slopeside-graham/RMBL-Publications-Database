@@ -1,5 +1,6 @@
 <?php
 
+//phpinfo();
 /*
  * Plugin Name: RMBL Publications Database
  * Version: 0.1
