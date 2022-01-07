@@ -11,11 +11,12 @@ function pubs_get()
 
     $output .= '<div>';
     $output .= '    <div id="pubs-list-view"></div>';
+    $output .= '    <div id="pager"></div>';
 
     $output .= '    <script type="text/x-kendo-template" id="pubs-listview-template">';
-    $output .= '        <div class="publication">';
-    $output .= '            <h3>#:id#</h3>';
-    $output .= '        </div>';
+    $output .= '        <dl>';
+    $output .= '            <dt>#:id# - #=title#</dt>';
+    $output .= '        </dl>';
     $output .= '    </script>';
     $output .= '</div>';
 

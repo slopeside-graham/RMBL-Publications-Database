@@ -6,6 +6,7 @@ $(function () {
         $("#pubs-list-view").kendoListView({
             dataSource: PubsDataSource,
             template: kendo.template($("#pubs-listview-template").html()),
+            pageable: true,
             dataBound: function (e) {
                 if (this.dataSource.data().length == 0) {
                     //custom logic
@@ -13,7 +14,7 @@ $(function () {
                         "<h3 class='no-entries'>No entries found, please check your search.</h3>"
                     );
                 };
-                // attachPager();
+               attachPager();
             }
         });
     });

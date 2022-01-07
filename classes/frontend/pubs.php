@@ -7,6 +7,7 @@ namespace PUBS {
     class Pubs extends Pubs_Base implements \JsonSerializable
     {
         private $_id;
+        private $_title;
         private $_DateCreated;
         private $_DateModified;
 
@@ -19,6 +20,17 @@ namespace PUBS {
             // If no value was provided return the existing value
             else {
                 return $this->_id;
+            }
+        }
+        protected function title($value = null)
+        {
+            // If value was provided, set the value
+            if ($value) {
+                $this->_title = $value;
+            }
+            // If no value was provided return the existing value
+            else {
+                return $this->_title;
             }
         }
         protected function DateCreated($value = null)
@@ -48,6 +60,7 @@ namespace PUBS {
         {
             return [
                 'id' => $this->id,
+                'title' => $this->title,
                 'DateCreated' => $this->DateCreated,
                 'DateModified' => $this->DateModified
             ];
@@ -68,7 +81,7 @@ namespace PUBS {
             return $pub;
         }
 
-        public static function GetAll()
+        public static function GetAll($request)
         {
             PUBSUTILS::$db->error_handler = false; // since we're catching errors, don't need error handler
             PUBSUTILS::$db->throw_exception_on_error = true;
@@ -76,17 +89,36 @@ namespace PUBS {
             $pubs = new NestedSerializable();
 
             try {
-                $results = PUBSUTILS::$db->query("select * from rmbl_pubs");
+                $results = PUBSUTILS::$db->query(
+                    "SELECT 
+                        * 
+                    FROM 
+                        library
+                    LIMIT %i, %i",
+                    $request['skip'],
+                    $request['take']
+                );
+
+                $total = PUBSUTILS::$db->query(
+                    "SELECT 
+                        COUNT(*)
+                    FROM 
+                        library"
+                );
 
                 foreach ($results as $row) {
                     $pub = Pubs::populatefromRow($row);
-                    $pubs->add_item($pub);  // Add the lesson to the collection
-
+                    $pubs->add_item($pub);  // Add the publication to the collection
                 }
+
             } catch (\MeekroDBException $e) {
-                return new \WP_Error('Sample_GetAll_Error', $e->getMessage());
+                return new \WP_Error('Pubs_GetAll_Error', $e->getMessage());
             }
-            return $pubs;
+
+            return [
+                'total' => $total[0]['COUNT(*)'],
+                'data' => $pubs
+            ];
         }
 
         public static function populatefromrow($row): ?Pubs
@@ -97,6 +129,7 @@ namespace PUBS {
             $Pub = new Pubs();
 
             $Pub->id = $row['id'];
+            $Pub->title = $row['title'];
             $Pub->DateCreated = $row['DateCreated'];
             $Pub->DateModified = $row['DateModified'];
 

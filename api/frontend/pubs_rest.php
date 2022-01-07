@@ -178,7 +178,7 @@ namespace PUBS {
         {
             if ($request['id'] == '') {
                 // Call static function Get (use :: to reference static function)
-                $Pubs = Pubs::GetAll();
+                $Pubs = Pubs::GetAll($request);
             } else {
                 // Call static function Get (use :: to reference static function)
                 $Pubs = Pubs::Get($request['id']);

@@ -24,12 +24,16 @@ PubsDataSource = new kendo.data.DataSource({
             });
         }
     },
-    batch: true,
+    serverPaging: true,
+    pageSize: 10,
     schema: {
+        total: 'total',
+        data: 'data',
         model: {
             id: "id",
             fields: {
-                id: { editable: false, nullable: true }
+                id: { type: "number" },
+                title: { type: "string" }
             }
         }
     }
