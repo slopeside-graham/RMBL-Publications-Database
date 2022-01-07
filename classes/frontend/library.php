@@ -446,6 +446,10 @@ namespace PUBS {
             PUBSUTILS::$db->error_handler = false; // since we're catching errors, don't need error handler
             PUBSUTILS::$db->throw_exception_on_error = true;
 
+            // Check request for search parameter, and set defaults if there are none.
+            $limit = ($request['take']) ? $request['take'] : 10; // Amount of results to display
+            $offset = ($request['skip']) ? $request['skip'] : 0; // Amount of results to skip.
+
             $libraryitems = new NestedSerializable();
 
             try {
@@ -455,8 +459,8 @@ namespace PUBS {
                     FROM 
                         library
                     LIMIT %i, %i",
-                    $request['skip'],
-                    $request['take']
+                    $offset,
+                    $limit
                 );
                 foreach ($results as $row) {
                     $libraryitem = Library::populatefromRow($row);
