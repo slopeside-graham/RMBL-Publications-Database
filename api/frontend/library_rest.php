@@ -2,9 +2,9 @@
 
 namespace PUBS {
 
-    use PUBS\Pubs;
+    use PUBS\Library;
 
-    class Pubs_Rest extends \WP_REST_Controller
+    class Library_Rest extends \WP_REST_Controller
     {
         /**
          * The namespace.
@@ -27,7 +27,7 @@ namespace PUBS {
         {
 
             $this->namespace = 'rmbl-pubs/v1';
-            $this->rest_base = 'pubs';
+            $this->rest_base = 'library';
         }
 
         /**
@@ -80,24 +80,24 @@ namespace PUBS {
             register_rest_route($this->namespace, '/' . $this->rest_base, array(
 
                 array(
-                    'methods'             => Pubs_Rest::READABLE,
+                    'methods'             => Library_Rest::READABLE,
                     'callback'            => array($this, 'get_item'),
                     'permission_callback' => array($this, 'get_item_permissions_check'),
                 ),
                 array(
-                    'methods'         => Pubs_Rest::EDITABLE,
+                    'methods'         => Library_Rest::EDITABLE,
                     'callback'        => array($this, 'update_item'),
                     'permission_callback' => array($this, 'update_item_permissions_check'),
                     'args'            => $this->get_endpoint_args_for_item_schema(false),
                 ),
                 array(
-                    'methods'         => Pubs_Rest::CREATABLE,
+                    'methods'         => Library_Rest::CREATABLE,
                     'callback'        => array($this, 'create_item'),
                     'permission_callback' => array($this, 'create_item_permissions_check'),
                     'args'            => $this->get_endpoint_args_for_item_schema(true),
                 ),
                 array(
-                    'methods'         => Pubs_Rest::DELETABLE,
+                    'methods'         => Library_Rest::DELETABLE,
                     'callback'        => array($this, 'delete_item'),
                     'permission_callback' => array($this, 'delete_item_permissions_check'),
                     'args'            => $this->get_endpoint_args_for_item_schema(true),
@@ -139,7 +139,7 @@ namespace PUBS {
          */
         public function update_item_permissions_check($request)
         {
-            return new \WP_Error('rest_forbidden', esc_html__('You cannot update this Publication.'), array('status' => $this->authorization_status_code()));
+            return new \WP_Error('rest_forbidden', esc_html__('You cannot update this Library item.'), array('status' => $this->authorization_status_code()));
         }
 
         /**
@@ -151,7 +151,7 @@ namespace PUBS {
          */
         public function create_item_permissions_check($request)
         {
-            return new \WP_Error('rest_forbidden', esc_html__('You cannot create this Publication.'), array('status' => $this->authorization_status_code()));
+            return new \WP_Error('rest_forbidden', esc_html__('You cannot create this Library item.'), array('status' => $this->authorization_status_code()));
         }
 
         /**
@@ -163,7 +163,7 @@ namespace PUBS {
          */
         public function delete_item_permissions_check($request)
         {
-            return new \WP_Error('rest_forbidden', esc_html__('You cannot delete this Publication.'), array('status' => $this->authorization_status_code()));
+            return new \WP_Error('rest_forbidden', esc_html__('You cannot delete this Library item.'), array('status' => $this->authorization_status_code()));
         }
 
         /**
@@ -178,10 +178,10 @@ namespace PUBS {
         {
             if ($request['id'] == '') {
                 // Call static function Get (use :: to reference static function)
-                $Pubs = Pubs::GetAll($request);
+                $Pubs = Library::GetAll($request);
             } else {
                 // Call static function Get (use :: to reference static function)
-                $Pubs = Pubs::Get($request['id']);
+                $Pubs = Library::Get($request['id']);
             }
 
             if (!is_wp_error($Pubs)) {
@@ -189,7 +189,7 @@ namespace PUBS {
                 return $response;
             } else {
                 $error_string = $Pubs->get_error_message();
-                return new \WP_Error('Pub_Get_Error', 'An error occured: ' . $error_string, array('status' => 400));
+                return new \WP_Error('Library_Get_Error', 'An error occured: ' . $error_string, array('status' => 400));
             }
         }
 

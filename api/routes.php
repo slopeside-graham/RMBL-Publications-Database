@@ -7,8 +7,8 @@ include_once(plugin_dir_path(__FILE__) . '/../classes/base.php');  // object bas
 include_once(plugin_dir_path(__FILE__) . '/../classes/nestedserializable.php');  // Class for serializing 
 
 // Include Publications REST controller and class 
-include_once(plugin_dir_path(__FILE__) . '/../classes/frontend/pubs.php');  // Pubs class
-include_once(plugin_dir_path(__FILE__) . '/frontend/pubs_rest.php');    // Pubs REST controller
+include_once(plugin_dir_path(__FILE__) . '/../classes/frontend/library.php');  // Library class
+include_once(plugin_dir_path(__FILE__) . '/frontend/library_rest.php');    // Library REST controller
 
 
 /**
@@ -21,7 +21,7 @@ include_once(plugin_dir_path(__FILE__) . '/frontend/pubs_rest.php');    // Pubs 
 function register_pubs_controllers()
 {
     // Publications Controller
-    $controller = new PUBS\Pubs_Rest();
+    $controller = new PUBS\Library_Rest();
     $controller->register_routes();
 }
 
