@@ -1,0 +1,27 @@
+#library-list-view {
+    margin-right: 10px;
+    border: none;
+}
+
+#library-list-view a {
+    color: blue;
+}
+
+.single-library-item {
+    padding: 15px 5px 10px 10px;
+    border: 1px solid #eee;
+    margin: 0 0 5px;
+}
+
+.ARTICLE {
+    background-color: rgba(255, 0, 0, .1);
+}
+
+.library-item-type {
+    text-align: right;
+    font-size: 8px;
+}
+
+.ARTICLE .library-item-type {
+    color: rgba(255, 0, 0, .35);
+}

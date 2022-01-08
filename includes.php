@@ -19,13 +19,15 @@ function pubs_frontend_register_localize()
     wp_register_script('pubs-utils-js', plugins_url('rmbl-pubs/js/frontend/utils.js'), dirname(__FILE__), ['pubs-kendo-js'], scriptver, true);
     wp_localize_script('pubs-utils-js', 'wpApiSettings', array('root' => esc_url_raw(rest_url()), 'nonce' => wp_create_nonce('wp_rest')));
 
-    // Pubs
+    // Library
 
     wp_register_script('library-ds-js', plugins_url('rmbl-pubs/js/frontend/library/ds.js'), dirname(__FILE__), ['pubs-utils-js'], scriptver, true);
     wp_localize_script('library-ds-js', 'wpApiSettings', array('root' => esc_url_raw(rest_url()), 'nonce' => wp_create_nonce('wp_rest')));
 
     wp_register_script('library-get-js', plugins_url('rmbl-pubs/js/frontend/library/get.js'), dirname(__FILE__), ['pubs-ds-js'], scriptver, true);
     wp_localize_script('library-get-js', 'wpApiSettings', array('root' => esc_url_raw(rest_url()), 'nonce' => wp_create_nonce('wp_rest')));
+
+    wp_register_style('library-frontend-style', plugins_url('rmbl-pubs/css/frontend/library/style.css'));
 }
 add_action('wp_enqueue_scripts', 'pubs_frontend_register_localize');
 
@@ -50,6 +52,7 @@ function pubs_enqueue_kendo()
 }
 function pubs_enqueue_frontend_style()
 {
+    wp_enqueue_style('library-frontend-style');
 }
 
 // Publications
@@ -59,4 +62,6 @@ function pubs_enqueue_frontend_get_library()
     wp_enqueue_script('pubs-utils-js');
     wp_enqueue_script('library-ds-js');
     wp_enqueue_script('library-get-js');
+
+    wp_enqueue_style('library-frontend-style');
 }
