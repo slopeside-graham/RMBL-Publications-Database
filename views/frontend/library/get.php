@@ -14,9 +14,9 @@ function library_get()
     $output .= '    <div id="pager"></div>';
 
     $output .= '    <script type="text/x-kendo-template" id="library-listview-template">';
-    $output .= '        <dl>';
-    $output .= '            <dt>#:id# - #=title#</dt>';
-    $output .= '        </dl>';
+    $output .= '        <div class="single-library-item #:reftypename#">';
+    $output .= '            #if (authors) {# #:authors# #}#  #:year#. #=title#. #if (journalname) {# #:journalname#. #}# #if (volume || pages) {# #:volume#:#:pages#. #}#';
+    $output .= '        </div>';
     $output .= '    </script>';
     $output .= '</div>';
 

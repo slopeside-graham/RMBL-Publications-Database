@@ -386,6 +386,7 @@ namespace PUBS {
             return [
                 'id' => $this->id,
                 'reftypeId' => $this->reftypeId,
+                'reftypename' => $this->reftypename,
                 'year' => $this->year,
                 'title' => $this->title,
                 'volume' => $this->volume,
@@ -447,18 +448,33 @@ namespace PUBS {
             PUBSUTILS::$db->throw_exception_on_error = true;
 
             // Check request for search parameter, and set defaults if there are none.
-            $limit = ($request['take']) ? $request['take'] : 10; // Amount of results to display
-            $offset = ($request['skip']) ? $request['skip'] : 0; // Amount of results to skip.
+            $orderByColumnFirst = ($request['orderbycolumnfirst']) ? $request['orderbycolumnfirst'] : 'year'; // Which column to order by first
+            $orderByColumnSecond = ($request['orderbycolumnsecond']) ? $request['orderbycolumnsecond'] : 'authors'; // Which column to order by first
+            $orderByFirst = ($request['orderbyfirst'] == 'ASC') ? 'ASC' : 'DESC'; // Which way to order the first column by
+            $orderBySecond = ($request['orderbysecond'] == 'DESC') ? 'DESC' : 'ASC'; // Which way to order the second column by
+            $limit = ($request['take']) ? intval($request['take']) : 10; // Amount of results to display
+            $offset = ($request['skip']) ? intval($request['skip']) : 0; // Amount of results to skip.
 
             $libraryitems = new NestedSerializable();
 
             try {
                 $results = PUBSUTILS::$db->query(
                     "SELECT 
-                        * 
+                        l.*,
+                        rt.name as reftypename
                     FROM 
-                        library
+                        library l
+                    INNER JOIN 
+                        reftype rt ON l.reftypeId = rt.id
+                    ORDER BY
+                        %l %l,
+                        reftypename ASC,
+                        %l %l
                     LIMIT %i, %i",
+                    $orderByColumnFirst,
+                    $orderByFirst,
+                    $orderByColumnSecond,
+                    $orderBySecond,
                     $offset,
                     $limit
                 );
@@ -492,6 +508,7 @@ namespace PUBS {
 
             $libraryitem->id = $row['id'];
             $libraryitem->reftypeId = $row['reftypeId'];
+            $libraryitem->reftypename = $row['reftypename'];
             $libraryitem->year = $row['year'];
             $libraryitem->title = $row['title'];
             $libraryitem->volume = $row['volume'];
