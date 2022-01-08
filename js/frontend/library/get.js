@@ -14,7 +14,8 @@ $(function () {
                         "<h3 class='no-entries'>No entries found, please check your search.</h3>"
                     );
                 };
-               attachPager();
+                attachPager();
+                // attachFilter();
             }
         });
     });
@@ -25,3 +26,18 @@ function attachPager() {
         dataSource: LibraryDataSource
     });
 };
+
+$("#filter").kendoFilter({
+    dataSource: LibraryDataSource,
+    expressionPreview: true,
+    applyButton: true,
+    fields: [
+        { name: "title", type: "string", label: "Title" }
+    ],
+    expression: {
+        logic: "or",
+        filters: [
+            { field: "title", value: "", operator: "contains" }
+        ]
+    }
+}).data("kendoFilter").applyFilter();

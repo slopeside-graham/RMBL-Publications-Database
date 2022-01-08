@@ -446,6 +446,16 @@ namespace PUBS {
         {
             PUBSUTILS::$db->error_handler = false; // since we're catching errors, don't need error handler
             PUBSUTILS::$db->throw_exception_on_error = true;
+            $filters = $request['filter']['filters'];
+            foreach ($filters as $filter) {
+                $field = $filter['field'];
+                $value = $filter['value'];
+                $operator = $filter['operator'];
+
+                if ($field == 'title') {
+                    $titlesearch = $value;
+                };
+            };
 
             // Check request for search parameter, and set defaults if there are none.
             $orderByColumnFirst = ($request['orderbycolumnfirst']) ? $request['orderbycolumnfirst'] : 'year'; // Which column to order by first
@@ -466,11 +476,14 @@ namespace PUBS {
                         library l
                     INNER JOIN 
                         reftype rt ON l.reftypeId = rt.id
+                    WHERE
+                        l.title LIKE %ss
                     ORDER BY
                         %l %l,
                         reftypename ASC,
                         %l %l
                     LIMIT %i, %i",
+                    $titlesearch,
                     $orderByColumnFirst,
                     $orderByFirst,
                     $orderByColumnSecond,
@@ -487,7 +500,10 @@ namespace PUBS {
                     "SELECT 
                         COUNT(*)
                     FROM 
-                        library"
+                        library l
+                    WHERE
+                        l.title LIKE %ss",
+                    $titlesearch
                 );
             } catch (\MeekroDBException $e) {
                 return new \WP_Error('Library_GetAll_Error', $e->getMessage());

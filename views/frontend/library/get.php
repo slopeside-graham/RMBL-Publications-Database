@@ -10,6 +10,7 @@ function library_get()
     $output = '';
 
     $output .= '<div>';
+    $output .= '    <div id="filter"></div>';
     $output .= '    <div id="library-list-view"></div>';
     $output .= '    <div id="pager"></div>';
 
