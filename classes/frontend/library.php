@@ -446,22 +446,61 @@ namespace PUBS {
         {
             PUBSUTILS::$db->error_handler = false; // since we're catching errors, don't need error handler
             PUBSUTILS::$db->throw_exception_on_error = true;
-            $filters = $request['filter']['filters'];
-            foreach ($filters as $filter) {
-                $field = $filter['field'];
-                $value = $filter['value'];
-                $operator = $filter['operator'];
 
-                if ($field == 'title') {
-                    $titlesearch = $value;
-                };
-            };
+            $sqlWhere = ' ';
+            if ($request['filter']) {
+                $filters = $request['filter']['filters'];
+                $filtersLogic = $request['filter']['logic'];
+                // Build the sql statemont for the where clause.
+                if ($filters) {
+                    $sqlWhereArray = array();
+                    foreach ($filters as $filter) {
+                        $field = $filter['field'];
+                        $value = $filter['value'];
+                        $operator = $filter['operator'];
+                        // Convert operators to SQL
+                        if ($operator == 'contains') {
+                            $operator = 'LIKE';
+                            $sqlValue = '"%' . $value . '%"';
+                        } else if ($operator == 'eq') {
+                            $operator = '=';
+                            $sqlValue = $value;
+                        }
+
+                        if ($value) {
+                            array_push($sqlWhereArray, "l." . $field . " " . $operator  . " " . $sqlValue);
+                        }
+                    };
+                    $sqlWhere = " WHERE " . implode(" ". $filtersLogic . " ", $sqlWhereArray) . " ";
+                }
+            }
+
 
             // Check request for search parameter, and set defaults if there are none.
-            $orderByColumnFirst = ($request['orderbycolumnfirst']) ? $request['orderbycolumnfirst'] : 'year'; // Which column to order by first
-            $orderByColumnSecond = ($request['orderbycolumnsecond']) ? $request['orderbycolumnsecond'] : 'authors'; // Which column to order by first
-            $orderByFirst = ($request['orderbyfirst'] == 'ASC') ? 'ASC' : 'DESC'; // Which way to order the first column by
-            $orderBySecond = ($request['orderbysecond'] == 'DESC') ? 'DESC' : 'ASC'; // Which way to order the second column by
+            $orderFirstColumn = 'year';
+            $orderFirstDir = 'desc'; // Sort Newest to Oldest
+
+            $orderSecondColumn = 'reftypename';
+            $orderSecondDir = 'asc';
+
+            $orderThirdColumn = 'authors';
+            $orderThirdDir = 'asc';
+
+            $sort = $request['sort'][0];
+            $sortField = $sort['field'];
+            $sortDir = $sort['dir'];
+
+            if ($sortField == 'title') {
+                $orderFirstColumn = $sortField;
+                $orderFirstDir = $sortDir;
+
+                $orderSecondColumn = 'year';
+                $orderSecondDir = 'desc';
+
+                $orderThirdColumn = 'reftypename';
+                $orderThirdDir = 'asc';
+            }
+
             $limit = ($request['take']) ? intval($request['take']) : 10; // Amount of results to display
             $offset = ($request['skip']) ? intval($request['skip']) : 0; // Amount of results to skip.
 
@@ -475,19 +514,21 @@ namespace PUBS {
                     FROM 
                         library l
                     INNER JOIN 
-                        reftype rt ON l.reftypeId = rt.id
-                    WHERE
-                        l.title LIKE %ss
-                    ORDER BY
+                        reftype rt ON l.reftypeId = rt.id"
+                        .
+                        $sqlWhere // Where caluse
+                        .
+                        "ORDER BY
                         %l %l,
-                        reftypename ASC,
+                        %l %l,
                         %l %l
                     LIMIT %i, %i",
-                    $titlesearch,
-                    $orderByColumnFirst,
-                    $orderByFirst,
-                    $orderByColumnSecond,
-                    $orderBySecond,
+                    $orderFirstColumn,
+                    $orderFirstDir,
+                    $orderSecondColumn,
+                    $orderSecondDir,
+                    $orderThirdColumn,
+                    $orderThirdDir,
                     $offset,
                     $limit
                 );
@@ -501,11 +542,13 @@ namespace PUBS {
                         COUNT(*)
                     FROM 
                         library l
-                    WHERE
-                        l.title LIKE %ss",
-                    $titlesearch
+                    INNER JOIN 
+                        reftype rt ON l.reftypeId = rt.id"
+                        .
+                        $sqlWhere
                 );
             } catch (\MeekroDBException $e) {
+                $query = $e->getQuery();
                 return new \WP_Error('Library_GetAll_Error', $e->getMessage());
             }
 

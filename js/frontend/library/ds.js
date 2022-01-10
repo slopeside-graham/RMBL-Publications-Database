@@ -26,6 +26,7 @@ LibraryDataSource = new kendo.data.DataSource({
     },
     serverPaging: true,
     serverFiltering: true,
+    serverSorting: true,
     pageSize: 10,
     schema: {
         total: 'total',

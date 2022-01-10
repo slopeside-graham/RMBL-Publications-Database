@@ -9,8 +9,11 @@ function library_get()
 
     $output = '';
 
-    $output .= '<div>';
+    $output .= '<div id="library-list">';
     $output .= '    <div id="filter"></div>';
+    $output .= '    <div id="sort">';
+    $output .= '        <button onclick="sortLibrary(this)" data-type="title">Title</button>';
+    $output .= '    </div>';
     $output .= '    <div id="library-list-view"></div>';
     $output .= '    <div id="pager"></div>';
 

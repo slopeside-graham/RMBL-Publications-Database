@@ -7,16 +7,6 @@ $(function () {
             dataSource: LibraryDataSource,
             template: kendo.template($("#library-listview-template").html()),
             pageable: true,
-            dataBound: function (e) {
-                if (this.dataSource.data().length == 0) {
-                    //custom logic
-                    $("#library-list-view").append(
-                        "<h3 class='no-entries'>No entries found, please check your search.</h3>"
-                    );
-                };
-                
-                // attachFilter();
-            }
         });
         attachPager();
         attachFilter();
@@ -32,16 +22,51 @@ function attachPager() {
 function attachFilter() {
     $("#filter").kendoFilter({
         dataSource: LibraryDataSource,
-        expressionPreview: true,
         applyButton: true,
         fields: [
-            { name: "title", type: "string", label: "Title" }
+            { name: "title", type: "string", label: "Title" },
+            { name: "year", type: "string", label: "Year" },
+            { name: "authors", type: "string", label: "Author" }
         ],
         expression: {
-            logic: "or",
+            logic: "and",
             filters: [
-                { field: "title", value: "", operator: "contains" }
+                { field: "title", value: "", operator: "contains" },
+                { field: "year", value: "", operator: "eq" },
+                { field: "authors", value: "", operator: "contains" }
             ]
         }
     })
 }
+
+var sortDirection = "asc";
+
+function sortLibrary(clickedItem) {
+    console.log(clickedItem.dataset.type);
+    var sortBy = clickedItem.dataset.type;
+
+    if (sortDirection == "desc") {
+        LibraryDataSource.sort({ field: sortBy, dir: "asc" });
+        sortDirection = "asc";
+    } else if (sortDirection == "asc") {
+        LibraryDataSource.sort({ field: sortBy, dir: "desc" });
+        sortDirection = "desc";
+    }
+}
+
+//TODO : Finish sort and filter.
+// Sort by folowing items: 
+// - Year, Type Author (Default)
+// - Author
+// - Title
+// - Type
+// - Year
+
+//FIlter by folowing items:
+// - Type (Show Totals)
+// - - Show All
+// - - Article
+// - - Thesis
+// - - Other
+// - - Student Paper
+// - Years Range
