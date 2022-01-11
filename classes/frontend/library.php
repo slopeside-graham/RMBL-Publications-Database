@@ -452,7 +452,7 @@ namespace PUBS {
             // Only run if there is a filter sent inthe request.
             $filtersLogic = 'AND';
             $where = new WhereClause($filtersLogic);
-
+            $where->add('RMBL <> %s', 'F');
             if ($request['filter']) {
                 $filters = $request['filter']['filters'];
                 $filtersLogic = $request['filter']['logic'];
@@ -485,11 +485,6 @@ namespace PUBS {
                         $where->add($field .  " " . $operator . " " . $searchType, $value);
                     }
                 }
-                if (empty($where->clauses)) {
-                    $where->add('title LIKE %ss', ''); // Set a default Where clause whenthere are filter, but no values. Only happens if the search button is pressed with no input.
-                };
-            } else {
-                $where->add('title LIKE %ss', ''); // Use this to set a default Where caluse when there are no filters.
             }
 
             $sqlSort = " ORDER BY l.year desc, reftypename asc, l.authors asc "; // Set the default sort
