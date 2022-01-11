@@ -66,3 +66,13 @@ ul.k-filter-container, ul.k-filter-lines {
     grid-template-columns: 45% 10% 45%;
     text-align: center;
 }
+
+.sort-decending:after {
+    content: "\02191";
+    float: right;
+}
+
+.sort-ascending:after {
+    content: "\02193";
+    float: right;
+}

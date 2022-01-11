@@ -40,7 +40,7 @@ function library_get()
     $output .= '                <div class="active search-item" id="sort-year-type-author" data-sort="year-type-authors" onclick="sortLibrary(this)">Year, Type, Author</div>';
     $output .= '                <div class="search-item" id="sort-authors" data-sort="authors" onclick="sortLibrary(this)">Author</div>';
     $output .= '                <div class="search-item" id="sort-title" data-sort="title"onclick="sortLibrary(this)">Title</div>';
-    $output .= '                <div class="search-item" id="sort-type" data-sort="rt.name" onclick="sortLibrary(this)">Type</div>';
+    $output .= '                <div class="search-item" id="sort-rt-name" data-sort="rt.name" onclick="sortLibrary(this)">Type</div>';
     $output .= '                <div class="search-item" id="sort-year" data-sort="year" onclick="sortLibrary(this)">Year</div>';
     $output .= '        </div>';
     $output .= '        </div>';

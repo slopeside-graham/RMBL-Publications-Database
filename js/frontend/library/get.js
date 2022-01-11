@@ -51,6 +51,8 @@ function sortLibrary(clickedItem) {
     var sortinputs = sortcontainer.querySelectorAll('div');
 
     sortinputs.forEach(element => element.classList.remove('active'));
+    sortinputs.forEach(element => element.classList.remove('sort-ascending'));
+    sortinputs.forEach(element => element.classList.remove('sort-decending'));
 
     if (sort != clickedItem.dataset.sort) {
         sortDirection = '';
@@ -88,6 +90,8 @@ function sortLibrary(clickedItem) {
 
     var element = document.getElementById(clickedItem.id);
     element.classList.add("active");
+    //element.classList.remove("sort-decending");
+    //element.classList.remove("sort-ascending");
     element.classList.add(sortDirectionClass);
 }
 
