@@ -502,7 +502,7 @@ namespace PUBS {
                     $sortField = $sort['field'];
                     $sortDir = $sort['dir'];
 
-                    array_push($sqlSortArray, "l." . $sortField . " " . $sortDir);
+                    array_push($sqlSortArray, $sortField . " " . $sortDir);
                 }
                 $sqlSort = " ORDER BY " . implode(", ", $sqlSortArray) . " ";
             }

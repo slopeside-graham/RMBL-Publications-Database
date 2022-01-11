@@ -36,6 +36,10 @@
 .filter-sort {
     font-size: 80%;
 }
+.filter-sort input {
+    width: 100%;
+    margin-bottom: 5px !important;
+}
 
 ul.k-filter-container, ul.k-filter-lines {
     margin: 0px;
@@ -45,14 +49,20 @@ ul.k-filter-container, ul.k-filter-lines {
 .k-filter-toolbar-item.k-filter-operator {
     display: none;
 }
-#filter-types div {
+.filter-sort .search-item {
     margin-bottom: 5px;
 }
-#filter-types div:hover {
+.filter-sort .search-item:hover {
     cursor: pointer;
 }
 
-#filter-types .active {
+.filter-sort .search-item.active {
     background-color: blue;
     color: white;
+}
+
+.years-filter {
+    display: grid;
+    grid-template-columns: 45% 10% 45%;
+    text-align: center;
 }

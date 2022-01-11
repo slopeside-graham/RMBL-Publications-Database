@@ -1,5 +1,12 @@
 $ = jQuery;
 
+var startYear;
+var endYear;
+var year;
+var type;
+var sortDirection;
+var sortDirectionClass;
+var sort;
 
 $(function () {
     $(document).ready(function () {
@@ -39,77 +46,63 @@ function attachFilter() {
     })
 }
 
-var sortDirection = "asc";
-
 function sortLibrary(clickedItem) {
-    console.log(clickedItem.dataset.type);
-    var sortBy = clickedItem.dataset.type;
+    var sortcontainer = document.getElementById('sort-type');
+    var sortinputs = sortcontainer.querySelectorAll('div');
 
-    if (sortDirection == "desc") {
-        LibraryDataSource.sort(
-            [
-                { field: "authors", dir: "asc" },
-                { field: sortBy, dir: "asc" }
-            ]
-        );
+    sortinputs.forEach(element => element.classList.remove('active'));
+
+    if (sort != clickedItem.dataset.sort) {
+        sortDirection = '';
+    }
+
+    sort = clickedItem.dataset.sort;
+
+    if (!sortDirection) {
         sortDirection = "asc";
+        sortDirectionClass = "sort-ascending";
     } else if (sortDirection == "asc") {
+        sortDirection = "desc";
+        sortDirectionClass = "sort-decending";
+    } else if (sortDirection == "desc") {
+        sortDirection = "asc";
+        sortDirectionClass = "sort-ascending";
+    };
+
+    if (sort == 'year-type-authors') {
         LibraryDataSource.sort(
             [
-                { field: "autors", dir: "asc" },
-                { field: sortBy, dir: "asc" }
+                { field: 'year', dir: "desc" },
+                { field: 'rt.name', dir: "asc" },
+                { field: 'authors', dir: "asc" }
             ]
         );
-        sortDirection = "desc";
-    }
-}
-
-var startYear;
-var endYear;
-var year;
-
-function filterYears() {
-    startYear = document.getElementById('yearStart').value;
-    endYear = document.getElementById('yearEnd').value;
-
-    if (startYear || endYear) {
-        if (startYear && !endYear) {
-            endYear = startYear;
-        } else if (!startYear && endYear) {
-            startYear = endYear;
-        }
-        //console.log(startYear + " - " + endYear);
-        LibraryDataSource.filter(
+    } else {
+        LibraryDataSource.sort(
             [
-                { field: "year", value: startYear + " AND " + endYear, operator: "between" }
+                { field: sort, dir: sortDirection }
+
             ]
-        )
+        );
     }
+
+    var element = document.getElementById(clickedItem.id);
+    element.classList.add("active");
+    element.classList.add(sortDirectionClass);
 }
-var type;
+
 function filterLibrary() {
     title = document.getElementById('title').value;
     author = document.getElementById('author').value;
     keywords = document.getElementById('keywords').value;
     startYear = document.getElementById('yearStart').value;
     endYear = document.getElementById('yearEnd').value;
-    // year = "";
-/*
-    if (startYear || endYear) {
-        if (startYear && !endYear) {
-            endYear = startYear;
-        } else if (!startYear && endYear) {
-            startYear = endYear;
-        }
-        //console.log(startYear + " - " + endYear);
-    }
-    */
+
     LibraryDataSource.filter(
         [
             { field: "title", value: title, operator: "LIKE" },
             { field: "authors", value: author, operator: "LIKE" },
             { field: "keywords", value: keywords, operator: "LIKE" },
-            // { field: "year", value: year, operator: "between" },
             { field: "year", value: startYear, operator: ">=" },
             { field: "year", value: endYear, operator: "<=" },
             { field: "rt.name", value: type, operator: "eq" }
@@ -118,8 +111,8 @@ function filterLibrary() {
 }
 
 function filterTypes(clickedItem) {
-    var container = document.getElementById('filter-types');
-    var typeinputs = container.querySelectorAll('div');
+    var typescontainer = document.getElementById('filter-types');
+    var typeinputs = typescontainer.querySelectorAll('div');
 
     typeinputs.forEach(element => element.classList.remove('active'));
 
@@ -130,7 +123,7 @@ function filterTypes(clickedItem) {
 
     filterLibrary();
 
-    var element  = document.getElementById(type);
+    var element = document.getElementById(type);
     element.classList.add("active");
 }
 
