@@ -2,7 +2,9 @@
 
 namespace PUBS {
 
+    use MeekroDB;
     use PUBS\Utils as PUBSUTILS;
+    use WhereClause;
 
     class Library extends Pubs_Base implements \JsonSerializable
     {
@@ -447,58 +449,62 @@ namespace PUBS {
             PUBSUTILS::$db->error_handler = false; // since we're catching errors, don't need error handler
             PUBSUTILS::$db->throw_exception_on_error = true;
 
-            $sqlWhere = ' ';
+            // $sqlWhere = ' '; // Set the default where clause to nothing, so that it works without a filter.
+            // Only run if there is a filter sent inthe request.
+            $filtersLogic = 'AND';
+            $where = new WhereClause($filtersLogic);
             if ($request['filter']) {
                 $filters = $request['filter']['filters'];
                 $filtersLogic = $request['filter']['logic'];
                 // Build the sql statemont for the where clause.
-                if ($filters) {
-                    $sqlWhereArray = array();
-                    foreach ($filters as $filter) {
-                        $field = $filter['field'];
-                        $value = $filter['value'];
-                        $operator = $filter['operator'];
+                // $sqlWhereArray = array();
+
+                foreach ($filters as $filter) {
+                    $field = $filter['field'];
+                    $value = $filter['value'];
+                    $operator = $filter['operator'];
+                    $searchType = '%ss'; // Search String set as default
+                    // Only continue if the filter has any value, filters can exist with no value.
+                    if ($value) {
                         // Convert operators to SQL
-                        if ($operator == 'contains') {
+                        if ($operator == 'contains' || $operator == 'LIKE') {
                             $operator = 'LIKE';
-                            $sqlValue = '"%' . $value . '%"';
+                            $searchType = '%ss';
                         } else if ($operator == 'eq') {
                             $operator = '=';
-                            $sqlValue = $value;
+                            $searchType = '%l';
+                        } else {
+                            $operator = $operator;
+                            $searchType = '%l';
                         }
-
-                        if ($value) {
-                            array_push($sqlWhereArray, "l." . $field . " " . $operator  . " " . $sqlValue);
-                        }
-                    };
-                    $sqlWhere = " WHERE " . implode(" ". $filtersLogic . " ", $sqlWhereArray) . " ";
+                        $where->add($field .  " " . $operator . " " . $searchType, $value);
+                        // array_push($sqlWhereArray, "l." . $field . " " . $operator  . " " . $sqlValue);
+                    }
                 }
+                if (empty($where->clauses)) {
+                    $where->add('title LIKE %ss', ''); // Set a default Where clause whenthere are filter, but no values. Only happens if the search button is pressed with no input.
+                };
+                // Only fill the Where clause if the filters array has something in it.
+                // if (!empty($sqlWhereArray)) {
+                //  $sqlWhere = " WHERE " . implode(" " . $filtersLogic . " ", $sqlWhereArray) . " ";
+                // }
+            } else {
+                $where->add('title LIKE %ss', ''); // Use this to set a default Where caluse when there are no filters.
             }
 
+            $sqlSort = " ORDER BY l.year desc, reftypename asc, l.authors asc "; // Set the default sort
 
-            // Check request for search parameter, and set defaults if there are none.
-            $orderFirstColumn = 'year';
-            $orderFirstDir = 'desc'; // Sort Newest to Oldest
+            if ($request['sort']) {
+                $sqlSortArray = array();
+                $sorts = $request['sort'];
 
-            $orderSecondColumn = 'reftypename';
-            $orderSecondDir = 'asc';
+                foreach ($sorts as $sort) {
+                    $sortField = $sort['field'];
+                    $sortDir = $sort['dir'];
 
-            $orderThirdColumn = 'authors';
-            $orderThirdDir = 'asc';
-
-            $sort = $request['sort'][0];
-            $sortField = $sort['field'];
-            $sortDir = $sort['dir'];
-
-            if ($sortField == 'title') {
-                $orderFirstColumn = $sortField;
-                $orderFirstDir = $sortDir;
-
-                $orderSecondColumn = 'year';
-                $orderSecondDir = 'desc';
-
-                $orderThirdColumn = 'reftypename';
-                $orderThirdDir = 'asc';
+                    array_push($sqlSortArray, "l." . $sortField . " " . $sortDir);
+                }
+                $sqlSort = " ORDER BY " . implode(", ", $sqlSortArray) . " ";
             }
 
             $limit = ($request['take']) ? intval($request['take']) : 10; // Amount of results to display
@@ -514,21 +520,13 @@ namespace PUBS {
                     FROM 
                         library l
                     INNER JOIN 
-                        reftype rt ON l.reftypeId = rt.id"
+                        reftype rt ON l.reftypeId = rt.id
+                    WHERE %l"
                         .
-                        $sqlWhere // Where caluse
+                        $sqlSort // Sort Clause
                         .
-                        "ORDER BY
-                        %l %l,
-                        %l %l,
-                        %l %l
-                    LIMIT %i, %i",
-                    $orderFirstColumn,
-                    $orderFirstDir,
-                    $orderSecondColumn,
-                    $orderSecondDir,
-                    $orderThirdColumn,
-                    $orderThirdDir,
+                        "LIMIT %i, %i",
+                    $where,
                     $offset,
                     $limit
                 );
@@ -543,9 +541,9 @@ namespace PUBS {
                     FROM 
                         library l
                     INNER JOIN 
-                        reftype rt ON l.reftypeId = rt.id"
-                        .
-                        $sqlWhere
+                        reftype rt ON l.reftypeId = rt.id
+                    WHERE %l",
+                    $where
                 );
             } catch (\MeekroDBException $e) {
                 $query = $e->getQuery();

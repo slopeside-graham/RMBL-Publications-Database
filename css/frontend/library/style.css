@@ -1,3 +1,8 @@
+#library-list {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    column-gap: 5px;
+}
 #library-list-view {
     margin-right: 10px;
     border: none;
@@ -24,4 +29,16 @@
 
 .ARTICLE .library-item-type {
     color: rgba(255, 0, 0, .35);
+}
+
+/* Sort and Filter CSS */
+.filter-sort {
+    font-size: 80%;
+}
+ul.k-filter-container, ul.k-filter-lines {
+    margin: 0px;
+    padding: 0px;
+}
+.k-filter-toolbar-item.k-filter-operator {
+    display: none;
 }

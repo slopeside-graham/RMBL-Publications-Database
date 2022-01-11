@@ -10,13 +10,28 @@ function library_get()
     $output = '';
 
     $output .= '<div id="library-list">';
-    $output .= '    <div id="filter"></div>';
-    $output .= '    <div id="sort">';
-    $output .= '        <button onclick="sortLibrary(this)" data-type="title">Title</button>';
+    $output .= '    <div class="filter-sort">';
+    //$output .= '        <div id="filter"></div>';
+    $output .= '        <div class="filter">';
+    $output .= '            <h3>Search</h3>';
+    $output .= '            <div><input id="title" placeholder="Title" /></div>';
+    $output .= '            <div><input id="author" placeholder="Author"/></div>';
+    $output .= '            <div><input id="keywords" placeholder="Keyword"/></div>';
+    $output .= '            <div class="years-filter">';
+    $output .= '                <input id="yearStart" placeholder="Year Start" />';
+    $output .= '                <input id="yearEnd" placeholder="Year End" />';
+    $output .= '            </div>';
+    $output .= '            <button onclick="filterLibrary()">Search</button>';
+    $output .= '        </div>';
+    $output .= '        <div id="sort">';
+    $output .= '            <h3>Sort</h3>';
+    $output .= '            <button onclick="sortLibrary(this)" data-type="title">Title</button>';
+    $output .= '        </div>';
     $output .= '    </div>';
-    $output .= '    <div id="library-list-view"></div>';
-    $output .= '    <div id="pager"></div>';
-
+    $output .= '    <div>';
+    $output .= '        <div id="library-list-view"></div>';
+    $output .= '        <div id="pager"></div>';
+    $output .= '    </div>';
     $output .= '    <script type="text/x-kendo-template" id="library-listview-template">';
     $output .= '        <div class="single-library-item #:reftypename#">';
     $output .= '            <div class="library-item-type">#:reftypename#</div>';

@@ -22,18 +22,18 @@ function attachPager() {
 function attachFilter() {
     $("#filter").kendoFilter({
         dataSource: LibraryDataSource,
-        applyButton: true,
+        applyButton: false,
         fields: [
             { name: "title", type: "string", label: "Title" },
-            { name: "year", type: "string", label: "Year" },
-            { name: "authors", type: "string", label: "Author" }
+            { name: "authors", type: "string", label: "Author" },
+            { name: "keywords", type: "string", label: "Keywords" }
         ],
         expression: {
             logic: "and",
             filters: [
                 { field: "title", value: "", operator: "contains" },
-                { field: "year", value: "", operator: "eq" },
-                { field: "authors", value: "", operator: "contains" }
+                { field: "authors", value: "", operator: "contains" },
+                { field: "keywords", value: "", operator: "contains" },
             ]
         }
     })
@@ -46,12 +46,75 @@ function sortLibrary(clickedItem) {
     var sortBy = clickedItem.dataset.type;
 
     if (sortDirection == "desc") {
-        LibraryDataSource.sort({ field: sortBy, dir: "asc" });
+        LibraryDataSource.sort(
+            [
+                { field: "authors", dir: "asc" },
+                { field: sortBy, dir: "asc" }
+            ]
+        );
         sortDirection = "asc";
     } else if (sortDirection == "asc") {
-        LibraryDataSource.sort({ field: sortBy, dir: "desc" });
+        LibraryDataSource.sort(
+            [
+                { field: "autors", dir: "asc" },
+                { field: sortBy, dir: "asc" }
+            ]
+        );
         sortDirection = "desc";
     }
+}
+
+var startYear;
+var endYear;
+var year;
+
+function filterYears() {
+    startYear = document.getElementById('yearStart').value;
+    endYear = document.getElementById('yearEnd').value;
+
+    if (startYear || endYear) {
+        if (startYear && !endYear) {
+            endYear = startYear;
+        } else if (!startYear && endYear) {
+            startYear = endYear;
+        }
+        //console.log(startYear + " - " + endYear);
+        LibraryDataSource.filter(
+            [
+                { field: "year", value: startYear + " AND " + endYear, operator: "between" }
+            ]
+        )
+    }
+}
+
+function filterLibrary() {
+    title = document.getElementById('title').value;
+    author = document.getElementById('author').value;
+    keywords = document.getElementById('keywords').value;
+    startYear = document.getElementById('yearStart').value;
+    endYear = document.getElementById('yearEnd').value;
+    year = "";
+
+    if (startYear || endYear) {
+        if (startYear && !endYear) {
+            year = startYear + ' AND ' + startYear;
+        } else if (!startYear && endYear) {
+            year = endYear + ' AND ' + endYear;
+        } else if (startYear && endYear) {
+            year = startYear + ' AND ' + endYear;
+        } else {
+            year = "";
+        }
+        //console.log(startYear + " - " + endYear);
+    }
+    LibraryDataSource.filter(
+        [
+            { field: "title", value: title, operator: "LIKE" },
+            { field: "authors", value: author, operator: "LIKE" },
+            { field: "keywords", value: keywords, operator: "LIKE" },
+            { field: "year", value: year, operator: "between" }
+        ]
+    )
 }
 
 //TODO : Finish sort and filter.
