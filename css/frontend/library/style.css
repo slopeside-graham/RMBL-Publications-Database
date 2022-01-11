@@ -3,6 +3,7 @@
     grid-template-columns: 20% 80%;
     column-gap: 5px;
 }
+
 #library-list-view {
     margin-right: 10px;
     border: none;
@@ -35,10 +36,23 @@
 .filter-sort {
     font-size: 80%;
 }
+
 ul.k-filter-container, ul.k-filter-lines {
     margin: 0px;
     padding: 0px;
 }
+
 .k-filter-toolbar-item.k-filter-operator {
     display: none;
+}
+#filter-types div {
+    margin-bottom: 5px;
+}
+#filter-types div:hover {
+    cursor: pointer;
+}
+
+#filter-types .active {
+    background-color: blue;
+    color: white;
 }

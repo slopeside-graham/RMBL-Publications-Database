@@ -449,15 +449,14 @@ namespace PUBS {
             PUBSUTILS::$db->error_handler = false; // since we're catching errors, don't need error handler
             PUBSUTILS::$db->throw_exception_on_error = true;
 
-            // $sqlWhere = ' '; // Set the default where clause to nothing, so that it works without a filter.
             // Only run if there is a filter sent inthe request.
             $filtersLogic = 'AND';
             $where = new WhereClause($filtersLogic);
+
             if ($request['filter']) {
                 $filters = $request['filter']['filters'];
                 $filtersLogic = $request['filter']['logic'];
                 // Build the sql statemont for the where clause.
-                // $sqlWhereArray = array();
 
                 foreach ($filters as $filter) {
                     $field = $filter['field'];
@@ -472,22 +471,23 @@ namespace PUBS {
                             $searchType = '%ss';
                         } else if ($operator == 'eq') {
                             $operator = '=';
-                            $searchType = '%l';
+                            $searchType = '%s';
+                        } else if ($operator == 'gte') {
+                            $operator = '>=';
+                            $searchType = '%s';
+                        } else if ($operator == 'lte') {
+                            $operator = '<=';
+                            $searchType = '%s';
                         } else {
                             $operator = $operator;
-                            $searchType = '%l';
+                            $searchType = '%s';
                         }
                         $where->add($field .  " " . $operator . " " . $searchType, $value);
-                        // array_push($sqlWhereArray, "l." . $field . " " . $operator  . " " . $sqlValue);
                     }
                 }
                 if (empty($where->clauses)) {
                     $where->add('title LIKE %ss', ''); // Set a default Where clause whenthere are filter, but no values. Only happens if the search button is pressed with no input.
                 };
-                // Only fill the Where clause if the filters array has something in it.
-                // if (!empty($sqlWhereArray)) {
-                //  $sqlWhere = " WHERE " . implode(" " . $filtersLogic . " ", $sqlWhereArray) . " ";
-                // }
             } else {
                 $where->add('title LIKE %ss', ''); // Use this to set a default Where caluse when there are no filters.
             }

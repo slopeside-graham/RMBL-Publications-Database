@@ -86,35 +86,52 @@ function filterYears() {
         )
     }
 }
-
+var type;
 function filterLibrary() {
     title = document.getElementById('title').value;
     author = document.getElementById('author').value;
     keywords = document.getElementById('keywords').value;
     startYear = document.getElementById('yearStart').value;
     endYear = document.getElementById('yearEnd').value;
-    year = "";
-
+    // year = "";
+/*
     if (startYear || endYear) {
         if (startYear && !endYear) {
-            year = startYear + ' AND ' + startYear;
+            endYear = startYear;
         } else if (!startYear && endYear) {
-            year = endYear + ' AND ' + endYear;
-        } else if (startYear && endYear) {
-            year = startYear + ' AND ' + endYear;
-        } else {
-            year = "";
+            startYear = endYear;
         }
         //console.log(startYear + " - " + endYear);
     }
+    */
     LibraryDataSource.filter(
         [
             { field: "title", value: title, operator: "LIKE" },
             { field: "authors", value: author, operator: "LIKE" },
             { field: "keywords", value: keywords, operator: "LIKE" },
-            { field: "year", value: year, operator: "between" }
+            // { field: "year", value: year, operator: "between" },
+            { field: "year", value: startYear, operator: ">=" },
+            { field: "year", value: endYear, operator: "<=" },
+            { field: "rt.name", value: type, operator: "eq" }
         ]
     )
+}
+
+function filterTypes(clickedItem) {
+    var container = document.getElementById('filter-types');
+    var typeinputs = container.querySelectorAll('div');
+
+    typeinputs.forEach(element => element.classList.remove('active'));
+
+    type = clickedItem.id;
+    if (type == 'show-all') {
+        type = '';
+    }
+
+    filterLibrary();
+
+    var element  = document.getElementById(type);
+    element.classList.add("active");
 }
 
 //TODO : Finish sort and filter.
