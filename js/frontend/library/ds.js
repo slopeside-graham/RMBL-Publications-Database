@@ -14,6 +14,7 @@ LibraryDataSource = new kendo.data.DataSource({
                 },
                 success: function (result) {
                     options.success(result);
+                    attachTotals(result);
                     hideLoading($('body'));
                 },
                 error: function (result) {

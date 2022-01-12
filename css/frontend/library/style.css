@@ -7,6 +7,7 @@
 #library-list-view {
     margin-right: 10px;
     border: none;
+    min-height: 100px;
 }
 
 #library-list-view a {
@@ -19,46 +20,105 @@
     margin: 0 0 5px;
 }
 
-.ARTICLE {
-    background-color: rgba(255, 0, 0, .1);
-}
-
 .library-item-type {
     text-align: right;
     font-size: 8px;
+}
+
+.ARTICLE {
+    background-color: rgba(255, 0, 0, .1);
 }
 
 .ARTICLE .library-item-type {
     color: rgba(255, 0, 0, .35);
 }
 
+.OTHER {
+    background-color: rgba(150, 50, 50, .1);
+}
+
+.OTHER .library-item-type {
+    color: rgba(150, 50, 50, .35);
+}
+
+.THESIS {
+    background-color: rgba(20, 20, 20, .1);
+}
+
+.THESIS .library-item-type {
+    color: rgba(20, 20, 20, .35);
+}
+
+.STUDENTPAPER {
+    background-color: rgba(50, 50, 150, .1);
+}
+
+.STUDENTPAPER .library-item-type {
+    color: rgba(50, 50, 150, .35);
+}
+
 /* Sort and Filter CSS */
 .filter-sort {
     font-size: 80%;
 }
-.filter-sort input {
+
+.search-inputs {
+    margin-bottom: 10px;
+}
+.search-inputs input {
     width: 100%;
-    margin-bottom: 5px !important;
+    border: none;
+    background-repeat: repeat-x;
+    padding: 10px 15px;
+    border-bottom: 1px solid #ddd;
+
+}
+.search-inputs input:focus {
+    outline-color: #2b669a;
+}
+.year-seperator {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.years-filter input {
+    border-bottom: none;
+}
+#yearStart {
+    border-right: 1px solid #ddd;
+}
+#yearEnd {
+    border-left: 1px solid #ddd;
 }
 
-ul.k-filter-container, ul.k-filter-lines {
-    margin: 0px;
-    padding: 0px;
+#filter-types, #sort-type, .search-inputs {
+    border: 1px solid #ddd;
+    border-radius: 5px;
 }
 
-.k-filter-toolbar-item.k-filter-operator {
-    display: none;
-}
 .filter-sort .search-item {
-    margin-bottom: 5px;
+    background-repeat: repeat-x;
+    padding: 10px 15px;
+    border-bottom: 1px solid #ddd;
 }
+
+.filter-sort .search-item:first-child, .search-inputs:first-child {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.filter-sort .search-item:last-child, .search-inputs:last-child {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom: none;
+}
+
 .filter-sort .search-item:hover {
     cursor: pointer;
 }
 
 .filter-sort .search-item.active {
-    background-color: blue;
+    background-image: linear-gradient(to bottom, #337ab7 0, #2b669a 100%);
     color: white;
+    border-color: #2b669a;
 }
 
 .years-filter {
@@ -74,5 +134,9 @@ ul.k-filter-container, ul.k-filter-lines {
 
 .sort-ascending:after {
     content: "\02193";
+    float: right;
+}
+
+#filter-types .type-total {
     float: right;
 }

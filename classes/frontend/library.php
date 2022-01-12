@@ -451,8 +451,12 @@ namespace PUBS {
 
             // Only run if there is a filter sent inthe request.
             $filtersLogic = 'AND';
-            $where = new WhereClause($filtersLogic);
-            $where->add('RMBL <> %s', 'F');
+            $searchfilterwhere = new WhereClause($filtersLogic);
+            $searchfilterwhere->add('RMBL <> %s', 'F');
+
+            $searchwhere = new WhereClause($filtersLogic);
+            $searchwhere->add('RMBL <> %s', 'F');
+
             if ($request['filter']) {
                 $filters = $request['filter']['filters'];
                 $filtersLogic = $request['filter']['logic'];
@@ -482,7 +486,14 @@ namespace PUBS {
                             $operator = $operator;
                             $searchType = '%s';
                         }
-                        $where->add($field .  " " . $operator . " " . $searchType, $value);
+
+                        if ($field == 'rt.name') {
+                            $searchfilterwhere->add($field .  " " . $operator . " " . $searchType, $value);
+                        } else {
+                            $searchfilterwhere->add($field .  " " . $operator . " " . $searchType, $value);
+                            $searchwhere->add($field .  " " . $operator . " " . $searchType, $value);
+                        }
+                        
                     }
                 }
             }
@@ -521,7 +532,7 @@ namespace PUBS {
                         $sqlSort // Sort Clause
                         .
                         "LIMIT %i, %i",
-                    $where,
+                    $searchfilterwhere,
                     $offset,
                     $limit
                 );
@@ -538,7 +549,19 @@ namespace PUBS {
                     INNER JOIN 
                         reftype rt ON l.reftypeId = rt.id
                     WHERE %l",
-                    $where
+                    $searchfilterwhere
+                );
+
+                $totalTypes = PUBSUTILS::$db->query(
+                    "SELECT rt.name AS Type,
+                        COUNT(l.id) AS Total
+                    FROM 
+                        library l
+                    INNER JOIN 
+                        reftype rt ON l.reftypeId = rt.id
+                    WHERE %l
+                    GROUP BY rt.name",
+                    $searchwhere
                 );
             } catch (\MeekroDBException $e) {
                 $query = $e->getQuery();
@@ -547,6 +570,7 @@ namespace PUBS {
 
             return [
                 'total' => $total[0]['COUNT(*)'],
+                'totalTypes' => $totalTypes,
                 'data' => $libraryitems
             ];
         }

@@ -13,12 +13,45 @@ $(function () {
         $("#library-list-view").kendoListView({
             dataSource: LibraryDataSource,
             template: kendo.template($("#library-listview-template").html()),
-            pageable: true,
-        });
+            pageable: true
+        })
         attachPager();
         attachFilter();
-    });
+    })
 });
+
+function attachTotals(result) {
+    var totalTypesArray = result.totalTypes;
+    var total = result.total;
+
+    var filtercontainer = document.getElementById('filter-types');
+    var filterinputs = filtercontainer.querySelectorAll('div');
+
+    var librariestotal = 0;
+
+    filterinputs.forEach((element) => {
+        document.getElementById(element.id + '-total').innerHTML = 0;
+        document.getElementById(element.id).style.display = 'none'
+
+    });
+
+    Object.entries(totalTypesArray).forEach(entry => {
+        const [key, value] = entry;
+
+        var itemType = value['Type'].toLowerCase() + '-total';
+        element = document.getElementById(itemType)
+        if (element) {
+            document.getElementById(itemType).innerHTML = value['Total'];
+            document.getElementById(value['Type'].toLowerCase()).style.display = 'block';
+            librariestotal += parseInt(value['Total']);
+        }
+    })
+    document.getElementById('show-all').style.display = 'block';
+    document.getElementById('show-all-total').innerHTML = librariestotal;
+}
+function insertTotals() {
+
+}
 
 function attachPager() {
     $("#pager").kendoPager({
@@ -79,11 +112,11 @@ function sortLibrary(clickedItem) {
                 { field: 'authors', dir: "asc" }
             ]
         );
+        sortDirectionClass = "";
     } else {
         LibraryDataSource.sort(
             [
                 { field: sort, dir: sortDirection }
-
             ]
         );
     }
@@ -96,6 +129,8 @@ function sortLibrary(clickedItem) {
 }
 
 function filterLibrary() {
+    event.preventDefault();
+
     title = document.getElementById('title').value;
     author = document.getElementById('author').value;
     keywords = document.getElementById('keywords').value;
@@ -127,7 +162,7 @@ function filterTypes(clickedItem) {
 
     filterLibrary();
 
-    var element = document.getElementById(type);
+    var element = document.getElementById(clickedItem.id);
     element.classList.add("active");
 }
 
