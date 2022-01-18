@@ -1,6 +1,6 @@
 #library-list {
     display: grid;
-    grid-template-columns: auto;
+    grid-template-columns: auto auto;
     column-gap: 5px;
 }
 
