@@ -1,7 +1,13 @@
 #library-list {
     display: grid;
-    grid-template-columns: 20% 80%;
+    grid-template-columns: auto;
     column-gap: 5px;
+}
+
+@media only screen and (min-width: 768px) {
+    #library-list {
+        grid-template-columns: 20% 80%;
+    }
 }
 
 #library-list-view {
@@ -60,6 +66,7 @@
 /* Sort and Filter CSS */
 .filter-sort {
     font-size: 80%;
+    margin-bottom: 20px;
 }
 
 .search-inputs {

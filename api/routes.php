@@ -1,6 +1,6 @@
 <?php
 // Include Enum class
-include_once(plugin_dir_path(__FILE__) . '/../classes/enum.php');  // MyCLabs\Enum class
+// include_once(plugin_dir_path(__FILE__) . '/../classes/enum.php');  // MyCLabs\Enum class
 
 /*  Include all API files in Routes  */
 include_once(plugin_dir_path(__FILE__) . '/../classes/base.php');  // object base class
