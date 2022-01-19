@@ -166,6 +166,12 @@ function filterTypes(clickedItem) {
     element.classList.add("active");
 }
 
+function buildAuthors(authors) {
+    console.log(authors);
+    var authorNamesAray = [];
+
+}
+
 //TODO : Finish sort and filter.
 // Sort by folowing items: 
 // - Year, Type Author (Default)

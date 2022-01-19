@@ -493,7 +493,6 @@ namespace PUBS {
                             $searchfilterwhere->add($field .  " " . $operator . " " . $searchType, $value);
                             $searchwhere->add($field .  " " . $operator . " " . $searchType, $value);
                         }
-                        
                     }
                 }
             }
@@ -538,6 +537,17 @@ namespace PUBS {
                 );
                 foreach ($results as $row) {
                     $libraryitem = Library::populatefromRow($row);
+
+                    //TODO: Should the below be done in SQL?
+                    $authors = Author::GetAllByLibraryId($row['id']); // Get the authors for the library item.
+                    $peopleArray = []; // Create an array to put in the people (authors).
+                    foreach ($authors->jsonSerialize() as $author) { // Loop through authors and pull People names into People array.
+                        $person = People::Get($author->peopleId);
+                        array_push($peopleArray, $person->LastName . " " . $person->FirstName);
+                    }
+                    $authors = implode(", ", $peopleArray); // Convert People array to String.
+                    $libraryitem->authors = $authors; // Assign People Names to Authors in the Library item.
+
                     $libraryitems->add_item($libraryitem);  // Add the publication to the collection
                 }
 
@@ -611,7 +621,7 @@ namespace PUBS {
             $libraryitem->pending = $row['pending'];
             $libraryitem->email = $row['email'];
             $libraryitem->student = $row['student'];
-            $libraryitem->authors = $row['authors'];
+            // $libraryitem->authors = $row['authors'];
             //   $libraryitem->DateCreated = $row['DateCreated'];
             //   $libraryitem->DateModified = $row['DateModified'];
 
