@@ -19,20 +19,44 @@ function pubs_frontend_register_localize()
     wp_register_script('pubs-utils-js', plugins_url('rmbl-pubs/js/frontend/utils.js'), dirname(__FILE__), ['pubs-kendo-js'], scriptver, true);
     wp_localize_script('pubs-utils-js', 'wpApiSettings', array('root' => esc_url_raw(rest_url()), 'nonce' => wp_create_nonce('wp_rest')));
 
-    // Library
+    // Library Frontend
+    wp_register_script('library-fe-ds-js', plugins_url('rmbl-pubs/js/frontend/library/ds.js'), dirname(__FILE__), ['pubs-utils-js'], scriptver, true);
+    wp_localize_script('library-fe-ds-js', 'wpApiSettings', array('root' => esc_url_raw(rest_url()), 'nonce' => wp_create_nonce('wp_rest')));
 
-    wp_register_script('library-ds-js', plugins_url('rmbl-pubs/js/frontend/library/ds.js'), dirname(__FILE__), ['pubs-utils-js'], scriptver, true);
-    wp_localize_script('library-ds-js', 'wpApiSettings', array('root' => esc_url_raw(rest_url()), 'nonce' => wp_create_nonce('wp_rest')));
+    wp_register_script('library-fe-get-js', plugins_url('rmbl-pubs/js/frontend/library/get.js'), dirname(__FILE__), ['library-fe-ds-js'], scriptver, true);
+    wp_localize_script('library-fe-get-js', 'wpApiSettings', array('root' => esc_url_raw(rest_url()), 'nonce' => wp_create_nonce('wp_rest')));
 
-    wp_register_script('library-get-js', plugins_url('rmbl-pubs/js/frontend/library/get.js'), dirname(__FILE__), ['pubs-ds-js'], scriptver, true);
-    wp_localize_script('library-get-js', 'wpApiSettings', array('root' => esc_url_raw(rest_url()), 'nonce' => wp_create_nonce('wp_rest')));
-
-    wp_register_style('library-frontend-style', plugins_url('rmbl-pubs/css/frontend/library/style.css'));
+    wp_register_style('library-fe-style', plugins_url('rmbl-pubs/css/frontend/library/style.css'));
 }
 add_action('wp_enqueue_scripts', 'pubs_frontend_register_localize');
 
 function pubs_admin_register_localize()
 {
+    // Register Kendo Scripts and styles from RMBL Catalog
+
+    // Kendo Script
+    wp_register_script('pubs-kendo-js', plugins_url('/rmbl-catalog/kendo/js/kendo.all.min.js', dirname(__FILE__)), array('jquery'), scriptver, true);
+    wp_localize_script('pubs-kendo-js', 'wpApiSettings', array('root' => esc_url_raw(rest_url()), 'nonce' => wp_create_nonce('wp_rest')));
+
+    // Kendo  styles first
+    wp_register_style('pubs-kendo-common-style', plugins_url('/rmbl-catalog/kendo/styles/kendo.common.min.css', dirname(__FILE__)), array(), scriptver);
+    wp_register_style('pubs-kendo-default-style', plugins_url('/rmbl-catalog/kendo/styles/kendo.default.min.css', dirname(__FILE__)), array(), scriptver);
+
+    // Pubs Utilities
+    wp_register_script('pubs-utils-js', plugins_url('rmbl-pubs/js/frontend/utils.js'), dirname(__FILE__), ['pubs-kendo-js'], scriptver, true);
+    wp_localize_script('pubs-utils-js', 'wpApiSettings', array('root' => esc_url_raw(rest_url()), 'nonce' => wp_create_nonce('wp_rest')));
+
+    // Library Admin
+    wp_register_script('library-be-js', plugins_url('rmbl-pubs/js/backend/pubs.js'), dirname(__FILE__), ['pubs-utils-js'], scriptver, true);
+    wp_localize_script('library-be-js', 'wpApiSettings', array('root' => esc_url_raw(rest_url()), 'nonce' => wp_create_nonce('wp_rest')));
+
+    wp_register_script('library-be-ds-js', plugins_url('rmbl-pubs/js/backend/library/ds.js'), dirname(__FILE__), ['pubs-utils-js'], scriptver, true);
+    wp_localize_script('library-be-ds-js', 'wpApiSettings', array('root' => esc_url_raw(rest_url()), 'nonce' => wp_create_nonce('wp_rest')));
+
+    wp_register_script('library-be-grid-js', plugins_url('rmbl-pubs/js/backend/library/grid.js'), dirname(__FILE__), ['library-be-ds-js'], scriptver, true);
+    wp_localize_script('library-be-grid-js', 'wpApiSettings', array('root' => esc_url_raw(rest_url()), 'nonce' => wp_create_nonce('wp_rest')));
+
+    wp_register_style('library-be-style', plugins_url('rmbl-pubs/css/frontend/library/style.css'));
 }
 add_action('admin_enqueue_scripts', 'pubs_admin_register_localize');
 
@@ -52,7 +76,7 @@ function pubs_enqueue_kendo()
 }
 function pubs_enqueue_frontend_style()
 {
-    wp_enqueue_style('library-frontend-style');
+    wp_enqueue_style('library-fe-style');
 }
 
 // Publications
@@ -60,8 +84,19 @@ function pubs_enqueue_frontend_get_library()
 {
     wp_enqueue_script('pubs-kendo-js');
     wp_enqueue_script('pubs-utils-js');
-    wp_enqueue_script('library-ds-js');
-    wp_enqueue_script('library-get-js');
+    wp_enqueue_script('library-fe-ds-js');
+    wp_enqueue_script('library-fe-get-js');
 
-    wp_enqueue_style('library-frontend-style');
+    wp_enqueue_style('library-fe-style');
+}
+
+function pubs_enqueue_backend_library()
+{
+    wp_enqueue_script('pubs-kendo-js');
+    wp_enqueue_script('pubs-utils-js');
+    wp_enqueue_script('library-be-js');
+    wp_enqueue_script('library-be-ds-js');
+    wp_enqueue_script('library-be-grid-js');
+
+    wp_enqueue_style('library-be-style');
 }

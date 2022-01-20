@@ -17,7 +17,7 @@ function encryptpubssetting($setting)
     return Utils::encrypt($setting);
 }
 
-function pubs_page_admin()
+function pubs_settings()
 {
 ?>
     <div class="wrap">

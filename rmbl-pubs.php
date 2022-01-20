@@ -45,28 +45,37 @@ $pubsdbname = PUBSUtils::getunencryptedsetting('pubs-dbname');
  PUBSUtils::$db = new MeekroDB($pubsdbhost, $pubsdbuser, $pubsdbpassword, $pubsdbname, $pubsdbport);
 
 // Include Setting Pages
-include_once(plugin_dir_path(__FILE__) . '/admin/admin.php');
+include_once(plugin_dir_path(__FILE__) . '/admin/pubs.php');
+include_once(plugin_dir_path(__FILE__) . '/admin/settings.php');
 include_once(plugin_dir_path(__FILE__) . '/admin/pageSelections.php');
 
 // Create Pubs Admin Pages
 function pubs_register_menu_pages()
 {
     add_menu_page(
-        'PUBS Settings',
-        'PUBS Settings',
+        'Publications',
+        'Publications',
         'manage_options',
-        'rmbl-pubs/admin/admin.php',
-        'pubs_page_admin',
+        'rmbl-pubs/admin/pubs.php',
+        'pubs_main',
         'dashicons-book',
         2
     );
     add_submenu_page(
-        'rmbl-pubs/admin/admin.php',
-        'PUBS Page Selections',
+        'rmbl-pubs/admin/pubs.php',
+        'Publications Settings',
+        'Settings',
+        'manage_options',
+        'rmbl-pubs/admin/settings.php',
+        'pubs_settings'
+    );
+    add_submenu_page(
+        'rmbl-pubs/admin/pubs.php',
+        'Publications Page Selections',
         'Page Selections',
         'manage_options',
         'rmbl-pubs/admin/pageSelections.php',
-        'gcms_page_selections'
+        'pubs_page_selections'
     );
 }
 add_action('admin_menu', 'pubs_register_menu_pages');

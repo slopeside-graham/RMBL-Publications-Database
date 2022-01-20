@@ -539,6 +539,7 @@ namespace PUBS {
                     $libraryitem = Library::populatefromRow($row);
 
                     //TODO: Should the below be done in SQL?
+                    // Add People Names to the Library item from the authors table link. 
                     $authors = Author::GetAllByLibraryId($row['id']); // Get the authors for the library item.
                     $peopleArray = []; // Create an array to put in the people (authors).
                     foreach ($authors->jsonSerialize() as $author) { // Loop through authors and pull People names into People array.
