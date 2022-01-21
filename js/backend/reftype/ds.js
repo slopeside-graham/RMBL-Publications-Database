@@ -24,45 +24,14 @@ reftypeDataSource = new kendo.data.DataSource({
             });
         }
     },
-    serverPaging: true,
-    serverFiltering: true,
-    serverSorting: true,
-    pageSize: 10,
     schema: {
-        total: 'total',
         data: 'data',
         model: {
             id: "id",
             fields: {
                 id: { type: "number" },
-                reftypeId: { type: "string" },
-                year: { type: "string" },
-                title: { type: "string" },
-                volume: { type: "string" },
-                edition: { type: "string" },
-                publisherId: { type: "string" },
-                pages: { type: "string" },
-                restofreference: { type: "string" },
-                journalname: { type: "string" },
-                journalissue: { type: "string" },
-                catalognumber: { type: "string" },
-                donatedby: { type: "string" },
-                chaptertitle: { type: "string" },
-                bookeditors: { type: "string" },
-                degree: { type: "string" },
-                institution: { type: "string" },
-                keywords: { type: "string" },
-                comments: { type: "string" },
-                bn_url: { type: "string" },
-                abstract_url: { type: "string" },
-                fulltext_url: { type: "string" },
-                pdf_url: { type: "string" },
-                copyinlibrary: { type: "string" },
-                RMBL: { type: "string" },
-                pending: { type: "string" },
-                email: { type: "string" },
-                student: { type: "string" },
-                authors: { type: "object" }
+                name: { type: "string" },
+                template: { type: "string" }
             }
         }
     }

@@ -10,7 +10,7 @@ var sort;
 
 $(function () {
     $(document).ready(function () {
-        $("#library-grid").kendoGrid({
+        var libraryGrid = $("#library-grid").kendoGrid({
             dataSource: LibraryDataSource,
             toolbar: ["create"],
             sortable: true,
@@ -29,6 +29,9 @@ $(function () {
                     width: 600,
                     position: {
                         top: 100
+                    },
+                    close: function (e) {
+                        $('#library-grid').data('kendoGrid').dataSource.read();
                     }
                 },
                 template: kendo.template($("#library-popup-editor").html())
@@ -46,22 +49,8 @@ $(function () {
         attachPager();
         attachFilter();
     });
-
-
 });
 
-// Custom Editors
-function reftypeDropDownEditor(container, options) {
-    $('<input required name="' + options.field + '"/>')
-        .appendTo(container)
-        .kendoDropDownList({
-            autoBind: false,
-            dataTextField: "name",
-            dataValueField: "id",
-            dataSource: reftypeDataSource,
-            value: options.model.reftypeId
-        });
-}
 
 function attachTotals(result) {
     var totalTypesArray = result.totalTypes;

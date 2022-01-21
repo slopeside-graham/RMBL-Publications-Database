@@ -91,7 +91,7 @@ function pubs_main()
         <div class="editor-section">
             <div id="reftypeeditor" class="editor-row">
                 <label>RefType:<br />
-                    <input name="reftypeId" data-bind="value:reftypeId" data-value-field="id" data-text-field="name" data-source="reftypeDataSource" data-role="dropdownlist" data-value-primitive="true" />
+                    <input name="reftypeId" data-bind="value:reftypeId" data-value-field="id" data-text-field="name" data-source="reftypeDataSource" data-role="dropdownlist" />
                 </label>
                 <label>Year:<input name="year" /></label>
             </div>
