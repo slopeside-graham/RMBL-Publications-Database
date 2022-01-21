@@ -16,18 +16,52 @@ $(function () {
             sortable: true,
             columns: [
                 { field: "id", title: "ID", width: "60px" },
-                { field: "reftypename", title: "Type", width: "100px" },
-                { field: "title", title: "Title" },
+                { field: "reftypeId", title: "Type", template: "#=reftypename#", width: "100px" },
+                { field: "title", title: "Title", encoded: false },
                 //{ field: "authors", title: "Authors" },
                 { field: "year", title: "Year", width: "80px" },
                 { command: ["edit"], title: "&nbsp;", width: "100px" }
             ],
-            editable: "popup"
-        })
+            editable: {
+                mode: "popup",
+                window: {
+                    title: "Edit Library Item",
+                    width: 600,
+                    position: {
+                        top: 100
+                    }
+                },
+                template: kendo.template($("#library-popup-editor").html())
+            },
+            edit: function (e) {
+                $("#library-editor-tabstrip").kendoTabStrip({
+                    animation: {
+                        open: {
+                            effects: "fadeIn"
+                        }
+                    }
+                });
+            }
+        });
         attachPager();
         attachFilter();
-    })
+    });
+
+
 });
+
+// Custom Editors
+function reftypeDropDownEditor(container, options) {
+    $('<input required name="' + options.field + '"/>')
+        .appendTo(container)
+        .kendoDropDownList({
+            autoBind: false,
+            dataTextField: "name",
+            dataValueField: "id",
+            dataSource: reftypeDataSource,
+            value: options.model.reftypeId
+        });
+}
 
 function attachTotals(result) {
     var totalTypesArray = result.totalTypes;

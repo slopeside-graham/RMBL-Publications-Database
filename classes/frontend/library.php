@@ -3,6 +3,7 @@
 namespace PUBS {
 
     use MeekroDB;
+    use PUBS\Admin\Library as AdminLibrary;
     use PUBS\Utils as PUBSUTILS;
     use WhereClause;
 
@@ -441,7 +442,9 @@ namespace PUBS {
             } catch (\MeekroDBException $e) {
                 return new \WP_Error('Library_Get_Error', $e->getMessage());
             }
-            return $libraryitem;
+            return [
+                'data' => $libraryitem
+            ];
         }
 
         public static function GetAll($request)
@@ -451,10 +454,10 @@ namespace PUBS {
 
             // Only run if there is a filter sent inthe request.
             $filtersLogic = 'AND';
-            $searchfilterwhere = new WhereClause($filtersLogic);
+            $searchfilterwhere = new WhereClause($filtersLogic); // Set the base where caluse for returning records with filter
             $searchfilterwhere->add('RMBL <> %s', 'F');
 
-            $searchwhere = new WhereClause($filtersLogic);
+            $searchwhere = new WhereClause($filtersLogic); // Set the base where clause for returning totals without filter.
             $searchwhere->add('RMBL <> %s', 'F');
 
             if ($request['filter']) {

@@ -7,7 +7,7 @@ function pubs_main()
     pubs_enqueue_backend_library()
 ?>
     <h1>Publications Database Integration</h1>
-    <div id="tabstrip">
+    <div id="pubs-tabstrip">
         <ul>
             <li class="k-state-active">Library</li>
             <li>Authors</li>
@@ -77,5 +77,92 @@ function pubs_main()
         </div>
     </div>
 
+    <?php
+    echo "<script id='library-popup-editor' type='text/x-kendo-template'>";
+    ?>
+    <div id="library-editor-tabstrip">
+        <ul>
+            <li class="k-state-active">Library</li>
+            <li>Meta</li>
+            <li>URL's</li>
+            <li>Authors</li>
+            <li>Publishers</li>
+        </ul>
+        <div class="editor-section">
+            <div id="reftypeeditor" class="editor-row">
+                <label>RefType:<br />
+                    <input name="reftypeId" data-bind="value:reftypeId" data-value-field="id" data-text-field="name" data-source="reftypeDataSource" data-role="dropdownlist" data-value-primitive="true" />
+                </label>
+                <label>Year:<input name="year" /></label>
+            </div>
+            <div class="editor-row">
+                <label>Title:<input name="title" /></label>
+            </div>
+            <div class="editor-row">
+                <label>Chapter Title:<input name="chaptertitle" /></label>
+                <label>Journal Name:<input name="journalname" /></label>
+            </div>
+            <div class="editor-row">
+                <label>Volume:<input name="volume" /></label>
+                <label>Pages:<input name="pages" /></label>
+                <label>Catalog Number:<input name="catalognumber" /></label>
+                <label>Journal Issue:<input name="journalissue" /></label>
+            </div>
+            <div class="editor-row">
+                <label>Book Editors:<input name="bookeditors" /></label>
+                <label>Degree:<input name="degree" /></label>
+                <label>Edition:<input name="edition" /></label>
+            </div>
+            <div class="editor-row">
+                <label>Rest of Reference:<input name="restofreference" /></label>
+                <label>Institution:<input name="institution" /></label>
+            </div>
+        </div>
+        <div class="editor-section">
+            <div class="editor-row">
+                <label>RMBL:<input name="RMBL" /></label>
+                <label>Pending:<input name="pending" /></label>
+            </div>
+            <div class="editor-row">
+                <label>Student:<input name="student" /></label>
+                <label>Copy in Library:<input name="copyinlibrary" /></label>
+            </div>
+            <div class="editor-row">
+                <label>Keywords:<input name="keywords" /></label>
+            </div>
+            <div class="editor-row">
+                <label>Comments:<input name="comments" /></label>
+                <label>Donated By:<input name="donatedby" /></label>
+            </div>
+        </div>
+        <div class="editor-section">
+            <div class="editor-row">
+                <label>PDF URL:<input name="pdf_url" /></label>
+            </div>
+            <div class="editor-row">
+                <label>Abstract URL:<input name="abstract_url" /></label>
+            </div>
+            <div class="editor-row">
+                <label>Fulltext URL:<input name="fulltext_url" /></label>
+            </div>
+            <div class="editor-row">
+                <label>BN URL:<input name="bn_url" /></label>
+            </div>
+        </div>
+        <div class="editor-section">
+            <div class="editor-row">
+                <label>Select Authors:<input name="authors" /></label>
+            </div>
+        </div>
+        <div class="editor-section">
+            <div class="editor-row">
+                <label>Choose a Publisher:<input name="publisherId" /></label>
+            </div>
+        </div>
+    </div>
+    </div>
+    <?php
+    echo "</script>";
+    ?>
 <?php
 }
