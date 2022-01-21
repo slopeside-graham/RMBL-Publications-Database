@@ -224,10 +224,10 @@ namespace PUBS\Admin {
                     'RMBL' => $this->RMBL,
                     'pending' => $this->pending,
                     'email' => $this->email,
-                    'student' => $this->student,
-                    // '' => $this->authors => $library->authors;
-                    //   '' => $this->DateCreated => $library->DateCreated;
-                    //   '' => $this->DateModified => $library->DateModified;
+                    'student' => $this->student
+                    // 'authors' => $this->authors,
+                    // 'DateCreated' => $this->DateCreatedm
+                    // 'DateModified' => $this->DateModified\
                 ];
 
                 PUBSUTILS::$db->update(
@@ -236,17 +236,6 @@ namespace PUBS\Admin {
                     'id = %i',
                     $this->id
                 );
-/*
-                $result = PUBSUTILS::$db->query(
-                    "UPDATE library 
-                    SET
-                        year = %i 
-                    WHERE 
-                        id = %i",
-                    $this->year,
-                    $this->id
-                );
-*/
                 $counter = PUBSUTILS::$db->affectedRows();
 
                 $library = Library::Get($this->id);
