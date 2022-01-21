@@ -589,7 +589,7 @@ namespace PUBS {
             ];
         }
 
-        public static function populatefromrow($row): ?Library
+        public static function populatefromrow($row)
         {
             if ($row == null)
                 return null;

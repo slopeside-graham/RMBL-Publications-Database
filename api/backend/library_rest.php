@@ -203,7 +203,7 @@ namespace PUBS\Admin {
          *
          * @return mixed|WP_Error|WP_REST_Response
          */
-        /*
+        
         public function update_item($request)
         {
             $library = Library::populatefromRow($request);
@@ -217,7 +217,6 @@ namespace PUBS\Admin {
                 return new \WP_Error('Library_Update_Error', 'An error occured: ' . $error_string, array('status' => 400));
             }
         }
-*/
         /**
          * Sets up the proper HTTP status code for authorization.
          *

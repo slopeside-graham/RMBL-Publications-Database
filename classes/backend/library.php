@@ -12,7 +12,39 @@ namespace PUBS\Admin {
         public function __construct($library = null)
         {
             if ($library != null) {
-                $this->name = $library->name;
+
+                $this->id = $library->id;
+                $this->reftypeId = $library->reftypeId;
+                $this->reftypename = $library->reftypename;
+                $this->year = $library->year;
+                $this->title = $library->title;
+                $this->volume = $library->volume;
+                $this->edition = $library->edition;
+                $this->publisherId = $library->publisherId;
+                $this->pages = $library->pages;
+                $this->restofreference = $library->restofreference;
+                $this->journalname = $library->journalname;
+                $this->journalissue = $library->journalissue;
+                $this->catalognumber = $library->catalognumber;
+                $this->donatedby = $library->donatedby;
+                $this->chaptertitle = $library->chaptertitle;
+                $this->bookeditors = $library->bookeditors;
+                $this->degree = $library->degree;
+                $this->institution = $library->institution;
+                $this->keywords = $library->keywords;
+                $this->comments = $library->comments;
+                $this->bn_url = $library->bn_url;
+                $this->abstract_url = $library->abstract_url;
+                $this->fulltext_url = $library->fulltext_url;
+                $this->pdf_url = $library->pdf_url;
+                $this->copyinlibrary = $library->copyinlibrary;
+                $this->RMBL = $library->RMBL;
+                $this->pending = $library->pending;
+                $this->email = $library->email;
+                $this->student = $library->student;
+                // $this->authors = $library->authors;
+                //   $this->DateCreated = $library->DateCreated;
+                //   $this->DateModified = $library->DateModified;
             }
         }
 
@@ -164,20 +196,62 @@ namespace PUBS\Admin {
             PUBSUTILS::$db->throw_exception_on_error = true;
 
             try {
+                $tableName = 'library';
+                $setArray = [
+                    'reftypeId' => $this->reftypeId,
+                    'year' => $this->year,
+                    'title' => $this->title,
+                    'volume' => $this->volume,
+                    'edition' => $this->edition,
+                    'publisherId' => $this->publisherId,
+                    'pages' => $this->page,
+                    'restofreference' => $this->restofreference,
+                    'journalname' => $this->journalname,
+                    'journalissue' => $this->journalissue,
+                    'catalognumber' => $this->catalognumber,
+                    'donatedby' => $this->donatedby,
+                    'chaptertitle' => $this->chaptertitle,
+                    'bookeditors' => $this->bookeditors,
+                    'degree' => $this->degree,
+                    'institution' => $this->institution,
+                    'keywords' => $this->keywords,
+                    'comments' => $this->comments,
+                    'bn_url' => $this->bn_url,
+                    'abstract_url' => $this->abstract_url,
+                    'fulltext_url' => $this->fulltext_url,
+                    'pdf_url' => $this->pdf_url,
+                    'copyinlibrary' => $this->copyinlibrary,
+                    'RMBL' => $this->RMBL,
+                    'pending' => $this->pending,
+                    'email' => $this->email,
+                    'student' => $this->student,
+                    // '' => $this->authors => $library->authors;
+                    //   '' => $this->DateCreated => $library->DateCreated;
+                    //   '' => $this->DateModified => $library->DateModified;
+                ];
+
+                PUBSUTILS::$db->update(
+                    $tableName,
+                    $setArray,
+                    'id = %i',
+                    $this->id
+                );
+/*
                 $result = PUBSUTILS::$db->query(
                     "UPDATE library 
                     SET
-                        year=%i, 
+                        year = %i 
                     WHERE 
-                        id=%i",
+                        id = %i",
                     $this->year,
                     $this->id
                 );
-
+*/
                 $counter = PUBSUTILS::$db->affectedRows();
 
                 $library = Library::Get($this->id);
             } catch (\MeekroDBException $e) {
+                $query = $e->getQuery();
                 return new \WP_Error('Library_Update_Error', $e->getMessage());
             }
             return [
@@ -195,8 +269,8 @@ namespace PUBS\Admin {
             return $adminLibrary;
         }
 */
-        /*
-        public static function populatefromrow($row): ?Library
+
+        public static function populatefromrow($row)
         {
             $library = \PUBS\Library::populatefromrow($row);
 
@@ -205,6 +279,5 @@ namespace PUBS\Admin {
 
             return $adminLibrary;
         }
-        */
     }
 }
