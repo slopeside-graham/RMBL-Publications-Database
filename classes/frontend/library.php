@@ -417,6 +417,7 @@ namespace PUBS {
                 'email' => $this->email,
                 'student' => $this->student,
                 'authors' => $this->authors,
+                'authorIds' => $this->authorIds,
                 //  'DateCreated' => $this->DateCreated,
                 //  'DateModified' => $this->DateModified
             ];

@@ -42,7 +42,8 @@ namespace PUBS\Admin {
                 $this->pending = $library->pending;
                 $this->email = $library->email;
                 $this->student = $library->student;
-                // $this->authors = $library->authors;
+                $this->authors = $library->authors;
+                $this->authorIds = $library->authorIds;
                 //   $this->DateCreated = $library->DateCreated;
                 //   $this->DateModified = $library->DateModified;
             }
@@ -146,12 +147,15 @@ namespace PUBS\Admin {
                     // Add People Names to the Library item from the authors table link. 
                     $authors = \Pubs\Author::GetAllByLibraryId($row['id']); // Get the authors for the library item.
                     $peopleArray = []; // Create an array to put in the people (authors).
+                    $peopleIdsArray = []; // Create an array to hold the People Ids
                     foreach ($authors->jsonSerialize() as $author) { // Loop through authors and pull People names into People array.
                         $person = \PUBS\People::Get($author->peopleId);
-                        array_push($peopleArray, $person->LastName . " " . $person->FirstName);
+                        array_push($peopleArray, $person['data']->LastName . " " . $person['data']->FirstName);
+                        array_push($peopleIdsArray, $person['data']->id);
                     }
                     $authors = implode(", ", $peopleArray); // Convert People array to String.
                     $libraryitem->authors = $authors; // Assign People Names to Authors in the Library item.
+                    $libraryitem->authorIds = $peopleIdsArray; // Assing the poepl ids array to the library object
 
                     $libraryitems->add_item($libraryitem);  // Add the publication to the collection
                 }
@@ -224,8 +228,9 @@ namespace PUBS\Admin {
                     'RMBL' => $this->RMBL,
                     'pending' => $this->pending,
                     'email' => $this->email,
-                    'student' => $this->student
-                    // 'authors' => $this->authors,
+                    'student' => $this->student,
+                    'authors' => $this->authors,
+                    'authorIds' => $this->authorIds
                     // 'DateCreated' => $this->DateCreatedm
                     // 'DateModified' => $this->DateModified\
                 ];
@@ -265,6 +270,7 @@ namespace PUBS\Admin {
 
             $adminLibrary = new Library($library);
 
+            $adminLibrary->authorIds = $row['authorIds'];
 
             return $adminLibrary;
         }

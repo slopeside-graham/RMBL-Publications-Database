@@ -44,6 +44,14 @@ $(function () {
                         }
                     }
                 });
+                $('#libraryitemauthors').kendoMultiSelect({
+                    dataSource: peopleDataSource,
+                    dataTextField: "FirstName",
+                    dataValueField: "id",
+                    itemTemplate: '#: LastName #, #: FirstName#',
+                    tagTemplate: '#: LastName #, #: FirstName#',
+                    value: e.model.authorIds
+                })
             }
         });
         attachPager();

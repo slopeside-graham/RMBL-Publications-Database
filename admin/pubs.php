@@ -151,7 +151,8 @@ function pubs_main()
         </div>
         <div class="editor-section">
             <div class="editor-row">
-                <label>Select Authors:<input name="authors" /></label>
+
+                <label>Select Authors:<input name="authorIds"  id="libraryitemauthors" /></label>
             </div>
         </div>
         <div class="editor-section">

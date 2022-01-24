@@ -116,7 +116,10 @@ namespace PUBS {
             } catch (\MeekroDBException $e) {
                 return new \WP_Error('People_Get_Error', $e->getMessage());
             }
-            return $person;
+            return
+                [
+                    'data' => $person
+                ];
         }
 
         public static function GetAll($request)
@@ -142,7 +145,10 @@ namespace PUBS {
                 return new \WP_Error('People_GetAll_Error', $e->getMessage());
             }
 
-            return $people;
+            return
+                [
+                    'data' => $people
+                ];
         }
 
         public static function populatefromrow($row): ?People
