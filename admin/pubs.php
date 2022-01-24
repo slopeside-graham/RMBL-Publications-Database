@@ -120,12 +120,12 @@ function pubs_main()
         </div>
         <div class="editor-section">
             <div class="editor-row">
-                <label>RMBL:<input name="RMBL" /></label>
-                <label>Pending:<input name="pending" /></label>
+                <label>RMBL:<input name="RMBL" data-role="dropdownlist" data-bind="value:RMBL" data-value-field="id" data-text-field="name" data-source="[ {id: 'T', name: 'True'}, {id: 'F', name: 'False'} ]" /></label>
+                <label>Pending:<input name="pending" data-role="dropdownlist" data-bind="value:pending" data-value-field="id" data-text-field="name" data-source="[ {id: 'T', name: 'True'}, {id: 'F', name: 'False'} ]" /></label>
             </div>
             <div class="editor-row">
-                <label>Student:<input name="student" /></label>
-                <label>Copy in Library:<input name="copyinlibrary" /></label>
+                <label>Student:<input name="student" data-role="dropdownlist" data-bind="value:student" data-value-field="id" data-text-field="name" data-source="[ {id: 'T', name: 'True'}, {id: 'F', name: 'False'} ]" /></label>
+                <label>Copy in Library:<input name="copyinlibrary" data-role="dropdownlist" data-bind="value:copyinlibrary" data-value-field="id" data-text-field="name" data-source="[ {id: 'T', name: 'True'}, {id: 'F', name: 'False'} ]" /></label>
             </div>
             <div class="editor-row">
                 <label>Keywords:<input name="keywords" /></label>
@@ -156,7 +156,9 @@ function pubs_main()
         </div>
         <div class="editor-section">
             <div class="editor-row">
-                <label>Choose a Publisher:<input name="publisherId" /></label>
+                <label>Choose a Publisher:
+                    <input name="publisherId" data-bind="value:publisherId" data-value-field="id" data-text-field="name" data-filter="contains" data-source="publisherDataSource" data-role="dropdownlist" />
+                </label>
             </div>
         </div>
     </div>

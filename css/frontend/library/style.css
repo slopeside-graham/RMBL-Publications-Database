@@ -164,3 +164,7 @@
 .editor-section .editor-row input {
     width: 100%
 }
+
+.editor-row .k-dropdown {
+    width: 100%
+}
