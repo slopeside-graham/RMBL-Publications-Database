@@ -82,7 +82,9 @@
     background-repeat: repeat-x;
     padding: 10px 15px;
     border-bottom: 1px solid #ddd;
-
+    margin: 0px;
+    box-sizing: border-box;
+    font-size: 100%;
 }
 .search-inputs input:focus {
     outline-color: #2b669a;
@@ -171,4 +173,8 @@
 
 .editor-row .k-dropdown {
     width: 100%
+}
+
+#library-grid {
+    min-height: 400px;
 }
