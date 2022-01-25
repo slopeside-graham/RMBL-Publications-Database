@@ -30,6 +30,7 @@ namespace PUBS\Admin {
         public static function updateAuthorsByLibraryId($peopleIds, $libraryid)
         {
             $authors = \PUBS\Author::GetAllByLibraryId($libraryid);
+            //TODO: Does this actually need to delete entry individually or just do a DeleteAllByLibraryId()?
             foreach ($authors->jsonSerialize() as $author) {
                 // Get the admin version of the Author and delete it
                 $adminAuthor = new Author($author);

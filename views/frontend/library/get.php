@@ -59,7 +59,7 @@ function library_get()
     $output .= '        <div class="single-library-item #:reftypename#">';
     $output .= '            <div class="library-item-type">#:reftypename#</div>';
     $output .= '            <div>';
-    $output .= '                #if (authors) {# #:authors# #}#  #:year#. #=title#. #if (journalname) {# #:journalname#. #}# #if (volume || pages) {# #:volume#:#:pages#. #}# #if (pdf_url) {# <a href="#:pdf_url#" target="_blank">pdf</a> #}# #if (abstract_url) {# <a href="#:abstract_url#" target="_blank">abstract</a> #}#';
+    $output .= '                #if (authors) {# #:authors# #}#  #:year#. #=title#. #if (journalname) {# #:journalname#. #}# #if (volume || pages) {# #:volume#:#:pages#. #}# #if (pdf_url) {# <a href="#:pdf_url#" target="_blank">pdf</a> #}# #if (abstract_url) {# <a href="#:abstract_url#" target="_blank">abstract</a> #}# #if (restofreference) {# <br/><a href="#:restofreference#" target="_blank">Reference</a> #}#';
     $output .= '            </div>';
     $output .= '        </div>';
     $output .= '    </script>';
