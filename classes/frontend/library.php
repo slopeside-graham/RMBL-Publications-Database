@@ -548,10 +548,10 @@ namespace PUBS {
                     $peopleArray = []; // Create an array to put in the people (authors).
                     foreach ($authors->jsonSerialize() as $author) { // Loop through authors and pull People names into People array.
                         $person = People::Get($author->peopleId);
-                        array_push($peopleArray, $person->LastName . " " . $person->FirstName);
+                        array_push($peopleArray, $person['data']->LastName . " " . $person['data']->FirstName);
                     }
-                    $authors = implode(", ", $peopleArray); // Convert People array to String.
-                    $libraryitem->authors = $authors; // Assign People Names to Authors in the Library item.
+                    $authorsString = implode(", ", $peopleArray); // Convert People array to String.
+                    $libraryitem->authors = $authorsString; // Assign People Names to Authors in the Library item.
 
                     $libraryitems->add_item($libraryitem);  // Add the publication to the collection
                 }
