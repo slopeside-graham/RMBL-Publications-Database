@@ -152,7 +152,7 @@ function pubs_main()
         <div class="editor-section">
             <div class="editor-row">
 
-                <label>Select Authors:<input name="authorIds"  id="libraryitemauthors" /></label>
+                <label>Select Authors:<input name="authorIds" id="libraryitemauthors" /></label>
             </div>
         </div>
         <div class="editor-section">
@@ -162,7 +162,6 @@ function pubs_main()
                 </label>
             </div>
         </div>
-    </div>
     </div>
     <?php
     echo "</script>";

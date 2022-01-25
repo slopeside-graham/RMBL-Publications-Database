@@ -68,6 +68,10 @@
     font-size: 80%;
     margin-bottom: 20px;
 }
+.filter-sort .filter {
+    float: unset;
+    margin: 0px;
+}
 
 .search-inputs {
     margin-bottom: 10px;
