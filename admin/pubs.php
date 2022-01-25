@@ -13,7 +13,6 @@ function pubs_main()
             <li>Authors</li>
             <li>Publishers</li>
             <li>Reports</li>
-            <li>Usage</li>
         </ul>
         <div>
             <div id="library-list">
@@ -71,9 +70,6 @@ function pubs_main()
         </div>
         <div>
             Tab 4 Text
-        </div>
-        <div>
-            Tab 5 Text
         </div>
     </div>
 
