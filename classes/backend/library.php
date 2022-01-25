@@ -228,13 +228,16 @@ namespace PUBS\Admin {
                     'RMBL' => $this->RMBL,
                     'pending' => $this->pending,
                     'email' => $this->email,
-                    'student' => $this->student,
-                    'authors' => $this->authors,
-                    'authorIds' => $this->authorIds
+                    'student' => $this->student
+                    // 'authors' => $this->authors,
+                    // 'authorIds' => $this->authorIds
                     // 'DateCreated' => $this->DateCreatedm
                     // 'DateModified' => $this->DateModified\
                 ];
 
+                // Update the Authors Table
+                Author::updateAuthorsByLibraryId($this->authorIds, $this->id);
+                
                 PUBSUTILS::$db->update(
                     $tableName,
                     $setArray,

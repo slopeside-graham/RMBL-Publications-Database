@@ -19,7 +19,11 @@ include_once(plugin_dir_path(__FILE__) . '/backend/library_rest.php');    // Lib
 
 // Include Author REST controller and class 
 include_once(plugin_dir_path(__FILE__) . '/../classes/frontend/author.php');  // Library class
-// include_once(plugin_dir_path(__FILE__) . '/frontend/people_rest.php');    // Library REST controller
+// include_once(plugin_dir_path(__FILE__) . '/frontend/author_rest.php');    // Library REST controller
+
+// Include Author Admin REST controller and class 
+include_once(plugin_dir_path(__FILE__) . '/../classes/backend/author.php');  // Library class
+// include_once(plugin_dir_path(__FILE__) . '/backend/author_rest.php');    // Library REST controller
 
 
 //PEOPLE REST CONTROLLER

@@ -175,7 +175,7 @@ namespace PUBS {
             return $authors;
         }
 
-        public static function populatefromrow($row): ?Author
+        public static function populatefromrow($row)
         {
             if ($row == null)
                 return null;

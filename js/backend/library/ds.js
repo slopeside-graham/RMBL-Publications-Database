@@ -85,7 +85,7 @@ LibraryDataSource = new kendo.data.DataSource({
                 email: { type: "string" },
                 student: { type: "string" },
                 authors: { type: "object" },
-                authorIds: { type: "object" }
+                //authorIds: { type: "object" }
             }
         }
     }

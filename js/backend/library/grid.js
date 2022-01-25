@@ -48,6 +48,7 @@ $(function () {
                     dataSource: peopleDataSource,
                     dataTextField: "FirstName",
                     dataValueField: "id",
+                    valuePrimitive: true,
                     itemTemplate: '#: LastName #, #: FirstName#',
                     tagTemplate: '#: LastName #, #: FirstName#',
                     value: e.model.authorIds
