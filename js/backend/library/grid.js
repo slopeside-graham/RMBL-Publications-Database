@@ -214,19 +214,64 @@ function buildAuthors(authors) {
 
 }
 
-//TODO : Finish sort and filter.
-// Sort by folowing items: 
-// - Year, Type Author (Default)
-// - Author
-// - Title
-// - Type
-// - Year
+var closePublisherDDL = false;
 
-//FIlter by folowing items:
-// - Type (Show Totals)
-// - - Show All
-// - - Article
-// - - Thesis
-// - - Other
-// - - Student Paper
-// - Years Range
+function addNewPublisher(widgetId, value) {
+    var widget = $("#" + widgetId).getKendoDropDownList();
+    var dataSource = widget.dataSource;
+    var cityState = $('#newPublisherCityState').val();
+
+    if (confirm("Are you sure?")) {
+        dataSource.add({
+            name: value,
+            city_state: cityState
+        });
+
+        closePublisherDDL = true;
+
+        dataSource.one("sync", function () {
+            widget.select(dataSource.view().length - 1);
+            //TODO: make this actually select, trigger a change maybe?
+        });
+
+        dataSource.sync();
+    }
+};
+
+function closePublisherDL() {
+    var ddl = $('#publisherId').data('kendoDropDownList');
+    closePublisherDDL = true;
+    ddl.filterInput.val(null);
+    $('#newPublisherName').val(null);
+    $('#newPublisherCityState').val(null);
+    ddl.close();
+}
+
+function onFiltering(e) {
+    var filter = e.filter;
+
+    if (!filter.value) {
+        //prevent filtering if the filter does not value
+        e.preventDefault();
+    };
+
+    setTimeout(function () {
+        $('#newPublisherName').click(function () {
+            $('#newPublisherName').focus();
+        })
+
+        $('#newPublisherCityState').click(function () {
+            $('#newPublisherCityState').focus();
+        })
+    }, 0)
+}
+
+function publisherDDLclose(e) {
+    if (closePublisherDDL == false) {
+        e.preventDefault();
+    }
+}
+
+function publisherDDLopen(e) {
+    closePublisherDDL = false;
+}

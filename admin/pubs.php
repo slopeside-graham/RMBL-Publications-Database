@@ -73,94 +73,107 @@ function pubs_main()
         </div>
     </div>
 
-    <?php
-    echo "<script id='library-popup-editor' type='text/x-kendo-template'>";
-    ?>
-    <div id="library-editor-tabstrip">
-        <ul>
-            <li class="k-state-active">Library</li>
-            <li>Meta</li>
-            <li>URL's</li>
-            <li>Authors</li>
-            <li>Publishers</li>
-        </ul>
-        <div class="editor-section">
-            <div id="reftypeeditor" class="editor-row">
-                <label>RefType:<br />
-                    <input name="reftypeId" data-bind="value:reftypeId" data-value-field="id" data-text-field="name" data-source="reftypeDataSource" data-role="dropdownlist" />
-                </label>
-                <label>Year:<input name="year" /></label>
+    <script id='library-popup-editor' type='text/html'>
+        <div id="library-editor-tabstrip">
+            <ul>
+                <li class="k-state-active">Library</li>
+                <li>Meta</li>
+                <li>URL's</li>
+                <li>Authors</li>
+                <li>Publishers</li>
+            </ul>
+            <div class="editor-section">
+                <div id="reftypeeditor" class="editor-row">
+                    <label>RefType:<br />
+                        <input name="reftypeId" data-bind="value:reftypeId" data-value-field="id" data-text-field="name" data-source="reftypeDataSource" data-role="dropdownlist" />
+                    </label>
+                    <label>Year:<input name="year" /></label>
+                </div>
+                <div class="editor-row">
+                    <label>Title:<input name="title" /></label>
+                </div>
+                <div class="editor-row">
+                    <label>Chapter Title:<input name="chaptertitle" /></label>
+                    <label>Journal Name:<input name="journalname" /></label>
+                </div>
+                <div class="editor-row">
+                    <label>Volume:<input name="volume" /></label>
+                    <label>Pages:<input name="pages" /></label>
+                    <label>Catalog Number:<input name="catalognumber" /></label>
+                    <label>Journal Issue:<input name="journalissue" /></label>
+                </div>
+                <div class="editor-row">
+                    <label>Book Editors:<input name="bookeditors" /></label>
+                    <label>Degree:<input name="degree" /></label>
+                    <label>Edition:<input name="edition" /></label>
+                </div>
+                <div class="editor-row">
+                    <label>Rest of Reference:<input name="restofreference" /></label>
+                    <label>Institution:<input name="institution" /></label>
+                </div>
             </div>
-            <div class="editor-row">
-                <label>Title:<input name="title" /></label>
+            <div class="editor-section">
+                <div class="editor-row">
+                    <label>RMBL:<input name="RMBL" data-role="dropdownlist" data-bind="value:RMBL" data-value-field="id" data-text-field="name" data-source="[ {id: 'T', name: 'True'}, {id: 'F', name: 'False'} ]" /></label>
+                    <label>Pending:<input name="pending" data-role="dropdownlist" data-bind="value:pending" data-value-field="id" data-text-field="name" data-source="[ {id: 'T', name: 'True'}, {id: 'F', name: 'False'} ]" /></label>
+                </div>
+                <div class="editor-row">
+                    <label>Student:<input name="student" data-role="dropdownlist" data-bind="value:student" data-value-field="id" data-text-field="name" data-source="[ {id: 'T', name: 'True'}, {id: 'F', name: 'False'} ]" /></label>
+                    <label>Copy in Library:<input name="copyinlibrary" data-role="dropdownlist" data-bind="value:copyinlibrary" data-value-field="id" data-text-field="name" data-source="[ {id: 'T', name: 'True'}, {id: 'F', name: 'False'} ]" /></label>
+                </div>
+                <div class="editor-row">
+                    <label>Keywords:<input name="keywords" /></label>
+                </div>
+                <div class="editor-row">
+                    <label>Comments:<input name="comments" /></label>
+                    <label>Donated By:<input name="donatedby" /></label>
+                </div>
             </div>
-            <div class="editor-row">
-                <label>Chapter Title:<input name="chaptertitle" /></label>
-                <label>Journal Name:<input name="journalname" /></label>
+            <div class="editor-section">
+                <div class="editor-row">
+                    <label>PDF URL:<input name="pdf_url" /></label>
+                </div>
+                <div class="editor-row">
+                    <label>Abstract URL:<input name="abstract_url" /></label>
+                </div>
+                <div class="editor-row">
+                    <label>Fulltext URL:<input name="fulltext_url" /></label>
+                </div>
+                <div class="editor-row">
+                    <label>BN URL:<input name="bn_url" /></label>
+                </div>
             </div>
-            <div class="editor-row">
-                <label>Volume:<input name="volume" /></label>
-                <label>Pages:<input name="pages" /></label>
-                <label>Catalog Number:<input name="catalognumber" /></label>
-                <label>Journal Issue:<input name="journalissue" /></label>
+            <div class="editor-section">
+                <div class="editor-row">
+                    <label>Select Authors:<input name="authorIds" id="libraryitemauthors" /></label>
+                </div>
             </div>
-            <div class="editor-row">
-                <label>Book Editors:<input name="bookeditors" /></label>
-                <label>Degree:<input name="degree" /></label>
-                <label>Edition:<input name="edition" /></label>
-            </div>
-            <div class="editor-row">
-                <label>Rest of Reference:<input name="restofreference" /></label>
-                <label>Institution:<input name="institution" /></label>
+            <div class="editor-section">
+                <div class="editor-row">
+                    <label>Choose a Publisher:
+                        <!-- TODO: Make this display Publisher Name - State -->
+                        <input name="publisherId" id="publisherId" data-bind="value:publisherId" data-value-field="id" data-text-field="name" data-filter="contains" data-source="publisherDataSource" data-role="dropdownlist" data-no-data-template="no-publisher-template" data-filtering="onFiltering" data-close="publisherDDLclose" data-open="publisherDDLopen" />
+                    </label>
+                </div>
             </div>
         </div>
-        <div class="editor-section">
-            <div class="editor-row">
-                <label>RMBL:<input name="RMBL" data-role="dropdownlist" data-bind="value:RMBL" data-value-field="id" data-text-field="name" data-source="[ {id: 'T', name: 'True'}, {id: 'F', name: 'False'} ]" /></label>
-                <label>Pending:<input name="pending" data-role="dropdownlist" data-bind="value:pending" data-value-field="id" data-text-field="name" data-source="[ {id: 'T', name: 'True'}, {id: 'F', name: 'False'} ]" /></label>
-            </div>
-            <div class="editor-row">
-                <label>Student:<input name="student" data-role="dropdownlist" data-bind="value:student" data-value-field="id" data-text-field="name" data-source="[ {id: 'T', name: 'True'}, {id: 'F', name: 'False'} ]" /></label>
-                <label>Copy in Library:<input name="copyinlibrary" data-role="dropdownlist" data-bind="value:copyinlibrary" data-value-field="id" data-text-field="name" data-source="[ {id: 'T', name: 'True'}, {id: 'F', name: 'False'} ]" /></label>
-            </div>
-            <div class="editor-row">
-                <label>Keywords:<input name="keywords" /></label>
-            </div>
-            <div class="editor-row">
-                <label>Comments:<input name="comments" /></label>
-                <label>Donated By:<input name="donatedby" /></label>
-            </div>
-        </div>
-        <div class="editor-section">
-            <div class="editor-row">
-                <label>PDF URL:<input name="pdf_url" /></label>
-            </div>
-            <div class="editor-row">
-                <label>Abstract URL:<input name="abstract_url" /></label>
-            </div>
-            <div class="editor-row">
-                <label>Fulltext URL:<input name="fulltext_url" /></label>
-            </div>
-            <div class="editor-row">
-                <label>BN URL:<input name="bn_url" /></label>
-            </div>
-        </div>
-        <div class="editor-section">
-            <div class="editor-row">
+    </script>
 
-                <label>Select Authors:<input name="authorIds" id="libraryitemauthors" /></label>
+    <!-- Kendo Templates below -->
+    <script type="text/html" id="no-publisher-template">
+        <div class="add-publisher add-item">
+            <div>
+                No data found. Do you want to add new item - '#: instance.filterInput.val() #' ?
+            </div>
+            <div>
+                <input type="text" id="newPublisherName" value="#: instance.filterInput.val() #" />
+                <input type="text" id="newPublisherCityState" placeholder="City and State" />
+            </div>
+            <div>
+                <button class="k-button k-button-solid-base k-button-solid k-button-rectangle k-button-md k-rounded-md" onclick="addNewPublisher('#= instance.element[0].id #', '#: instance.filterInput.val() #')">Add new item</button>
+                <button class="k-button" onclick="closePublisherDL()">Close</button>
             </div>
         </div>
-        <div class="editor-section">
-            <div class="editor-row">
-                <label>Choose a Publisher:
-                    <input name="publisherId" data-bind="value:publisherId" data-value-field="id" data-text-field="name" data-filter="contains" data-source="publisherDataSource" data-role="dropdownlist" />
-                </label>
-            </div>
-        </div>
-    </div>
-    <?php
-    echo "</script>";
-    ?>
+    </script>
 <?php
 }

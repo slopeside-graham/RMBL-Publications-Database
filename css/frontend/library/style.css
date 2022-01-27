@@ -178,3 +178,9 @@
 #library-grid {
     min-height: 400px;
 }
+.add-item {
+    color: black;
+}
+.add-item div {
+    padding: 10px;
+}

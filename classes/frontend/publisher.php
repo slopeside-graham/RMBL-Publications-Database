@@ -136,7 +136,7 @@ namespace PUBS {
             ];
         }
 
-        public static function populatefromrow($row): ?Publisher
+        public static function populatefromrow($row)
         {
             if ($row == null)
                 return null;
