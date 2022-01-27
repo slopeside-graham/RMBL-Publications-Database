@@ -248,7 +248,7 @@ function closePublisherDL() {
     ddl.close();
 }
 
-function onFiltering(e) {
+function onPublisherFiltering(e) {
     var id = e.sender.element[0].id;
     setTimeout(function () {
         if ($('#' + id + ' .k-nodata').css('display') != 'none') {
@@ -268,7 +268,9 @@ function onFiltering(e) {
 }
 
 function publisherDDLclose(e) {
-    if (closePublisherDDL == false) {
-        e.preventDefault();
+    if ($('#publisher-section').css('display') != 'none') {
+        if (closePublisherDDL == false) {
+            e.preventDefault();
+        }
     }
 }

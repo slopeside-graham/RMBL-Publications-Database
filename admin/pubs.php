@@ -148,11 +148,11 @@ function pubs_main()
                     <label>Select Authors:<input name="authorIds" id="libraryitemauthors" /></label>
                 </div>
             </div>
-            <div class="editor-section">
+            <div id="publisher-section" class="editor-section">
                 <div class="editor-row">
                     <label>Choose a Publisher:
                         <!-- TODO: Make this display Publisher Name - State -->
-                        <input name="publisherId" id="publisherId" data-bind="value:publisherId" data-value-field="id" data-text-field="name" data-filter="contains" data-source="publisherDataSource" data-role="dropdownlist" data-no-data-template="no-publisher-template" data-filtering="onFiltering" data-close="publisherDDLclose" data-value-template="publisher-template" data-template="publisher-template" />
+                        <input name="publisherId" id="publisherId" data-bind="value:publisherId" data-value-field="id" data-text-field="name" data-filter="contains" data-source="publisherDataSource" data-role="dropdownlist" data-no-data-template="no-publisher-template" data-filtering="onPublisherFiltering" data-close="publisherDDLclose" data-value-template="publisher-template" data-template="publisher-template" />
                     </label>
                 </div>
             </div>
