@@ -152,7 +152,7 @@ function pubs_main()
                 <div class="editor-row">
                     <label>Choose a Publisher:
                         <!-- TODO: Make this display Publisher Name - State -->
-                        <input name="publisherId" id="publisherId" data-bind="value:publisherId" data-value-field="id" data-text-field="name" data-filter="contains" data-source="publisherDataSource" data-role="dropdownlist" data-no-data-template="no-publisher-template" data-filtering="onFiltering" data-close="publisherDDLclose" data-open="publisherDDLopen" data-select="selectPublisher" data-value-template="publisher-template" data-template="publisher-template" />
+                        <input name="publisherId" id="publisherId" data-bind="value:publisherId" data-value-field="id" data-text-field="name" data-filter="contains" data-source="publisherDataSource" data-role="dropdownlist" data-no-data-template="no-publisher-template" data-filtering="onFiltering" data-close="publisherDDLclose" data-value-template="publisher-template" data-template="publisher-template" />
                     </label>
                 </div>
             </div>
@@ -161,19 +161,19 @@ function pubs_main()
 
     <!-- Kendo Templates below -->
     <script type="text/html" id="no-publisher-template">
-        <div class="add-publisher add-item">
+        <form class="add-publisher add-item">
             <div>
                 No data found. Do you want to add new item - '#: instance.filterInput.val() #' ?
             </div>
             <div>
-                <input type="text" id="newPublisherName" value="#: instance.filterInput.val() #" />
-                <input type="text" id="newPublisherCityState" placeholder="City and State" />
+                <input required type="text" id="newPublisherName" value="#: instance.filterInput.val() #" />
+                <input required type="text" id="newPublisherCityState" placeholder="City and State" />
             </div>
             <div>
-                <button class="k-button k-button-solid-base k-button-solid k-button-rectangle k-button-md k-rounded-md" onclick="addNewPublisher('#= instance.element[0].id #', '#: instance.filterInput.val() #')">Add new item</button>
+                <button type="submit" class="k-button k-button-solid-base k-button-solid k-button-rectangle k-button-md k-rounded-md" onclick="addNewPublisher('#= instance.element[0].id #', '#: instance.filterInput.val() #')">Add new item</button>
                 <button class="k-button" onclick="closePublisherDL()">Close</button>
             </div>
-        </div>
+        </form>
     </script>
     <script type="text/html" id="publisher-template">
         <span>#: name # - #:city_state #</span>

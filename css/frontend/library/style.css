@@ -184,3 +184,6 @@
 .add-item div {
     padding: 10px;
 }
+.add-item input {
+    color: black;
+}

@@ -214,9 +214,10 @@ function buildAuthors(authors) {
 
 }
 
-var closePublisherDDL = false;
+var closePublisherDDL = true;
 
 function addNewPublisher(widgetId, value) {
+    event.preventDefault();
     var widget = $("#" + widgetId).getKendoDropDownList();
     var dataSource = widget.dataSource;
     var cityState = $('#newPublisherCityState').val();
@@ -248,14 +249,14 @@ function closePublisherDL() {
 }
 
 function onFiltering(e) {
-    var filter = e.filter;
-
-    if (!filter.value) {
-        //prevent filtering if the filter does not value
-        e.preventDefault();
-    };
-
+    var id = e.sender.element[0].id;
     setTimeout(function () {
+        if ($('#' + id + ' .k-nodata').css('display') != 'none') {
+            closePublisherDDL = false;
+        } else {
+            closePublisherDDL = true;
+        };
+
         $('#newPublisherName').click(function () {
             $('#newPublisherName').focus();
         })
@@ -270,12 +271,4 @@ function publisherDDLclose(e) {
     if (closePublisherDDL == false) {
         e.preventDefault();
     }
-}
-
-function publisherDDLopen(e) {
-    closePublisherDDL = false;
-}
-
-function selectPublisher(e) {
-    closePublisherDDL = true;
 }
