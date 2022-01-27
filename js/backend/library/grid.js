@@ -275,3 +275,7 @@ function publisherDDLclose(e) {
 function publisherDDLopen(e) {
     closePublisherDDL = false;
 }
+
+function selectPublisher(e) {
+    closePublisherDDL = true;
+}
