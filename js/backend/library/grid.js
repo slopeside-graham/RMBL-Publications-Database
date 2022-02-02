@@ -221,21 +221,28 @@ function addNewPublisher(widgetId, value) {
     var widget = $("#" + widgetId).getKendoDropDownList();
     var dataSource = widget.dataSource;
     var cityState = $('#newPublisherCityState').val();
+    var publisherName = $('#newPublisherName').val();
 
-    if (confirm("Are you sure?")) {
-        dataSource.add({
-            name: value,
-            city_state: cityState
-        });
-
-        closePublisherDDL = true;
+    if (publisherName && cityState) {
+        if (confirm("Are you sure?")) {
+            dataSource.add({
+                name: publisherName,
+                city_state: cityState
+            });
+        }
 
         dataSource.one("sync", function () {
-            widget.select(dataSource.view().length - 1);
-            //TODO: make this actually select, trigger a change maybe?
+            var newPublisher = dataSource.data().length - 1; // Get the new item index
+            var newPublisherId = dataSource.data()[newPublisher].id; // Get the id of the new item
+            widget.value(newPublisherId); // Set the value of the widget to the new ID. We set it here because we are using data-bind:value
+            widget.trigger("change"); // Tell the editor there has been a change
+            closePublisherDDL = true; // Allow dropdown to close
+            widget.close(); // Close the DoprDown Widget
         });
 
         dataSource.sync();
+    } else {
+        alert("Publisher Name and City and State are Required.");
     }
 };
 
@@ -273,4 +280,8 @@ function publisherDDLclose(e) {
             e.preventDefault();
         }
     }
+}
+
+function publisherSelect(e) {
+    closePublisherDDL = true;
 }
