@@ -45,8 +45,12 @@ peopleDataSource = new kendo.data.DataSource({
             });
         }
     },
+    pageSize: 10,
     schema: {
         data: 'data',
+        total: function (response) {
+            return response.data.length; // Calculate the total number of data items returned.
+        },
         model: {
             id: "id",
             fields: {

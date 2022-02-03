@@ -4,7 +4,8 @@ use PUBS\Utils;
 
 function pubs_main()
 {
-    pubs_enqueue_backend_library()
+    pubs_enqueue_backend_library();
+    pubs_enqueue_backend_people();
 ?>
     <div>
         <h1>Publications Database Integration</h1>
@@ -77,7 +78,7 @@ function pubs_main()
                 </div>
             </div>
             <div>
-                Tab 2 Text
+                <div id="people-grid"></div>
             </div>
             <div>
                 Tab 3 Text

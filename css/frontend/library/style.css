@@ -156,6 +156,9 @@
 
 
 /* Admin editor css, move to an admin css file */
+.k-edit-label {
+    width: 30% !important;
+}
 .k-edit-form-container {
     display: block !important;
 }
