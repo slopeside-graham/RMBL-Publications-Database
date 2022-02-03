@@ -62,19 +62,17 @@ function pubs_main()
                         <div id="pager"></div>
                     </div>
                     <div id="author-add-window">
-                        <form>
-                            <div class="editor-section">
-                                <div class="editor-row">
-                                    <label>Last Name: <input id="newAuthorLastName" /></label>
-                                    <label>First and Middle Initial: <input id="newAuthorFirstName" /></label>
-                                </div>
-                                <div class="editor-row">
-                                    <label>Suffix: <input id="newAuthorSuffix" /></label><br />
-                                </div>
-                                <button type="submit" class="k-button k-button-solid-base k-button-solid k-button-rectangle k-button-md k-rounded-md" onclick="addNewAuthor()">Add new Author</button>
-                                <button class="k-button" onclick="closeAuthorAddWindow()">Close</button>
+                        <div class="editor-section">
+                            <div class="editor-row">
+                                <label>Last Name: <input id="newAuthorLastName" /></label>
+                                <label>First and Middle Initial: <input id="newAuthorFirstName" /></label>
                             </div>
-                        </form>
+                            <div class="editor-row">
+                                <label>Suffix: <input id="newAuthorSuffix" /></label><br />
+                            </div>
+                            <button type="submit" class="k-button k-button-solid-base k-button-solid k-button-rectangle k-button-md k-rounded-md" onclick="addNewAuthor()">Add new Author</button>
+                            <button class="k-button" onclick="closeAuthorAddWindow()">Close</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -201,7 +199,6 @@ function pubs_main()
             </div>
             <div>
                 <button class="k-button k-button-solid-base k-button-solid k-button-rectangle k-button-md k-rounded-md" onclick="openAddAuthorWindow('# instance.element[0].id #')">Add New Author</button>
-                <button class="k-button" onclick="closeAuthorDL()">Close</button>
             </div>
         </script>
 

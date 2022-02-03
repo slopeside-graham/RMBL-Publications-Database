@@ -222,7 +222,6 @@ function buildAuthors(authors) {
 }
 
 var closePublisherDDL = true;
-var closeAuthorDDL = true;
 
 function addNewPublisher(widgetId, value) {
     event.preventDefault();
@@ -275,7 +274,7 @@ function addNewAuthor() {
     var authorLastName = $('#newAuthorLastName').val();
     var authorSuffix = $('#newAuthorSuffix').val();
 
-    if (authorFirstName && authorLastName) {
+    if (authorFirstName && authorLastName && authorSuffix) {
         if (confirm("Are you sure you want to add a new Author?")) {
             dataSource.add({
                 FirstName: authorFirstName,
@@ -307,21 +306,22 @@ function addNewAuthor() {
 
         dataSource.sync();
     } else {
-        alert("Author First and Last Name are Required.");
+        alert("Author First Initial, Last Name and Suffix are Required.");
     }
 };
 
-function closePublisherDL() {
-    var ddl = $('#publisherId').data('kendoDropDownList');
-    closePublisherDDL = true;
-    ddl.filterInput.val(null);
-    $('#newPublisherName').val(null);
-    $('#newPublisherCityState').val(null);
-    ddl.close();
+function closeAuthorAddWindow() {
+    var addAuthorWindow = $("#author-add-window");
+
+    $('#newAuthorFirstName').val('');
+    $('#newAuthorLastName').val('');
+    $('#newAuthorSuffix').val('');
+
+    addAuthorWindow.data("kendoWindow").close();
 }
 
-function closeAuthorDL() {
-    var ddl = $('#libraryitemauthors').data('kendoMultiSelect');
+function closePublisherDL() {
+    var ddl = $('#publisherId').data('kendoDropDownList');
     closePublisherDDL = true;
     ddl.filterInput.val(null);
     $('#newPublisherName').val(null);
@@ -348,27 +348,6 @@ function onPublisherFiltering(e) {
     }, 0)
 }
 
-function onAuthorFiltering(e) {
-    var id = e.sender.element[0].id;
-    setTimeout(function () {
-        if ($('#' + id + ' .k-nodata').css('display') != 'none') {
-            closeAuthorDDL = false;
-
-            $('#newAuthorLastName').click(function () {
-                $('#newAuthorLastName').focus();
-            })
-            $('#newAuthorFirstName').click(function () {
-                $('#newAuthorFirstName').focus();
-            })
-            $('#newAuthorSuffix').click(function () {
-                $('#newAuthorSuffix').focus();
-            })
-        } else {
-            closeAuthorDDL = true;
-        };
-    }, 0)
-}
-
 function publisherDDLclose(e) {
     if ($('#publisher-section').css('display') != 'none') {
         if (closePublisherDDL == false) {
@@ -377,18 +356,6 @@ function publisherDDLclose(e) {
     }
 }
 
-function authorDDLclose(e) {
-    if ($('#author-section').css('display') != 'none') {
-        if (closeAuthorDDL == false) {
-            e.preventDefault();
-        }
-    }
-}
-
 function publisherSelect(e) {
     closePublisherDDL = true;
-}
-
-function authorSelect(e) {
-    closeAuthorDDL = true;
 }
