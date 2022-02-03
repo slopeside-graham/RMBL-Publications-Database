@@ -22,6 +22,27 @@ peopleDataSource = new kendo.data.DataSource({
                     hideLoading($('body'));
                 }
             });
+        },
+        create: function (options) {
+            displayLoading($('body'));
+            $.ajax({
+                url: wpApiSettings.root + "rmbl-pubs/v1/admin/people",
+                dataType: "json",
+                method: "POST",
+                data: options.data,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("X-WP-Nonce", wpApiSettings.nonce);
+                },
+                success: function (result) {
+                    options.success(result);
+                    hideLoading($('body'));
+                },
+                error: function (result) {
+                    options.error(result);
+                    alert(result.responseText);
+                    hideLoading($('body'));
+                }
+            });
         }
     },
     schema: {

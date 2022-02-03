@@ -151,7 +151,7 @@ namespace PUBS {
                 ];
         }
 
-        public static function populatefromrow($row): ?People
+        public static function populatefromrow($row)
         {
             if ($row == null)
                 return null;

@@ -150,7 +150,11 @@ namespace PUBS\Admin {
          */
         public function create_item_permissions_check($request)
         {
-            return new \WP_Error('rest_forbidden', esc_html__('You cannot create this People item.'), array('status' => $this->authorization_status_code()));
+            if (\PUBS\PUBS_Base::UserIsAdmin()) {
+                return true;
+            } else {
+                return new \WP_Error('rest_forbidden', esc_html__('You cannot create this People item.'), array('status' => $this->authorization_status_code()));
+            }
         }
 
         /**
@@ -189,6 +193,32 @@ namespace PUBS\Admin {
             } else {
                 $error_string = $publisher->get_error_message();
                 return new \WP_Error('People_Get_Error', 'An error occured: ' . $error_string, array('status' => 400));
+            }
+        }
+
+        /**
+         * Create Publisher
+         *
+         * @param WP_REST_Request $request get data from request.
+         *
+         * @return mixed|WP_Error|WP_REST_Response
+         */
+        public function create_item($request)
+        {
+            try {
+                $person = People::populatefromRow($request);
+                $success = $person->Create($request);
+
+                if (!is_wp_error($success)) {
+                    return rest_ensure_response($success);
+                } else {
+                    $error_string = $success->get_error_message();
+                    error_log(" Error creating Person :" . $success->get_error_message(), 0);
+                    return new \WP_Error('Person_Create_Error', $error_string, array('status' => 500));
+                }
+            } catch (\Exception $e) {
+                error_log(" Error creating Person :" . $e->getMessage(), 0);
+                return new \WP_Error('Person_Create_Error', "An error occured creating the Person.  Please try again.", array('status' => 500));
             }
         }
 

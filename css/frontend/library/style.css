@@ -187,3 +187,10 @@
 .add-item input {
     color: black;
 }
+
+#author-add-window {
+    display: none;
+}
+div.k-loading-mask {
+    z-index: 99999;
+}
