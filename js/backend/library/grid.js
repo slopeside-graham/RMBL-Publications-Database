@@ -48,7 +48,7 @@ $(function () {
                 });
                 $('#libraryitemauthors').kendoMultiSelect({
                     dataSource: peopleDataSource,
-                    dataTextField: "FirstName",
+                    dataTextField: "LastName",
                     dataValueField: "id",
                     valuePrimitive: true,
                     itemTemplate: '#: LastName #, #: FirstName#',
@@ -232,7 +232,7 @@ function addNewPublisher(widgetId, value) {
     var publisherName = $('#newPublisherName').val();
 
     if (publisherName && cityState) {
-        if (confirm("Are you sure?")) {
+        if (confirm("Are you sure you want to add a new Publisher?")) {
             dataSource.add({
                 name: publisherName,
                 city_state: cityState
@@ -276,7 +276,7 @@ function addNewAuthor() {
     var authorSuffix = $('#newAuthorSuffix').val();
 
     if (authorFirstName && authorLastName) {
-        if (confirm("Are you sure?")) {
+        if (confirm("Are you sure you want to add a new Author?")) {
             dataSource.add({
                 FirstName: authorFirstName,
                 LastName: authorLastName,
