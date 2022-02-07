@@ -16,7 +16,7 @@ namespace PUBS\Admin {
                 $this->city_state = $publisher->city_state;
             }
         }
-        
+
         public function Create()
         {
             PUBSUTILS::$db->error_handler = false; // since we're catching errors, don't need error handler
@@ -32,6 +32,28 @@ namespace PUBS\Admin {
                 $publisher = Publisher::Get($this->id);
             } catch (\MeekroDBException $e) {
                 return new \WP_Error('Publisher_Create_Error', $e->getMessage());
+            }
+            return $publisher;
+        }
+
+        public function Update()
+        {
+            PUBSUTILS::$db->error_handler = false; // since we're catching errors, don't need error handler
+            PUBSUTILS::$db->throw_exception_on_error = true;
+
+            try {
+                PUBSUTILS::$db->update(
+                    'publisher',
+                    array(
+                        'name' => $this->name,
+                        'city_state' => $this->city_state
+                    ),
+                    'id=%i',
+                    $this->id
+                );
+                $publisher = Publisher::Get($this->id);
+            } catch (\MeekroDBException $e) {
+                return new \WP_Error('Publisher_Update_Error', $e->getMessage());
             }
             return $publisher;
         }

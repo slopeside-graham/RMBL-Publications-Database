@@ -66,6 +66,9 @@ function pubs_admin_register_localize()
     wp_register_script('publisher-be-ds-js', plugins_url('rmbl-pubs/js/backend/publisher/ds.js'), dirname(__FILE__), ['pubs-utils-js'], scriptver, true);
     wp_localize_script('publisher-be-ds-js', 'wpApiSettings', array('root' => esc_url_raw(rest_url()), 'nonce' => wp_create_nonce('wp_rest')));
 
+    wp_register_script('publisher-be-grid-js', plugins_url('rmbl-pubs/js/backend/publisher/grid.js'), dirname(__FILE__), ['publisher-be-ds-js'], scriptver, true);
+    wp_localize_script('publisher-be-grid-js', 'wpApiSettings', array('root' => esc_url_raw(rest_url()), 'nonce' => wp_create_nonce('wp_rest')));
+
     // People Admin
     wp_register_script('people-be-ds-js', plugins_url('rmbl-pubs/js/backend/people/ds.js'), dirname(__FILE__), ['pubs-utils-js'], scriptver, true);
     wp_localize_script('people-be-ds-js', 'wpApiSettings', array('root' => esc_url_raw(rest_url()), 'nonce' => wp_create_nonce('wp_rest')));
@@ -116,6 +119,7 @@ function pubs_enqueue_backend_library()
     wp_enqueue_script('reftype-be-ds-js');
 
     wp_enqueue_script('publisher-be-ds-js');
+    wp_enqueue_script('publisher-be-grid-js');
 
     wp_enqueue_script('people-be-ds-js');
 

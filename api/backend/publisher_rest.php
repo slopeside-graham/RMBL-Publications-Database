@@ -230,6 +230,28 @@ namespace PUBS\Admin {
             }
         }
 
+         /**
+         * Update Publisher
+         *
+         * @param WP_REST_Request $request get data from request.
+         *
+         * @return mixed|WP_Error|WP_REST_Response
+         */
+
+        public function update_item($request)
+        {
+            $publisher = Publisher::populatefromRow($request);
+            $success = $publisher->Update();
+
+
+            if (!is_wp_error($success)) {
+                return rest_ensure_response($publisher);
+            } else {
+                $error_string = $success->get_error_message();
+                return new \WP_Error('Publisher_Update_Error', 'An error occured: ' . $error_string, array('status' => 400));
+            }
+        }
+
         /**
          * Sets up the proper HTTP status code for authorization.
          *
