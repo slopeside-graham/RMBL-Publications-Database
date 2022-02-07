@@ -154,7 +154,11 @@ namespace PUBS\Admin {
          */
         public function create_item_permissions_check($request)
         {
-            return new \WP_Error('rest_forbidden', esc_html__('You cannot create this Library item.'), array('status' => $this->authorization_status_code()));
+            if (\PUBS\PUBS_Base::UserIsAdmin()) {
+                return true;
+            } else {
+                return new \WP_Error('rest_forbidden', esc_html__('You cannot create this Library item.'), array('status' => $this->authorization_status_code()));
+            }
         }
 
         /**
@@ -176,7 +180,31 @@ namespace PUBS\Admin {
          *
          * @return mixed|WP_REST_Response
          */
+        /**
+         * Create Library Item
+         *
+         * @param WP_REST_Request $request get data from request.
+         *
+         * @return mixed|WP_Error|WP_REST_Response
+         */
+        public function create_item($request)
+        {
+            try {
+                $library = Library::populatefromRow($request);
+                $success = $library->Create($request);
 
+                if (!is_wp_error($success)) {
+                    return rest_ensure_response($success);
+                } else {
+                    $error_string = $success->get_error_message();
+                    error_log(" Error creating Library :" . $success->get_error_message(), 0);
+                    return new \WP_Error('Library_Create_Error', $error_string, array('status' => 500));
+                }
+            } catch (\Exception $e) {
+                error_log(" Error creating Library :" . $e->getMessage(), 0);
+                return new \WP_Error('Library_Create_Error', "An error occured creating the Library.  Please try again.", array('status' => 500));
+            }
+        }
         public function get_item($request)
         {
             if ($request['id'] == '') {
@@ -196,6 +224,7 @@ namespace PUBS\Admin {
             }
         }
 
+
         /**
          * Update Library
          *
@@ -203,16 +232,16 @@ namespace PUBS\Admin {
          *
          * @return mixed|WP_Error|WP_REST_Response
          */
-        
+
         public function update_item($request)
         {
             $library = Library::populatefromRow($request);
             $success = $library->Update();
 
 
-            if (!is_wp_error($success))
+            if (!is_wp_error($success)) {
                 return rest_ensure_response($library);
-            else {
+            } else {
                 $error_string = $success->get_error_message();
                 return new \WP_Error('Library_Update_Error', 'An error occured: ' . $error_string, array('status' => 400));
             }

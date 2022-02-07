@@ -9,6 +9,7 @@ var sortDirectionClass;
 var sort;
 
 var libraryEditItem;
+var libraryEditorValidator;
 
 $(function () {
     $(document).ready(function () {
@@ -18,7 +19,16 @@ $(function () {
             sortable: true,
             columns: [
                 { field: "id", title: "ID", width: "60px" },
-                { field: "reftypeId", title: "Type", template: "#=reftypename#", width: "100px" },
+                {
+                    field: "reftypeId", title: "Type", template: function (dataItem) {
+                        if (dataItem.reftypename) {
+                            return dataItem.reftypename;
+                        } else {
+                            return '';
+                        }
+                    },
+                    width: "100px"
+                },
                 { field: "title", title: "Title", encoded: false },
                 //{ field: "authors", title: "Authors" },
                 { field: "year", title: "Year", width: "80px" },
@@ -60,6 +70,34 @@ $(function () {
                     //select: authorSelect
                 });
                 libraryEditItem = e.model;
+                libraryEditorValidator = $("#library-editor").kendoValidator({
+                    rules: {
+                        yearLength: function (input) {
+                            if (input.is("[name='year'")) {
+                                return input.val() ==="Tom";
+                                var valLength = input[0].value.length;
+                                var reqLength = 4;
+                                if (valLength != reqLength) {
+                                    return false;
+                                }
+                            }
+                            return true;
+                        }
+                    },
+                    messages: {
+                        yearLength: "Length is wrong.",
+                        required: "Custom Required Message"
+                    },
+                    validationSummary: false
+                }).data("kendoValidator");
+            },
+            save: function (e) {
+                if (libraryEditorValidator.validate()) {
+                    alert("Form is valid");
+                } else {
+                    e.preventDefault();
+                    alert("Error in Form");
+                }
             }
         });
         attachPager();

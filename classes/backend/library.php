@@ -194,6 +194,69 @@ namespace PUBS\Admin {
             ];
         }
 
+        
+        public function Create($request)
+        {
+            PUBSUTILS::$db->error_handler = false; // since we're catching errors, don't need error handler
+            PUBSUTILS::$db->throw_exception_on_error = true;
+
+            try {
+                $tableName = 'library';
+                $setArray = [
+                    'reftypeId' => $this->reftypeId,
+                    'year' => $this->year,
+                    'title' => $this->title,
+                    'volume' => $this->volume,
+                    'edition' => $this->edition,
+                    'publisherId' => $this->publisherId,
+                    'pages' => $this->page,
+                    'restofreference' => $this->restofreference,
+                    'journalname' => $this->journalname,
+                    'journalissue' => $this->journalissue,
+                    'catalognumber' => $this->catalognumber,
+                    'donatedby' => $this->donatedby,
+                    'chaptertitle' => $this->chaptertitle,
+                    'bookeditors' => $this->bookeditors,
+                    'degree' => $this->degree,
+                    'institution' => $this->institution,
+                    'keywords' => $this->keywords,
+                    'comments' => $this->comments,
+                    'bn_url' => $this->bn_url,
+                    'abstract_url' => $this->abstract_url,
+                    'fulltext_url' => $this->fulltext_url,
+                    'pdf_url' => $this->pdf_url,
+                    'copyinlibrary' => $this->copyinlibrary,
+                    'RMBL' => $this->RMBL,
+                    'pending' => $this->pending,
+                    'email' => $this->email,
+                    'student' => $this->student
+                    // 'authors' => $this->authors,
+                    // 'authorIds' => $this->authorIds
+                    // 'DateCreated' => $this->DateCreatedm
+                    // 'DateModified' => $this->DateModified\
+                ];
+                
+                PUBSUTILS::$db->insert(
+                    $tableName,
+                    $setArray
+                );
+                $counter = PUBSUTILS::$db->affectedRows();
+                $this->id = PUBSUTILS::$db->insertId();
+                $library = Library::Get($this->id);
+
+                 // Update the Authors Table
+                 Author::updateAuthorsByLibraryId($this->authorIds, $this->id);
+
+            } catch (\MeekroDBException $e) {
+                $query = $e->getQuery();
+                return new \WP_Error('Library_Update_Error', $e->getMessage());
+            }
+            return [
+                'data' => $library
+            ];
+        }
+
+
         public function Update()
         {
             PUBSUTILS::$db->error_handler = false; // since we're catching errors, don't need error handler

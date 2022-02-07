@@ -89,87 +89,92 @@ function pubs_main()
         </div>
 
         <script id='library-popup-editor' type='text/html'>
-            <div id="library-editor-tabstrip">
-                <ul>
-                    <li class="k-state-active">Library</li>
-                    <li>Meta</li>
-                    <li>URL's</li>
-                    <li>Authors</li>
-                    <li>Publishers</li>
-                </ul>
-                <div class="editor-section">
-                    <div id="reftypeeditor" class="editor-row">
-                        <label>RefType:<br />
-                            <input name="reftypeId" data-bind="value:reftypeId" data-value-field="id" data-text-field="name" data-source="reftypeDataSource" data-role="dropdownlist" />
-                        </label>
-                        <label>Year:<input name="year" /></label>
+            <div id="library-editor">
+                <div id="library-editor-tabstrip">
+                    <ul>
+                        <li class="k-state-active">Library</li>
+                        <li>Meta</li>
+                        <li>URL's</li>
+                        <li>Authors</li>
+                        <li>Publishers</li>
+                    </ul>
+                    <div class="editor-section">
+                        <div id="reftypeeditor" class="editor-row">
+                            <label>RefType:<br />
+                                <input name="reftypeId" data-bind="value:reftypeId" data-value-field="id" data-text-field="name" data-source="reftypeDataSource" data-role="dropdownlist" />
+                            </label>
+                            <div>
+                                <label for="year">Year:</label>
+                                <input required min=4 max=4 name="year" />
+                            </div>
+                        </div>
+                        <div class="editor-row">
+                            <label>Title:<input name="title" /></label>
+                        </div>
+                        <div class="editor-row">
+                            <label>Chapter Title:<input name="chaptertitle" /></label>
+                            <label>Journal Name:<input name="journalname" /></label>
+                        </div>
+                        <div class="editor-row">
+                            <label>Volume:<input name="volume" /></label>
+                            <label>Pages:<input name="pages" /></label>
+                            <label>Catalog Number:<input name="catalognumber" /></label>
+                            <label>Journal Issue:<input name="journalissue" /></label>
+                        </div>
+                        <div class="editor-row">
+                            <label>Book Editors:<input name="bookeditors" /></label>
+                            <label>Degree:<input name="degree" /></label>
+                            <label>Edition:<input name="edition" /></label>
+                        </div>
+                        <div class="editor-row">
+                            <label>Rest of Reference:<input name="restofreference" /></label>
+                            <label>Institution:<input name="institution" /></label>
+                        </div>
                     </div>
-                    <div class="editor-row">
-                        <label>Title:<input name="title" /></label>
+                    <div class="editor-section">
+                        <div class="editor-row">
+                            <label>RMBL:<input name="RMBL" data-role="dropdownlist" data-bind="value:RMBL" data-value-field="id" data-text-field="name" data-source="[ {id: 'T', name: 'True'}, {id: 'F', name: 'False'} ]" /></label>
+                            <label>Pending:<input name="pending" data-role="dropdownlist" data-bind="value:pending" data-value-field="id" data-text-field="name" data-source="[ {id: 'T', name: 'True'}, {id: 'F', name: 'False'} ]" /></label>
+                        </div>
+                        <div class="editor-row">
+                            <label>Student:<input name="student" data-role="dropdownlist" data-bind="value:student" data-value-field="id" data-text-field="name" data-source="[ {id: 'T', name: 'True'}, {id: 'F', name: 'False'} ]" /></label>
+                            <label>Copy in Library:<input name="copyinlibrary" data-role="dropdownlist" data-bind="value:copyinlibrary" data-value-field="id" data-text-field="name" data-source="[ {id: 'T', name: 'True'}, {id: 'F', name: 'False'} ]" /></label>
+                        </div>
+                        <div class="editor-row">
+                            <label>Keywords:<input name="keywords" /></label>
+                        </div>
+                        <div class="editor-row">
+                            <label>Comments:<input name="comments" /></label>
+                            <label>Donated By:<input name="donatedby" /></label>
+                        </div>
                     </div>
-                    <div class="editor-row">
-                        <label>Chapter Title:<input name="chaptertitle" /></label>
-                        <label>Journal Name:<input name="journalname" /></label>
+                    <div class="editor-section">
+                        <div class="editor-row">
+                            <label>PDF URL:<input name="pdf_url" /></label>
+                        </div>
+                        <div class="editor-row">
+                            <label>Abstract URL:<input name="abstract_url" /></label>
+                        </div>
+                        <div class="editor-row">
+                            <label>Fulltext URL:<input name="fulltext_url" /></label>
+                        </div>
+                        <div class="editor-row">
+                            <label>BN URL:<input name="bn_url" /></label>
+                        </div>
                     </div>
-                    <div class="editor-row">
-                        <label>Volume:<input name="volume" /></label>
-                        <label>Pages:<input name="pages" /></label>
-                        <label>Catalog Number:<input name="catalognumber" /></label>
-                        <label>Journal Issue:<input name="journalissue" /></label>
+                    <div id="author-section" class="editor-section">
+                        <div class="editor-row">
+                            <label>Select Authors:
+                                <input name="authorIds" id="libraryitemauthors" />
+                            </label>
+                        </div>
                     </div>
-                    <div class="editor-row">
-                        <label>Book Editors:<input name="bookeditors" /></label>
-                        <label>Degree:<input name="degree" /></label>
-                        <label>Edition:<input name="edition" /></label>
-                    </div>
-                    <div class="editor-row">
-                        <label>Rest of Reference:<input name="restofreference" /></label>
-                        <label>Institution:<input name="institution" /></label>
-                    </div>
-                </div>
-                <div class="editor-section">
-                    <div class="editor-row">
-                        <label>RMBL:<input name="RMBL" data-role="dropdownlist" data-bind="value:RMBL" data-value-field="id" data-text-field="name" data-source="[ {id: 'T', name: 'True'}, {id: 'F', name: 'False'} ]" /></label>
-                        <label>Pending:<input name="pending" data-role="dropdownlist" data-bind="value:pending" data-value-field="id" data-text-field="name" data-source="[ {id: 'T', name: 'True'}, {id: 'F', name: 'False'} ]" /></label>
-                    </div>
-                    <div class="editor-row">
-                        <label>Student:<input name="student" data-role="dropdownlist" data-bind="value:student" data-value-field="id" data-text-field="name" data-source="[ {id: 'T', name: 'True'}, {id: 'F', name: 'False'} ]" /></label>
-                        <label>Copy in Library:<input name="copyinlibrary" data-role="dropdownlist" data-bind="value:copyinlibrary" data-value-field="id" data-text-field="name" data-source="[ {id: 'T', name: 'True'}, {id: 'F', name: 'False'} ]" /></label>
-                    </div>
-                    <div class="editor-row">
-                        <label>Keywords:<input name="keywords" /></label>
-                    </div>
-                    <div class="editor-row">
-                        <label>Comments:<input name="comments" /></label>
-                        <label>Donated By:<input name="donatedby" /></label>
-                    </div>
-                </div>
-                <div class="editor-section">
-                    <div class="editor-row">
-                        <label>PDF URL:<input name="pdf_url" /></label>
-                    </div>
-                    <div class="editor-row">
-                        <label>Abstract URL:<input name="abstract_url" /></label>
-                    </div>
-                    <div class="editor-row">
-                        <label>Fulltext URL:<input name="fulltext_url" /></label>
-                    </div>
-                    <div class="editor-row">
-                        <label>BN URL:<input name="bn_url" /></label>
-                    </div>
-                </div>
-                <div id="author-section" class="editor-section">
-                    <div class="editor-row">
-                        <label>Select Authors:
-                            <input name="authorIds" id="libraryitemauthors" />
-                        </label>
-                    </div>
-                </div>
-                <div id="publisher-section" class="editor-section">
-                    <div class="editor-row">
-                        <label>Choose a Publisher:
-                            <input name="publisherId" id="publisherId" data-bind="value:publisherId" data-value-field="id" data-text-field="name" data-filter="contains" data-source="publisherDataSource" data-role="dropdownlist" data-no-data-template="no-publisher-template" data-filtering="onPublisherFiltering" data-close="publisherDDLclose" data-select="publisherSelect" data-value-template="publisher-template" data-template="publisher-template" />
-                        </label>
+                    <div id="publisher-section" class="editor-section">
+                        <div class="editor-row">
+                            <label>Choose a Publisher:
+                                <input name="publisherId" id="publisherId" data-bind="value:publisherId" data-value-field="id" data-text-field="name" data-filter="contains" data-source="publisherDataSource" data-role="dropdownlist" data-no-data-template="no-publisher-template" data-filtering="onPublisherFiltering" data-close="publisherDDLclose" data-select="publisherSelect" data-value-template="publisher-template" data-template="publisher-template" />
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>

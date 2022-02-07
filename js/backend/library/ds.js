@@ -44,6 +44,27 @@ LibraryDataSource = new kendo.data.DataSource({
                     hideLoading($('body'));
                 }
             });
+        },
+        create: function (options) {
+            displayLoading($('body'));
+            $.ajax({
+                url: wpApiSettings.root + "rmbl-pubs/v1/admin/library",
+                dataType: "json",
+                method: "POST",
+                data: options.data,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("X-WP-Nonce", wpApiSettings.nonce);
+                },
+                success: function (result) {
+                    options.success(result);
+                    hideLoading($('body'));
+                },
+                error: function (result) {
+                    options.error(result);
+                    alert(result.responseText);
+                    hideLoading($('body'));
+                }
+            });
         }
     },
     serverPaging: true,
@@ -57,9 +78,9 @@ LibraryDataSource = new kendo.data.DataSource({
             id: "id",
             fields: {
                 id: { type: "number" },
-                reftypeId: { type: "number" },
+                reftypeId: { type: "number", validation: { required: true } },
                 year: { type: "number" },
-                title: { type: "string" },
+                title: { type: "string", validation: { required: true } },
                 volume: { type: "string" },
                 edition: { type: "string" },
                 publisherId: { type: "number" },

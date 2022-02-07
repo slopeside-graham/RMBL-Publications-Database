@@ -1,5 +1,6 @@
 $ = jQuery;
-var validator
+var validator;
+
 $(document).ready(function () {
     validator = $("form").kendoValidator({
         rules: {
@@ -25,6 +26,14 @@ $(document).ready(function () {
                     pass = input.val().match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$/);
                 }
                 return pass;
+            },
+            maxInputLength: function (input) {
+                if (input.val() != "") {
+                    var maxlength = input.attr("maxlength");
+                    var value = input.value();
+                    return value.replace(/<[^>]+>/g, "").length <= maxlength;
+                }
+                return true;
             }
         },
         messages: {
