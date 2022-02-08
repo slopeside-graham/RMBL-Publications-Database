@@ -166,6 +166,7 @@
     display: flex;
     padding: 10px;
     gap: 30px;
+    align-items: flex-end;
 }
 .editor-section .editor-row label {
     flex-grow: 1;

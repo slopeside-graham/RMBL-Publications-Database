@@ -81,7 +81,7 @@ function pubs_main()
                 <div id="people-grid"></div>
             </div>
             <div>
-            <div id="publisher-grid"></div>
+                <div id="publisher-grid"></div>
             </div>
             <div>
                 Tab 4 Text
@@ -151,15 +151,19 @@ function pubs_main()
                     <div class="editor-section">
                         <div class="editor-row">
                             <label>PDF URL:<input name="pdf_url" /></label>
+                            <button onclick="openMediaUploader('pdf_url')">Select/Upload</button>
                         </div>
                         <div class="editor-row">
                             <label>Abstract URL:<input name="abstract_url" /></label>
+                            <button onclick="openMediaUploader('abstract_url')">Select/Upload</button>
                         </div>
                         <div class="editor-row">
                             <label>Fulltext URL:<input name="fulltext_url" /></label>
+                            <button onclick="openMediaUploader('fulltext_url')">Select/Upload</button>
                         </div>
                         <div class="editor-row">
                             <label>BN URL:<input name="bn_url" /></label>
+                            <button onclick="openMediaUploader('bn_url')">Select/Upload</button>
                         </div>
                     </div>
                     <div id="author-section" class="editor-section">
