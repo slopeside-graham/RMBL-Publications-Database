@@ -79,7 +79,11 @@ LibraryDataSource = new kendo.data.DataSource({
             fields: {
                 id: { type: "number" },
                 reftypeId: { type: "number", validation: { required: true } },
-                year: { type: "number" },
+                year: {
+                    type: "number", validation: {
+                        required: true, checklength
+                    }
+                },
                 title: { type: "string", validation: { required: true } },
                 volume: { type: "string" },
                 edition: { type: "string" },

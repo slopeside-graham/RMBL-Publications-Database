@@ -100,35 +100,35 @@ function pubs_main()
                     </ul>
                     <div class="editor-section">
                         <div id="reftypeeditor" class="editor-row">
-                            <label>RefType:<br />
-                                <input name="reftypeId" data-bind="value:reftypeId" data-value-field="id" data-text-field="name" data-source="reftypeDataSource" data-role="dropdownlist" />
+                            <label>RefType:
+                                <input required name="reftypeId" data-bind="value:reftypeId" data-value-field="id" data-text-field="name" data-source="reftypeDataSource" data-role="dropdownlist" />
                             </label>
                             <div>
                                 <label for="year">Year:</label>
-                                <input required min=4 max=4 name="year" />
+                                <input type="text" data-role="textbox" required maximumlength="4" minimumlength="4" name="year" />
                             </div>
                         </div>
                         <div class="editor-row">
-                            <label>Title:<input name="title" /></label>
+                            <label>Title:<input type="text" data-role="textbox" required maximumlength="254" name="title" /></label>
                         </div>
                         <div class="editor-row">
-                            <label>Chapter Title:<input name="chaptertitle" /></label>
-                            <label>Journal Name:<input name="journalname" /></label>
+                            <label>Chapter Title:<input type="text" data-role="textbox" maximumlength="255" name="chaptertitle" /></label>
+                            <label>Journal Name:<input type="text" data-role="textbox" maximumlength="255" name="journalname" /></label>
                         </div>
                         <div class="editor-row">
-                            <label>Volume:<input name="volume" /></label>
-                            <label>Pages:<input name="pages" /></label>
-                            <label>Catalog Number:<input name="catalognumber" /></label>
-                            <label>Journal Issue:<input name="journalissue" /></label>
+                            <label>Volume:<input type="text" data-role="textbox" maximumlength="12" name="volume" /></label>
+                            <label>Pages:<input type="text" data-role="textbox" maximumlength="12" name="pages" /></label>
+                            <label>Catalog Number:<input type="text" data-role="textbox" maximumlength="30" name="catalognumber" /></label>
+                            <label>Journal Issue:<input type="text" data-role="textbox" maximumlength="10" name="journalissue" /></label>
                         </div>
                         <div class="editor-row">
-                            <label>Book Editors:<input name="bookeditors" /></label>
-                            <label>Degree:<input name="degree" /></label>
-                            <label>Edition:<input name="edition" /></label>
+                            <label>Book Editors:<input type="text" data-role="textbox" maximumlength="150" name="bookeditors" /></label>
+                            <label>Degree:<input type="text" data-role="textbox" maximumlength="50" name="degree" /></label>
+                            <label>Edition:<input type="text" data-role="textbox" maximumlength="50" name="edition" /></label>
                         </div>
                         <div class="editor-row">
-                            <label>Rest of Reference:<input name="restofreference" /></label>
-                            <label>Institution:<input name="institution" /></label>
+                            <label>Rest of Reference:<input type="text" data-role="textbox" maximumlength="255" name="restofreference" /></label>
+                            <label>Institution:<input type="text" data-role="textbox" maximumlength="150" name="institution" /></label>
                         </div>
                     </div>
                     <div class="editor-section">
@@ -141,28 +141,28 @@ function pubs_main()
                             <label>Copy in Library:<input name="copyinlibrary" data-role="dropdownlist" data-bind="value:copyinlibrary" data-value-field="id" data-text-field="name" data-source="[ {id: 'T', name: 'True'}, {id: 'F', name: 'False'} ]" /></label>
                         </div>
                         <div class="editor-row">
-                            <label>Keywords:<input name="keywords" /></label>
+                            <label>Keywords:<input type="text" data-role="textbox" maximumlength="200" name="keywords" /></label>
                         </div>
                         <div class="editor-row">
-                            <label>Comments:<input name="comments" /></label>
-                            <label>Donated By:<input name="donatedby" /></label>
+                            <label>Comments:<input type="text" data-role="textbox" maximumlength="255" name="comments" /></label>
+                            <label>Donated By:<input type="text" data-role="textbox" maximumlength="150" name="donatedby" /></label>
                         </div>
                     </div>
                     <div class="editor-section">
                         <div class="editor-row">
-                            <label>PDF URL:<input name="pdf_url" /></label>
+                            <label>PDF URL:<input type="text" data-role="textbox" maximumlength="255" name="pdf_url" /></label>
                             <button onclick="openMediaUploader('pdf_url')">Select/Upload</button>
                         </div>
                         <div class="editor-row">
-                            <label>Abstract URL:<input name="abstract_url" /></label>
+                            <label>Abstract URL:<input type="text" data-role="textbox" maximumlength="255" name="abstract_url" /></label>
                             <button onclick="openMediaUploader('abstract_url')">Select/Upload</button>
                         </div>
                         <div class="editor-row">
-                            <label>Fulltext URL:<input name="fulltext_url" /></label>
+                            <label>Fulltext URL:<input type="text" data-role="textbox" maximumlength="255" name="fulltext_url" /></label>
                             <button onclick="openMediaUploader('fulltext_url')">Select/Upload</button>
                         </div>
                         <div class="editor-row">
-                            <label>BN URL:<input name="bn_url" /></label>
+                            <label>BN URL:<input type="text" data-role="textbox" maximumlength="255" name="bn_url" /></label>
                             <button onclick="openMediaUploader('bn_url')">Select/Upload</button>
                         </div>
                     </div>

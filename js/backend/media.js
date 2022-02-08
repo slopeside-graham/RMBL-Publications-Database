@@ -17,7 +17,9 @@ $(document).ready(function () {
             selectedItemURL = attachment.attributes['url'];
         });
 
-        uploadInput.val(selectedItemURL).change();
+        uploadInput.data("kendoTextBox").value(selectedItemURL);
+        uploadInput.data("kendoTextBox").trigger('change');
+
         /*
         $("input[name='Image_id']").val(selectedItemID).change();
         if (selectedImageID != null) {

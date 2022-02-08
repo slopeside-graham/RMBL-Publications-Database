@@ -70,34 +70,6 @@ $(function () {
                     //select: authorSelect
                 });
                 libraryEditItem = e.model;
-                libraryEditorValidator = $("#library-editor").kendoValidator({
-                    rules: {
-                        yearLength: function (input) {
-                            if (input.is("[name='year'")) {
-                                return input.val() ==="Tom";
-                                var valLength = input[0].value.length;
-                                var reqLength = 4;
-                                if (valLength != reqLength) {
-                                    return false;
-                                }
-                            }
-                            return true;
-                        }
-                    },
-                    messages: {
-                        yearLength: "Length is wrong.",
-                        required: "Custom Required Message"
-                    },
-                    validationSummary: false
-                }).data("kendoValidator");
-            },
-            save: function (e) {
-                if (libraryEditorValidator.validate()) {
-                    alert("Form is valid");
-                } else {
-                    e.preventDefault();
-                    alert("Error in Form");
-                }
             }
         });
         attachPager();
@@ -397,3 +369,4 @@ function publisherDDLclose(e) {
 function publisherSelect(e) {
     closePublisherDDL = true;
 }
+
