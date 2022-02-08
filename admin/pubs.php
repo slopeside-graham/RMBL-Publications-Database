@@ -65,11 +65,11 @@ function pubs_main()
                     <div id="author-add-window">
                         <div class="editor-section">
                             <div class="editor-row">
-                                <label>Last Name: <input id="newAuthorLastName" /></label>
-                                <label>First and Middle Initial: <input id="newAuthorFirstName" /></label>
+                                <label>Last Name: <input type="text" data-role="textbox" id="newAuthorLastName" /></label>
+                                <label>First and Middle Initial: <input type="text" data-role="textbox" id="newAuthorFirstName" /></label>
                             </div>
                             <div class="editor-row">
-                                <label>Suffix: <input id="newAuthorSuffix" /></label><br />
+                                <label>Suffix: <input type="text" data-role="textbox" id="newAuthorSuffix" /></label><br />
                             </div>
                             <button type="submit" class="k-button k-button-solid-base k-button-solid k-button-rectangle k-button-md k-rounded-md" onclick="addNewAuthor()">Add new Author</button>
                             <button class="k-button" onclick="closeAuthorAddWindow()">Close</button>

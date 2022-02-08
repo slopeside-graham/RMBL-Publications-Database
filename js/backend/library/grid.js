@@ -300,7 +300,6 @@ function addNewAuthor() {
 
         dataSource.one("sync", function () {
             dataSource.read().then(function () {
-                dataSource.pageSize(dataSource.total());
                 var newAuthor = dataSource.data().length - 1; // Get the new item index
                 var newAuthorId = parseInt(dataSource.data()[newAuthor].id); // Get the id of the new item
                 var addAuthorWindow = $("#author-add-window");
