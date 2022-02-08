@@ -251,7 +251,6 @@ function addNewPublisher(widgetId, value) {
         }
 
         dataSource.one("sync", function () {
-            modifyPageSizes();
             var newPublisher = dataSource.data().length - 1; // Get the new item index
             var newPublisherId = dataSource.data()[newPublisher].id; // Get the id of the new item
             widget.value(newPublisherId); // Set the value of the widget to the new ID. We set it here because we are using data-bind:value

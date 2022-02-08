@@ -45,7 +45,7 @@ peopleDataSource = new kendo.data.DataSource({
             });
         }
     },
-    pageSize: 10,
+    //pageSize: 10,
     schema: {
         data: 'data',
         total: function (response) {

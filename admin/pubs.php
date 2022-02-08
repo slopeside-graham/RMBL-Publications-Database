@@ -11,9 +11,9 @@ function pubs_main()
         <h1>Publications Database Integration</h1>
         <div id="pubs-tabstrip">
             <ul>
-                <li class="k-state-active">Library</li>
-                <li>Authors</li>
-                <li>Publishers</li>
+                <li onclick="setPageSizes()" class="k-state-active">Library</li>
+                <li onclick="setPageSize(10, 'people-grid')">Authors</li>
+                <li onclick="setPageSize(10, 'publisher-grid')">Publishers</li>
                 <li>Reports</li>
             </ul>
             <div>
