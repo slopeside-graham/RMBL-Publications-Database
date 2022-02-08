@@ -44,6 +44,7 @@ $(function () {
                     },
                     close: function (e) {
                         $('#library-grid').data('kendoGrid').dataSource.read();
+                        resetPageSizes();
                     }
                 },
                 template: kendo.template($("#library-popup-editor").html())
@@ -70,6 +71,7 @@ $(function () {
                     //select: authorSelect
                 });
                 libraryEditItem = e.model;
+                modifyPageSizes();
             }
         });
         attachPager();
@@ -249,6 +251,7 @@ function addNewPublisher(widgetId, value) {
         }
 
         dataSource.one("sync", function () {
+            modifyPageSizes();
             var newPublisher = dataSource.data().length - 1; // Get the new item index
             var newPublisherId = dataSource.data()[newPublisher].id; // Get the id of the new item
             widget.value(newPublisherId); // Set the value of the widget to the new ID. We set it here because we are using data-bind:value
@@ -297,6 +300,7 @@ function addNewAuthor() {
 
         dataSource.one("sync", function () {
             dataSource.read().then(function () {
+                dataSource.pageSize(dataSource.total());
                 var newAuthor = dataSource.data().length - 1; // Get the new item index
                 var newAuthorId = parseInt(dataSource.data()[newAuthor].id); // Get the id of the new item
                 var addAuthorWindow = $("#author-add-window");
@@ -369,4 +373,24 @@ function publisherDDLclose(e) {
 function publisherSelect(e) {
     closePublisherDDL = true;
 }
+var authorswidget;
+var publisherwidget;
 
+var authorwidgetpagesize;
+var publisherwidgetpagesize;
+
+function modifyPageSizes() {
+    authorswidget = $("#libraryitemauthors").getKendoMultiSelect();
+    publisherwidget = $("#publisherId").getKendoDropDownList();
+
+    authorwidgetpagesize = authorswidget.dataSource.pageSize();
+    publisherwidgetpagesize = publisherwidget.dataSource.pageSize();
+
+    authorswidget.dataSource.pageSize(authorswidget.dataSource.total());
+    publisherwidget.dataSource.pageSize(publisherwidget.dataSource.total());
+}
+
+function resetPageSizes() {
+    authorswidget.dataSource.pageSize(authorwidgetpagesize);
+    publisherwidget.dataSource.pageSize(publisherwidgetpagesize);
+}
