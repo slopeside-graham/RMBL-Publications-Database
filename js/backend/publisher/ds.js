@@ -79,40 +79,13 @@ publisherDataSource = new kendo.data.DataSource({
                 name: {
                     type: "string", editable: true, nullable: false,
                     validation: {
-                        required: true,
-                        publisherNameValidation: function (input) {
-                            if (input.is("[name='name']") && input.val() != "") {
-                                input.attr("data-publishernamevalidation-msg", "Publisher Name should start with capital letter");
-                                return /^[A-Z]/.test(input.val());
-                            }
-
-                            return true;
-                        },
-                        maxlength: function (input) {
-                            if (input.is("[name='name']") && input.val() != "") {
-                                if (input.val().length > 100) {
-                                    input.attr("data-maxlength-msg", "Max length is 100");
-                                    return false;
-                                }
-                                return true;
-                            }
-                            return true;
-                        }
+                        required: true, checklength
                     }
                 },
                 city_state: {
                     type: "string", ediatble: true, nullable: true,
                     validation: {
-                        maxlength: function (input) {
-                            if (input.is("[name='name']") && input.val() != "") {
-                                if (input.val().length > 50) {
-                                    input.attr("data-maxlength-msg", "Max length is 50");
-                                    return false;
-                                }
-                                return true;
-                            }
-                            return true;
-                        }
+                        required: true, checklength
                     }
                 }
             }

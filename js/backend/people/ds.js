@@ -57,32 +57,22 @@ peopleDataSource = new kendo.data.DataSource({
                 id: { type: "number", editable: false, nullable: false },
                 FirstName: {
                     type: "string", validation: {
-                        required: true, length
+                        required: true, checklength
                     }
                 },
-                LastName: { type: "string" },
-                SuffixName: { type: "string" }
+                LastName: {
+                    type: "string",
+                    validation: {
+                        required: true, checklength
+                    }
+                },
+                SuffixName: {
+                    type: "string",
+                    validation: {
+                        required: true, checklength
+                    }
+                }
             }
         }
     }
 });
-
-function length(input) {
-    var maxlength = input.attr("maximumlength");
-    var minlength = input.attr("minimumlength");
-    if (maxlength && input.val() != "") {
-
-        if (input.val().length > maxlength) {
-            input.attr("data-length-msg", "Maximum length is " + maxlength);
-            return false;
-        }
-
-        if (input.val().length < minlength) {
-            input.attr("data-length-msg", "Minimum length is " + minlength);
-            return false;
-        }
-
-        return true;
-    }
-    return true;
-}

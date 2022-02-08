@@ -61,3 +61,23 @@ function hideLoading(target) {
     var element = $(target);
     kendo.ui.progress(element, false);
 }
+
+
+function checklength(input) {
+    var maxlength = input.attr("maximumlength");
+    var minlength = input.attr("minimumlength");
+    if (maxlength && input.val() != "") {
+
+        if (input.val().length > maxlength) {
+            input.attr("data-checklength-msg", "Maximum length is " + maxlength);
+            return false;
+        }
+
+        if (input.val().length < minlength) {
+            input.attr("data-checklength-msg", "Minimum length is " + minlength);
+            return false;
+        }
+        return true;
+    }
+    return true;
+}

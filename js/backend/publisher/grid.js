@@ -8,8 +8,32 @@ $(function () {
             sortable: true,
             columns: [
                 { field: "id", title: "ID", editable: false, width: "60px" },
-                { field: "name", title: "Name" },
-                { field: "city_state", title: "City State" },
+                {
+                    field: "name", title: "Name",
+                    editor: function (container, options) {
+                        // create an input element
+                        var input = $("<input/>");
+                        // set its name to the field to which the column is bound ('name' in this case)
+                        input.attr("name", options.field);
+                        input.attr("required", "required");
+                        input.attr("maximumlength", 100);
+                        // append it to the container
+                        input.appendTo(container).kendoTextBox();
+                    }
+                },
+                {
+                    field: "city_state", title: "City State",
+                    editor: function (container, options) {
+                        // create an input element
+                        var input = $("<input/>");
+                        // set its name to the field to which the column is bound ('name' in this case)
+                        input.attr("name", options.field);
+                        input.attr("required", "required");
+                        input.attr("maximumlength", 50);
+                        // append it to the container
+                        input.appendTo(container).kendoTextBox();
+                    }
+                },
                 { command: ["edit"], title: "&nbsp;", width: "100px" }
             ],
             editable: {
