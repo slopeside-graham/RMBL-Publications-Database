@@ -84,7 +84,7 @@ function pubs_main()
                 <div id="publisher-grid"></div>
             </div>
             <div>
-                Tab 4 Text
+            <div id="report-grid"></div>
             </div>
         </div>
 

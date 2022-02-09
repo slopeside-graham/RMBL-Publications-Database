@@ -53,6 +53,10 @@ include_once(plugin_dir_path(__FILE__) . '/../classes/frontend/publisher.php'); 
 include_once(plugin_dir_path(__FILE__) . '/../classes/backend/publisher.php');  // Library class
 include_once(plugin_dir_path(__FILE__) . '/backend/publisher_rest.php');    // Library REST controller
 
+//REPORT REST CONTROLLER AND CLASS
+include_once(plugin_dir_path(__FILE__) . '/../classes/backend/report.php');    // Report Class
+include_once(plugin_dir_path(__FILE__) . '/backend/report_rest.php');    // Report REST controller
+
 /**
  * Register our API routes.
  */
@@ -80,6 +84,10 @@ function register_pubs_controllers()
 
     // RefType Admin Controller
     $controller = new PUBS\Admin\People_Rest();
+    $controller->register_routes();
+
+    // RefType Admin Controller
+    $controller = new PUBS\Admin\Report_Rest();
     $controller->register_routes();
 }
 
