@@ -44,7 +44,7 @@ $(function () {
                     },
                     close: function (e) {
                         $('#library-grid').data('kendoGrid').dataSource.read();
-                        resetPageSizes();
+                       // resetPageSizes();
                     }
                 },
                 template: kendo.template($("#library-popup-editor").html())
@@ -58,7 +58,7 @@ $(function () {
                     }
                 });
                 $('#libraryitemauthors').kendoMultiSelect({
-                    dataSource: peopleDataSource,
+                    dataSource: libraryPeopleDataSource,
                     dataTextField: "LastName",
                     dataValueField: "id",
                     valuePrimitive: true,
@@ -71,7 +71,7 @@ $(function () {
                     //select: authorSelect
                 });
                 libraryEditItem = e.model;
-                modifyPageSizes();
+                // modifyPageSizes();
             }
         });
         attachPager();

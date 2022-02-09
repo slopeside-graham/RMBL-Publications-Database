@@ -11,9 +11,9 @@ function pubs_main()
         <h1>Publications Database Integration</h1>
         <div id="pubs-tabstrip">
             <ul>
-                <li onclick="setPageSizes()" class="k-state-active">Library</li>
-                <li onclick="setPageSize(10, 'people-grid')">Authors</li>
-                <li onclick="setPageSize(10, 'publisher-grid')">Publishers</li>
+                <li class="k-state-active">Library</li>
+                <li>Authors</li>
+                <li>Publishers</li>
                 <li>Reports</li>
             </ul>
             <div>
@@ -176,7 +176,7 @@ function pubs_main()
                     <div id="publisher-section" class="editor-section">
                         <div class="editor-row">
                             <label>Choose a Publisher:
-                                <input name="publisherId" id="publisherId" data-bind="value:publisherId" data-value-field="id" data-text-field="name" data-filter="contains" data-source="publisherDataSource" data-role="dropdownlist" data-no-data-template="no-publisher-template" data-filtering="onPublisherFiltering" data-close="publisherDDLclose" data-select="publisherSelect" data-value-template="publisher-template" data-template="publisher-template" />
+                                <input name="publisherId" id="publisherId" data-bind="value:publisherId" data-value-field="id" data-text-field="name" data-filter="contains" data-source="libraryPublisherDataSource" data-role="dropdownlist" data-no-data-template="no-publisher-template" data-filtering="onPublisherFiltering" data-close="publisherDDLclose" data-select="publisherSelect" data-value-template="publisher-template" data-template="publisher-template" />
                             </label>
                         </div>
                     </div>
