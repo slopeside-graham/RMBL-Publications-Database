@@ -202,3 +202,6 @@
 div.k-loading-mask {
     z-index: 99999;
 }
+.year-filter {
+    padding-bottom: 10px;
+}

@@ -84,7 +84,10 @@ function pubs_main()
                 <div id="publisher-grid"></div>
             </div>
             <div>
-            <div id="report-grid"></div>
+                <div class="year-filter">
+                    <input id="reportYear" />
+                </div>
+                <div id="report-grid"></div>
             </div>
         </div>
 
