@@ -395,6 +395,8 @@ namespace PUBS {
                 'volume' => $this->volume,
                 'edition' => $this->edition,
                 'publisherId' => $this->publisherId,
+                'publishername' => $this->publishername,
+                'publishercity_state' => $this->publishercity_state,
                 'pages' => $this->pages,
                 'restofreference' => $this->restofreference,
                 'journalname' => $this->journalname,
@@ -525,11 +527,15 @@ namespace PUBS {
                 $results = PUBSUTILS::$db->query(
                     "SELECT 
                         l.*,
-                        rt.name as reftypename
+                        rt.name as reftypename,
+                        p.name as publishername,
+                        p.city_state as publishercity_state
                     FROM 
                         library l
                     INNER JOIN 
                         reftype rt ON l.reftypeId = rt.id
+                    INNER JOIN
+                        publisher p ON l.publisherId = p.id
                     WHERE %l"
                         .
                         $sqlSort // Sort Clause
@@ -605,6 +611,8 @@ namespace PUBS {
             $libraryitem->volume = $row['volume'];
             $libraryitem->edition = $row['edition'];
             $libraryitem->publisherId = $row['publisherId'];
+            $libraryitem->publishername = $row['publishername'];
+            $libraryitem->publishercity_state = $row['publishercity_state'];
             $libraryitem->pages = $row['pages'];
             $libraryitem->restofreference = $row['restofreference'];
             $libraryitem->journalname = $row['journalname'];

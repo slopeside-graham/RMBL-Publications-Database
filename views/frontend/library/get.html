@@ -1,0 +1,177 @@
+<div id="library-list">
+    <div class="filter-sort">
+
+        <div class="filter">
+            <h4>Search By:</h4>
+            <form>
+                <div class="search-inputs">
+                    <div><input id="title" placeholder="Title" /></div>
+                    <div><input id="author" placeholder="Author" /></div>
+                    <div><input id="keywords" placeholder="Keyword" /></div>
+                    <div class="years-filter">
+                        <input id="yearStart" placeholder="Year Start" />
+                        <span class="year-seperator">&nbsp;-&nbsp;</span>
+                        <input id="yearEnd" placeholder="Year End" />
+                    </div>
+                </div>
+                <button onclick="filterLibrary()">Search</button>
+            </form>
+            <hr />
+            <h4>Filter Items:</h4>
+            <div id="filter-types">
+                <div class="active search-item" id="show-all"
+                    onclick="filterTypes(this)">Show All<span class="type-total"
+                        id="show-all-total"></span></div>
+                <div class="search-item" id="article"
+                    onclick="filterTypes(this)">Article<span class="type-total"
+                        id="article-total"></span></div>
+                <div class="search-item" id="book" onclick="filterTypes(this)">Book<span
+                        class="type-total" id="book-total"></span></div>
+                <div class="search-item" id="chapter"
+                    onclick="filterTypes(this)">Chapter<span class="type-total"
+                        id="chapter-total"></span></div>
+                <div class="search-item" id="thesis"
+                    onclick="filterTypes(this)">Thesis<span class="type-total"
+                        id="thesis-total"></span></div>
+                <div class="search-item" id="other" onclick="filterTypes(this)">Other<span
+                        class="type-total" id="other-total"></span></div>
+                <div class="search-item" id="studentpaper"
+                    onclick="filterTypes(this)">Student Paper<span
+                        class="type-total" id="studentpaper-total"></span></div>
+            </div>
+        </div>
+        <hr />
+        <div id="sort">
+            <h4>Sort By:</h4>
+            <div id="sort-type">
+                <div class="active search-item" id="sort-year-type-author"
+                    data-sort="year-type-authors" onclick="sortLibrary(this)">Year,
+                    Type, Author</div>
+                <div class="search-item" id="sort-authors" data-sort="authors"
+                    onclick="sortLibrary(this)">Author</div>
+                <div class="search-item" id="sort-title" data-sort="title"
+                    onclick="sortLibrary(this)">Title</div>
+                <div class="search-item" id="sort-rt-name" data-sort="rt.name"
+                    onclick="sortLibrary(this)">Type</div>
+                <div class="search-item" id="sort-year" data-sort="year"
+                    onclick="sortLibrary(this)">Year</div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div id="library-list-view"></div>
+        <div id="pager"></div>
+    </div>
+    <script type="text/html" id="library-listview-template">
+            <div class="single-library-item #:reftypename#">
+                <div class="library-item-type">
+                    <!-- Reference Type Section-->
+                    #:reftypename# 
+                    #if (student == "T") {
+                        # - STUDENT#
+                    }#
+                    <!-- End Reference Type Section-->
+                </div>
+                <div>
+                    <!-- All Items Section-->
+                    #if (authors && year) {#
+                        <span class="library-item-authors">#:authors#</span> <span class="library-item-year">#:year#.</span>
+                    #} else if (authors && !year){#
+                        <span class="library-item-authors">#:author#.</span>
+                    #} else if (!authors && year){#
+                        <span class="library-item-year">#:year#.</span>
+                    #}# 
+                    <!-- End All Items Section-->
+                    <!-- Aricle Section -->
+                    #if (reftypename == 'ARTICLE') {#
+                        <span class="library-item-title">#=title#.</span>
+                        #if (journalname) {# 
+                            <span class="library-item-journalname">#:journalname#.</span>
+                        #}# 
+                        #if (volume && pages) {#
+                            <span class="library-item-volume">Volume: #:volume#,</span> <span class="library-item-pages">pages: #:pages#.</span>
+                        #} else if (volume && !pages) {#
+                            <span class="library-item-volume">Volume: #:volume#.</span>
+                        #} else if (!volume && pages) {#
+                            <span class="library-item-pages">Pages: #:pages#.</span>
+                        #}# 
+                    #}#
+                    <!-- End Article Section-->
+                    <!-- Book Section-->
+                    #if (reftypename == 'BOOK') {#
+                        <span class="library-item-title">#=title#</span>.
+                        #if (publishername && publishercity_state) {#
+                            <span class="library-item-publishername">#:publishername#,</span> <span class="library-item-publishercitystate">#:publishercity_state#.</span>
+                        #} else if (publishername && !publishercity_state) {#
+                            <span class="library-item-publishername">#:publishername#.</span>
+                        #}#
+
+                        #if (pages) {#
+                            <span class="library-item-pages">Pages: #:pages#.</span>
+                        #}#
+                    #}#
+                    <!-- End Book Section-->
+                    <!-- Chapter Section-->
+                    #if (reftypename == 'CHAPTER') {#
+                        #if (chaptertitle) {#
+                            <span class="library-item-chaptertitle">#:chaptertitle#</span> in <span class="library-item-title">#=title#</span>.
+                        #} else {#
+                            <span class="library-item-title">#=title#</span>.
+                        #}#
+                        
+                        #if (publishername && publishercity_state) {#
+                            <span class="library-item-publishername">#:publishername#,</span> <span class="library-item-publishercitystate">#:publishercity_state#.</span>
+                        #} else if (publishername && !publishercity_state) {#
+                            <span class="library-item-publishername">#:publishername#.</span>
+                        #}#
+
+                        #if (pages) {#
+                            <span class="library-item-pages">Pages: #:pages#.</span>
+                        #}#
+                    #}#
+                    <!-- End Chapter Section-->
+                    <!-- Other Section-->
+                    #if (reftypename == 'OTHER') {#
+                        <span class="library-item-title">#=title#</span>.
+                        #if (restofreference) {#
+                            <a href="#:restofreference#" target="_blank" class="library-item-restofreference">Reference</a>
+                        #}#
+                    #}#
+                    <!-- End Other Section-->
+                    <!-- Paper Section-->
+                    #if (reftypename == 'STUDENTPAPER') {#
+                        <span class="library-item-title">#=title#</span>. Student Paper.
+                        #if (restofreference) {#
+                            <a href="#:restofreference#" target="_blank" class="library-item-restofreference">Reference</a>
+                        #}#
+                    #}#
+                    <!-- End Paper Section-->
+                    <!-- Thesis Section-->
+                    #if (reftypename == 'THESIS') {#
+                        <span class="library-item-title">#=title#</span>.
+                        #if (degree) {#
+                            <span class="library-item-degree">#:degree#.</span>
+                        #}#
+                        #if (institution) {#
+                            <span class="library-item-institution">#:institution#.</span>
+                        #}#
+                    #}#
+                    <!-- End Thesis Section-->
+                    <!-- Links Section-->
+                    #if (pdf_url) {#
+                        <a href="#:pdf_url#" target="_blank" class="library-item-pdf-url">pdf</a>
+                    #}#
+                    #if (abstract_url) {#
+                        <a href="#:abstract_url#" target="_blank" class="library-item-abstract-url">abstract</a>
+                    #}#
+                    #if (reftypename != 'OTHER' || reftypename != 'PAPER') {#
+                        #if (restofreference) {#
+                            <br/>
+                            <a href="#:restofreference#" target="_blank" class="library-item-restofreference">Reference</a>
+                        #}#
+                    #}#
+                    <!-- End Links Section-->
+                </div>
+            </div>
+        </script>
+</div>

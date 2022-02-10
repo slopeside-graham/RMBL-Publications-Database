@@ -39,12 +39,20 @@
     color: rgba(255, 0, 0, .35);
 }
 
-.OTHER {
-    background-color: rgba(150, 50, 50, .1);
+.BOOK {
+    background-color: rgba(125,200,125,.1);
 }
 
-.OTHER .library-item-type {
-    color: rgba(150, 50, 50, .35);
+.BOOK .library-item-type {
+    color: rgba(125,200,125,.8);
+}
+
+.CHAPTER {
+    background-color: rgba(255,125,0,.1);
+}
+
+.CHAPTER .library-item-type {
+    color: rgba(255,125,0,.35)
 }
 
 .THESIS {
@@ -53,6 +61,14 @@
 
 .THESIS .library-item-type {
     color: rgba(20, 20, 20, .35);
+}
+
+.OTHER {
+    background-color: rgba(150, 50, 50, .1);
+}
+
+.OTHER .library-item-type {
+    color: rgba(150, 50, 50, .35);
 }
 
 .STUDENTPAPER {
