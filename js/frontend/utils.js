@@ -30,7 +30,7 @@ $(document).ready(function () {
             maxInputLength: function (input) {
                 if (input.val() != "") {
                     var maxlength = input.attr("maxlength");
-                    var value = input.value();
+                    var value = input.val();
                     return value.replace(/<[^>]+>/g, "").length <= maxlength;
                 }
                 return true;
