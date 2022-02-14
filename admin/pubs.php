@@ -75,6 +75,17 @@ function pubs_main()
                             <button class="k-button" onclick="closeAuthorAddWindow()">Close</button>
                         </div>
                     </div>
+
+                    <div id="publisher-add-window">
+                        <div class="editor-section">
+                            <div class="editor-row">
+                                <label>Publisher Name: <input type="text" data-role="textbox" id="newPublisherName" /></label>
+                                <label>City & State: <input type="text" data-role="textbox" id="newPublisherCityState" /></label>
+                            </div>
+                            <button type="submit" class="k-button k-button-solid-base k-button-solid k-button-rectangle k-button-md k-rounded-md" onclick="addNewPublisher()">Add new Publisher</button>
+                            <button class="k-button" onclick="closeAuthorAddWindow()">Close</button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div>
@@ -179,7 +190,7 @@ function pubs_main()
                     <div id="publisher-section" class="editor-section">
                         <div class="editor-row">
                             <label>Choose a Publisher:
-                                <input name="publisherId" id="publisherId" data-bind="value:publisherId" data-value-field="id" data-text-field="name" data-filter="contains" data-source="libraryPublisherDataSource" data-role="dropdownlist" data-no-data-template="no-publisher-template" data-filtering="onPublisherFiltering" data-close="publisherDDLclose" data-select="publisherSelect" data-value-template="publisher-template" data-template="publisher-template" />
+                                <input name="publisherId" id="publisherId">
                             </label>
                         </div>
                     </div>
@@ -189,19 +200,14 @@ function pubs_main()
 
         <!-- Kendo Templates below -->
         <script type="text/html" id="no-publisher-template">
-            <form class="add-publisher add-item">
-                <div>
-                    No data found. Do you want to add new item - '#: instance.filterInput.val() #' ?
-                </div>
-                <div>
-                    <input required type="text" id="newPublisherName" value="#: instance.filterInput.val() #" />
-                    <input required type="text" id="newPublisherCityState" placeholder="City and State" />
-                </div>
-                <div>
-                    <button type="submit" class="k-button k-button-solid-base k-button-solid k-button-rectangle k-button-md k-rounded-md" onclick="addNewPublisher('#= instance.element[0].id #', '#: instance.filterInput.val() #')">Add new item</button>
-                    <button class="k-button" onclick="closePublisherDL()">Close</button>
-                </div>
-            </form>
+            
+            # var id = instance.element[0].id; #
+            <div>
+                No data found. Do you want to add new publisher?
+            </div>
+            <div>
+                <button class="k-button k-button-solid-base k-button-solid k-button-rectangle k-button-md k-rounded-md" onclick="openAddPublisherWindow('# instance.element[0].id #')">Add New Publisher</button>
+            </div>
         </script>
 
         <script type="text/html" id="no-author-template">
@@ -213,10 +219,6 @@ function pubs_main()
             <div>
                 <button class="k-button k-button-solid-base k-button-solid k-button-rectangle k-button-md k-rounded-md" onclick="openAddAuthorWindow('# instance.element[0].id #')">Add New Author</button>
             </div>
-        </script>
-
-        <script type="text/html" id="publisher-template">
-            <span>#: name # - #:city_state #</span>
         </script>
     </div>
 <?php

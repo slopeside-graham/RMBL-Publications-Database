@@ -243,7 +243,7 @@ namespace PUBS\Admin {
                 return rest_ensure_response($library);
             } else {
                 $error_string = $success->get_error_message();
-                return new \WP_Error('Library_Update_Error', 'An error occured: ' . $error_string, array('status' => 400));
+                return new \WP_Error('Library_Update_Error', 'An error occured: ' . $error_string, array('status' => 500));
             }
         }
         /**

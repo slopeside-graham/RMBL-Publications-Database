@@ -7,6 +7,7 @@ var type;
 var sortDirection;
 var sortDirectionClass;
 var sort;
+var editortabs;
 
 var libraryEditItem;
 var libraryEditorValidator;
@@ -41,22 +42,12 @@ $(function () {
                     width: 600,
                     position: {
                         top: 100
-                    },
-                    close: function (e) {
-                        $('#library-grid').data('kendoGrid').dataSource.read();
-                       // resetPageSizes();
                     }
                 },
                 template: kendo.template($("#library-popup-editor").html())
             },
             edit: function (e) {
-                $("#library-editor-tabstrip").kendoTabStrip({
-                    animation: {
-                        open: {
-                            effects: "fadeIn"
-                        }
-                    }
-                });
+                buildEditorTabs();
                 $('#libraryitemauthors').kendoMultiSelect({
                     dataSource: libraryPeopleDataSource,
                     dataTextField: "LastName",
@@ -70,12 +61,32 @@ $(function () {
                     //close: authorDDLclose,
                     //select: authorSelect
                 });
+                $('#publisherId').kendoDropDownList({
+                    dataSource: libraryPublisherDataSource,
+                    dataTextField: "name",
+                    dataValueField: "id",
+                    valuePrimitive: true,
+                    value: e.model.publisherId,
+                    filter: "contains",
+                    template: '#: name # - #:city_state #',
+                    valueTemplate: '#: name # - #:city_state #',
+                    noDataTemplate: kendo.template($("#no-publisher-template").html()),
+                    // close: publisherDDLclose(),
+                    // select: publisherSelect(),
+                    // filtering: onPublisherFiltering()
+                    // data-filtering="onPublisherFiltering" 
+                    // data-close="publisherDDLclose" 
+                    // data-select="publisherSelect" 
+                    // data-value-template="publisher-template" 
+                    // data-template="publisher-template" />
+                })
                 libraryEditItem = e.model;
                 // modifyPageSizes();
             }
         });
         attachPager();
         attachFilter();
+        buildEditorTabs();
     });
 });
 
@@ -233,38 +244,6 @@ function buildAuthors(authors) {
 
 }
 
-var closePublisherDDL = true;
-
-function addNewPublisher(widgetId, value) {
-    event.preventDefault();
-    var widget = $("#" + widgetId).getKendoDropDownList();
-    var dataSource = widget.dataSource;
-    var cityState = $('#newPublisherCityState').val();
-    var publisherName = $('#newPublisherName').val();
-
-    if (publisherName && cityState) {
-        if (confirm("Are you sure you want to add a new Publisher?")) {
-            dataSource.add({
-                name: publisherName,
-                city_state: cityState
-            });
-        }
-
-        dataSource.one("sync", function () {
-            var newPublisher = dataSource.data().length - 1; // Get the new item index
-            var newPublisherId = dataSource.data()[newPublisher].id; // Get the id of the new item
-            widget.value(newPublisherId); // Set the value of the widget to the new ID. We set it here because we are using data-bind:value
-            widget.trigger("change"); // Tell the editor there has been a change
-            closePublisherDDL = true; // Allow dropdown to close
-            widget.close(); // Close the DoprDown Widget
-        });
-
-        dataSource.sync();
-    } else {
-        alert("Publisher Name and City and State are Required.");
-    }
-};
-
 function openAddAuthorWindow(widgetId) {
     event.preventDefault;
     console.log(widgetId);
@@ -274,6 +253,19 @@ function openAddAuthorWindow(widgetId) {
     addAuthorWindow.kendoWindow({
         width: "600px",
         title: "Add New Author",
+        visible: false
+    }).data("kendoWindow").center().open();
+}
+
+function openAddPublisherWindow(widgetId) {
+    event.preventDefault;
+    console.log(widgetId);
+
+    var addPublisherWindow = $("#publisher-add-window");
+
+    addPublisherWindow.kendoWindow({
+        width: "600px",
+        title: "Add New Publisher",
         visible: false
     }).data("kendoWindow").center().open();
 }
@@ -322,6 +314,44 @@ function addNewAuthor() {
     }
 };
 
+
+function addNewPublisher() {
+    event.preventDefault();
+    var widget = $("#publisherId").getKendoDropDownList();
+    var dataSource = widget.dataSource;
+    var publisherName = $('#newPublisherName').val();
+    var publisherCityState = $('#newPublisherCityState').val();
+
+    if (publisherName && publisherCityState) {
+        if (confirm("Are you sure you want to add a new Publisher?")) {
+            dataSource.add({
+                name: publisherName,
+                city_state: publisherCityState
+            });
+        }
+
+        dataSource.one("sync", function () {
+            dataSource.read().then(function () {
+                var newPublisher = dataSource.data().length - 1; // Get the new item index
+                var newPublisherId = parseInt(dataSource.data()[newPublisher].id); // Get the id of the new item
+                var addPublisherWindow = $("#publisher-add-window");
+
+                widget.value(newPublisherId);
+
+                addPublisherWindow.data("kendoWindow").close();
+                widget.trigger("change"); // Tell the editor there has been a change
+
+                $('#newPublisherName').val('');
+                $('#newPublisherCityState').val('');
+            });
+        });
+
+        dataSource.sync();
+    } else {
+        alert("Publisher name and City State are Required.");
+    }
+};
+
 function closeAuthorAddWindow() {
     var addAuthorWindow = $("#author-add-window");
 
@@ -332,45 +362,15 @@ function closeAuthorAddWindow() {
     addAuthorWindow.data("kendoWindow").close();
 }
 
-function closePublisherDL() {
-    var ddl = $('#publisherId').data('kendoDropDownList');
-    closePublisherDDL = true;
-    ddl.filterInput.val(null);
-    $('#newPublisherName').val(null);
-    $('#newPublisherCityState').val(null);
-    ddl.close();
+function closePublisherAddWindow() {
+    var addPublisherWindow = $("#publisher-add-window");
+
+    $('#newPublisherName').val('');
+    $('#newPublisherCityState').val('');
+
+    addPublisherWindow.data("kendoWindow").close();
 }
 
-function onPublisherFiltering(e) {
-    var id = e.sender.element[0].id;
-    setTimeout(function () {
-        if ($('#' + id + ' .k-nodata').css('display') != 'none') {
-            closePublisherDDL = false;
-        } else {
-            closePublisherDDL = true;
-        };
-
-        $('#newPublisherName').click(function () {
-            $('#newPublisherName').focus();
-        })
-
-        $('#newPublisherCityState').click(function () {
-            $('#newPublisherCityState').focus();
-        })
-    }, 0)
-}
-
-function publisherDDLclose(e) {
-    if ($('#publisher-section').css('display') != 'none') {
-        if (closePublisherDDL == false) {
-            e.preventDefault();
-        }
-    }
-}
-
-function publisherSelect(e) {
-    closePublisherDDL = true;
-}
 var authorswidget;
 var publisherwidget;
 
@@ -391,4 +391,14 @@ function modifyPageSizes() {
 function resetPageSizes() {
     authorswidget.dataSource.pageSize(authorwidgetpagesize);
     publisherwidget.dataSource.pageSize(publisherwidgetpagesize);
+}
+
+function buildEditorTabs() {
+    var ebitortabs = $("#library-editor-tabstrip").kendoTabStrip({
+        animation: {
+            open: {
+                effects: "fadeIn"
+            }
+        }
+    });
 }
