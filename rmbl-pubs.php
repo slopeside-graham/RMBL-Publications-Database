@@ -69,13 +69,13 @@ function pubs_register_menu_pages()
         'rmbl-pubs/admin/settings.php',
         'pubs_settings'
     );
-    add_submenu_page(
-        'rmbl-pubs/admin/pubs.php',
-        'Publications Page Selections',
-        'Page Selections',
-        'manage_options',
-        'rmbl-pubs/admin/pageSelections.php',
-        'pubs_page_selections'
-    );
+    // add_submenu_page(
+    //     'rmbl-pubs/admin/pubs.php',
+    //     'Publications Page Selections',
+    //     'Page Selections',
+    //     'manage_options',
+    //     'rmbl-pubs/admin/pageSelections.php',
+    //     'pubs_page_selections'
+    // );
 }
 add_action('admin_menu', 'pubs_register_menu_pages');
