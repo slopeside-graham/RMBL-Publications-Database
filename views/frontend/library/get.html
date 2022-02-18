@@ -130,20 +130,14 @@
                         #}#
                     #}#
                     <!-- End Chapter Section-->
-                    <!-- Other Section-->
+                    <!-- Other Section -->
                     #if (reftypename == 'OTHER') {#
                         <span class="library-item-title">#=title#</span>.
-                        #if (restofreference) {#
-                            <a href="#:restofreference#" target="_blank" class="library-item-restofreference">Reference</a>
-                        #}#
                     #}#
                     <!-- End Other Section-->
-                    <!-- Paper Section-->
+                    <!-- Paper Section -->
                     #if (reftypename == 'STUDENTPAPER') {#
                         <span class="library-item-title">#=title#</span>. Student Paper.
-                        #if (restofreference) {#
-                            <a href="#:restofreference#" target="_blank" class="library-item-restofreference">Reference</a>
-                        #}#
                     #}#
                     <!-- End Paper Section-->
                     <!-- Thesis Section-->
@@ -157,19 +151,55 @@
                         #}#
                     #}#
                     <!-- End Thesis Section-->
+
                     <!-- Links Section-->
-                    #if (pdf_url) {#
-                        <a href="#:pdf_url#" target="_blank" class="library-item-pdf-url">pdf</a>
-                    #}#
-                    #if (abstract_url) {#
-                        <a href="#:abstract_url#" target="_blank" class="library-item-abstract-url">abstract</a>
-                    #}#
-                    #if (reftypename != 'OTHER' && reftypename != 'STUDENTPAPER') {#
+                    <div>
+                     <!-- Other Section Links -->
+                     #if (reftypename == 'OTHER') {#
                         #if (restofreference) {#
-                            <br/>
-                            <a href="#:restofreference#" target="_blank" class="library-item-restofreference">Reference</a>
+                            <div>
+                            #if (restofreference.startsWith('http')) {#
+                                <a href="#:restofreference#" target="_blank" class="library-item-restofreference">#:restofreference#</a>
+                            #} else {#
+                                #:restofreference#
+                            #}#
+                        </div>
                         #}#
                     #}#
+                    <!-- End Other Section Links -->
+                    <!-- Paper Section Links -->
+                    #if (reftypename == 'STUDENTPAPER') {#
+                        #if (restofreference) {#
+                            <div>
+                            #if (restofreference.startsWith('http')) {#
+                                <a href="#:restofreference#" target="_blank" class="library-item-restofreference">#:restofreference#</a>
+                            #} else {#
+                                #:restofreference#
+                            #}#
+                        </div>
+                        #}#
+                    #}#
+                    <!-- End Paper Section-->
+                    #if (reftypename != 'OTHER' && reftypename != 'STUDENTPAPER') {#
+                        #if (restofreference) {#
+                            <div>
+                            #if (restofreference.startsWith('http')) {#
+                                <a href="#:restofreference#" target="_blank" class="library-item-restofreference">#:restofreference#</a>
+                            #} else if (restofreference.toLowerCase().includes('doi:')) {#
+                                #:restofreference#
+                            #} else {#
+                                DOI: #:restofreference#
+                            #}#
+                        </div>
+                        #}#
+                    #}#
+                    #if (pdf_url) {#
+                        <div><a href="#:pdf_url#" target="_blank" class="library-item-pdf-url">pdf</a></div>
+                    #}#
+                    #if (abstract_url) {#
+                        <div><a href="#:abstract_url#" target="_blank" class="library-item-abstract-url">abstract</a></div>
+                    #}#
+                    </div>
                     <!-- End Links Section-->
                 </div>
             </div>
