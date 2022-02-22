@@ -86,7 +86,7 @@
                     #if (reftypename == 'ARTICLE') {#
                         <span class="library-item-title">#=title#.</span>
                         #if (journalname && volume && pages) {# 
-                            <span class="library-item-journalname">#:journalname# #:volume#:#:pages#</span>
+                            <span class="library-item-journalname">#:journalname# #:volume#:#:pages#.</span>
                         #}# 
                         #if (!journalname && volume && pages) {# 
                             <span class="library-item-journalname">#:volume#:#:pages#.</span>
@@ -161,7 +161,6 @@
                     <!-- End Thesis Section-->
 
                     <!-- Links Section-->
-                    <div>
                      <!-- Other Section Links -->
                      #if (reftypename == 'OTHER') {#
                         #if (restofreference) {#
@@ -190,7 +189,6 @@
                     <!-- End Paper Section-->
                     #if (reftypename != 'OTHER' && reftypename != 'STUDENTPAPER') {#
                         #if (restofreference) {#
-                            <div>
                             #if (restofreference.startsWith('http')) {#
                                 <a href="#:restofreference#" target="_blank" class="library-item-restofreference">#:restofreference#</a>
                             #} else if (restofreference.toLowerCase().includes('doi:')) {#
@@ -198,7 +196,6 @@
                             #} else {#
                                 DOI: #:restofreference#
                             #}#
-                        </div>
                         #}#
                     #}#
                     #if (pdf_url) {#
@@ -209,7 +206,6 @@
                     #}#
                     </div>
                     <!-- End Links Section-->
-                </div>
             </div>
         </script>
 </div>
