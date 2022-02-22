@@ -65,7 +65,7 @@ function pubs_main()
                     <div id="author-add-window">
                         <div class="editor-section">
                             <div class="editor-row">
-                                <label>Last Name: <input type="text" data-role="textbox" id="newAuthorLastName" /></label>
+                                <label>Last Name: <input type="text" data-role="textbox" id="newAuthorLastName" required /></label>
                                 <label>First and Middle Initial: <input type="text" data-role="textbox" id="newAuthorFirstName" /></label>
                             </div>
                             <div class="editor-row">

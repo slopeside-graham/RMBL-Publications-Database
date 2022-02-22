@@ -278,7 +278,7 @@ function addNewAuthor() {
     var authorLastName = $('#newAuthorLastName').val();
     var authorSuffix = $('#newAuthorSuffix').val();
 
-    if (authorFirstName && authorLastName && authorSuffix) {
+    if (authorLastName) {
         if (confirm("Are you sure you want to add a new Author?")) {
             dataSource.add({
                 FirstName: authorFirstName,
@@ -310,7 +310,7 @@ function addNewAuthor() {
 
         dataSource.sync();
     } else {
-        alert("Author First Initial, Last Name and Suffix are Required.");
+        alert("Author Last Name is Required.");
     }
 };
 
