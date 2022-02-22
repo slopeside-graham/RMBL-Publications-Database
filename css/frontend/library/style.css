@@ -221,3 +221,7 @@ div.k-loading-mask {
 .year-filter {
     padding-bottom: 10px;
 }
+
+.library-item-restofreference {
+    word-break: break-all;
+}
