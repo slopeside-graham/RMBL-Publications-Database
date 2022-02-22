@@ -85,16 +85,24 @@
                     <!-- Aricle Section -->
                     #if (reftypename == 'ARTICLE') {#
                         <span class="library-item-title">#=title#.</span>
-                        #if (journalname) {# 
-                            <span class="library-item-journalname">#:journalname#.</span>
+                        #if (journalname && volume && pages) {# 
+                            <span class="library-item-journalname">#:journalname# #:volume#:#:pages#</span>
                         #}# 
-                        #if (volume && pages) {#
-                            <span class="library-item-volume">Volume: #:volume#,</span> <span class="library-item-pages">pages: #:pages#.</span>
-                        #} else if (volume && !pages) {#
-                            <span class="library-item-volume">Volume: #:volume#.</span>
-                        #} else if (!volume && pages) {#
-                            <span class="library-item-pages">Pages: #:pages#.</span>
+                        #if (!journalname && volume && pages) {# 
+                            <span class="library-item-journalname">#:volume#:#:pages#.</span>
                         #}# 
+                        #if (journalname && !volume && pages) {# 
+                            <span class="library-item-journalname">#:journalname# #:pages#.</span>
+                        #}# 
+                        #if (journalname && volume && !pages) {# 
+                            <span class="library-item-journalname">#:journalname# #:volume#.</span>
+                        #}#
+                        #if (!journalname && !volume && pages) {# 
+                            <span class="library-item-journalname">#:pages#.</span>
+                        #}#
+                        #if (!journalname && volume && !pages) {# 
+                            <span class="library-item-journalname">#:volume#.</span>
+                        #}#
                     #}#
                     <!-- End Article Section-->
                     <!-- Book Section-->
