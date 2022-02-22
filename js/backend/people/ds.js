@@ -57,19 +57,19 @@ peopleDataSource = new kendo.data.DataSource({
                 id: { type: "number", editable: false, nullable: false },
                 FirstName: {
                     type: "string", validation: {
-                        required: true, checklength
+                        required: false, checklength
                     }
                 },
                 LastName: {
                     type: "string",
                     validation: {
-                        required: true, checklength
+                        required: false, checklength
                     }
                 },
                 SuffixName: {
                     type: "string",
                     validation: {
-                        required: true, checklength
+                        required: false, checklength
                     }
                 }
             }
@@ -134,19 +134,19 @@ libraryPeopleDataSource = new kendo.data.DataSource({
                 id: { type: "number", editable: false, nullable: false },
                 FirstName: {
                     type: "string", validation: {
-                        required: true, checklength
+                        required: false, checklength
                     }
                 },
                 LastName: {
                     type: "string",
                     validation: {
-                        required: true, checklength
+                        required: false, checklength
                     }
                 },
                 SuffixName: {
                     type: "string",
                     validation: {
-                        required: true, checklength
+                        required: false, checklength
                     }
                 }
             }

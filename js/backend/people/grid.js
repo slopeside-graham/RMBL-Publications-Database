@@ -15,7 +15,6 @@ $(function () {
                         var input = $("<input/>");
                         // set its name to the field to which the column is bound ('name' in this case)
                         input.attr("name", options.field);
-                        input.attr("required", "required");
                         input.attr("maximumlength", 50);
                         // append it to the container
                         input.appendTo(container).kendoTextBox();
@@ -28,7 +27,6 @@ $(function () {
                         var input = $("<input/>");
                         // set its name to the field to which the column is bound ('name' in this case)
                         input.attr("name", options.field);
-                        input.attr("required", "required");
                         input.attr("maximumlength", 5);
                         // append it to the container
                         input.appendTo(container).kendoTextBox();
@@ -41,7 +39,6 @@ $(function () {
                         var input = $("<input/>");
                         // set its name to the field to which the column is bound ('name' in this case)
                         input.attr("name", options.field);
-                        input.attr("required", "required");
                         input.attr("maximumlength", 10);
                         // append it to the container
                         input.appendTo(container).kendoTextBox();
