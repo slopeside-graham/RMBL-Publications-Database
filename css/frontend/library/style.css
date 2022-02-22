@@ -222,6 +222,6 @@ div.k-loading-mask {
     padding-bottom: 10px;
 }
 
-.library-item-restofreference {
+a.library-item-restofreference {
     word-break: break-all;
 }
