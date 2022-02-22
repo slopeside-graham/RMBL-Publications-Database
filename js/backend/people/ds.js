@@ -63,7 +63,7 @@ peopleDataSource = new kendo.data.DataSource({
                 LastName: {
                     type: "string",
                     validation: {
-                        required: false, checklength
+                        required: true, checklength
                     }
                 },
                 SuffixName: {
@@ -140,7 +140,7 @@ libraryPeopleDataSource = new kendo.data.DataSource({
                 LastName: {
                     type: "string",
                     validation: {
-                        required: false, checklength
+                        required: true, checklength
                     }
                 },
                 SuffixName: {
