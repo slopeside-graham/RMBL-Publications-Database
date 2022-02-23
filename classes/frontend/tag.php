@@ -109,7 +109,8 @@ namespace PUBS {
                     "SELECT 
                         *
                     FROM 
-                        tag t"
+                        tag t
+                    Order By tag asc"
                 );
                 foreach ($results as $row) {
                     $tag = Tag::populatefromRow($row);
