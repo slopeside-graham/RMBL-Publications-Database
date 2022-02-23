@@ -64,7 +64,8 @@ namespace PUBS {
         {
             return [
                 'id' => $this->id,
-                'tag' => $this->tag
+                'tag' => $this->tag,
+                'records' => $this->records
                 //  'DateCreated' => $this->DateCreated,
                 //  'DateModified' => $this->DateModified
             ];
@@ -112,6 +113,9 @@ namespace PUBS {
                 );
                 foreach ($results as $row) {
                     $tag = Tag::populatefromRow($row);
+                    $records = \PUBS\Admin\Library_Has_Tag::GetTotalByTagId($tag->id);
+                    $tag->records = $records;
+
                     $tags->add_item($tag);  // Add the author to the collection
                 }
             } catch (\MeekroDBException $e) {
@@ -134,6 +138,7 @@ namespace PUBS {
 
             $tag->id = $row['id'];
             $tag->tag = $row['tag'];
+            $tag->record = $row['records'];
             //   $libraryitem->DateCreated = $row['DateCreated'];
             //   $libraryitem->DateModified = $row['DateModified'];
 

@@ -36,6 +36,27 @@ namespace PUBS\Admin {
             ];
         }
 
+        public function Delete()
+        {
+            PUBSUTILS::$db->error_handler = false; // since we're catching errors, don't need error handler
+            PUBSUTILS::$db->throw_exception_on_error = true;
+
+            try {
+                PUBSUTILS::$db->query(
+                    "DELETE 
+                        from tag 
+                    WHERE id=%i",
+                    $this->id
+                );
+                $counter = PUBSUTILS::$db->affectedRows();
+            } catch (\MeekroDBException $e) {
+                $message = $e->getMessage();
+                $query = $e->getQuery();
+                return new \WP_Error('Tag_Delete_Error', $e->getMessage());
+            }
+            return true;
+        }
+
         public static function populatefromrow($row)
         {
             $tag = \PUBS\Tag::populatefromrow($row);

@@ -81,11 +81,12 @@ $(function () {
                     // data-template="publisher-template" />
                 });
                 $('#libraryitemtags').kendoMultiSelect({
-                    dataSource: TagDataSource,
+                    dataSource: tagDataSource,
                     dataTextField: "tag",
                     dataValueField: "id",
                     valuePrimitive: true,
                     value: e.model.tagIds,
+                    template: '#: tag# (#: records#)'
                     // noDataTemplate: kendo.template($("#no-author-template").html()),
                 });
                 libraryEditItem = e.model;

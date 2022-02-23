@@ -160,8 +160,8 @@ namespace PUBS\Admin {
                     $libraryitem->authors = $authors; // Assign People Names to Authors in the Library item.
                     $libraryitem->authorIds = $peopleIdsArray; // Assing the poepl ids array to the library object
 
-                    $library_has_tags = \Pubs\Library_Has_Tag::GetAllByLibraryId($row['id']);
-                    
+                    $library_has_tags = \Pubs\Admin\Library_Has_Tag::GetAllByLibraryId($row['id']);
+
                     $tagIdsArray = [];
                     foreach ($library_has_tags['data']->jsonSerialize() as $library_has_tag) {
                         array_push($tagIdsArray, $library_has_tag->tag_id);
@@ -260,7 +260,7 @@ namespace PUBS\Admin {
                 Author::updateAuthorsByLibraryId($this->authorIds, $this->id);
 
                 // Update the library_has_tags Table
-                Library_Has_Tag::updateLibraryHasTagByLibraryId($this->tagIds, $this->id);
+                \PUBS\Admin\Library_Has_Tag::updateLibraryHasTagByLibraryId($this->tagIds, $this->id);
             } catch (\MeekroDBException $e) {
                 $query = $e->getQuery();
                 return new \WP_Error('Library_Update_Error', $e->getMessage());
@@ -316,7 +316,7 @@ namespace PUBS\Admin {
                 Author::updateAuthorsByLibraryId($this->authorIds, $this->id);
 
                 // Update the Library_has_Tag Table
-                Library_Has_Tag::updateLibraryHasTagByLibraryId($this->tagIds, $this->id);
+                \PUBS\Admin\Library_Has_Tag::updateLibraryHasTagByLibraryId($this->tagIds, $this->id);
 
                 PUBSUTILS::$db->update(
                     $tableName,

@@ -1,6 +1,6 @@
 $ = jQuery;
 
-TagDataSource = new kendo.data.DataSource({
+tagDataSource = new kendo.data.DataSource({
     transport: {
         read: function (options) {
             displayLoading($('body'));

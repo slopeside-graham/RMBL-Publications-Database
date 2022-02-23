@@ -1,12 +1,12 @@
 <?php
 
-namespace PUBS {
+namespace PUBS\Admin {
 
     use MeekroDB;
     use PUBS\Utils as PUBSUTILS;
     use WhereClause;
 
-    class Library_Has_Tag extends Pubs_Base implements \JsonSerializable
+    class Library_Has_Tag extends \PUBS\Pubs_Base implements \JsonSerializable
     {
         private $_id;
         private $_library_id;
@@ -152,7 +152,7 @@ namespace PUBS {
             PUBSUTILS::$db->error_handler = false; // since we're catching errors, don't need error handler
             PUBSUTILS::$db->throw_exception_on_error = true;
 
-            $tags = new NestedSerializable();
+            $tags = new \PUBS\NestedSerializable();
 
             try {
                 $results = PUBSUTILS::$db->query(
@@ -181,7 +181,7 @@ namespace PUBS {
             PUBSUTILS::$db->error_handler = false; // since we're catching errors, don't need error handler
             PUBSUTILS::$db->throw_exception_on_error = true;
 
-            $library_has_tags = new NestedSerializable();
+            $library_has_tags = new \PUBS\NestedSerializable();
 
             try {
                 $results = PUBSUTILS::$db->query(
@@ -205,6 +205,27 @@ namespace PUBS {
                 [
                     'data' => $library_has_tags
                 ];
+        }
+
+        public static function GetTotalByTagId($tagid)
+        {
+            PUBSUTILS::$db->error_handler = false; // since we're catching errors, don't need error handler
+            PUBSUTILS::$db->throw_exception_on_error = true;
+
+            try {
+                $total = PUBSUTILS::$db->query(
+                    "SELECT
+                        COUNT(*) 
+                    From 
+                        library_has_tag 
+                    Where 
+                        tag_id = %i",
+                    $tagid
+                );
+            } catch (\MeekroDBException $e) {
+                return new \WP_Error('Library_Has_Tag_Get_Error', $e->getMessage());
+            }
+            return $total[0]['COUNT(*)'];
         }
 
         public static function updateLibraryHasTagByLibraryId($tagIds, $libraryid)
