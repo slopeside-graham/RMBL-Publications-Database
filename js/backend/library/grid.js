@@ -79,7 +79,15 @@ $(function () {
                     // data-select="publisherSelect" 
                     // data-value-template="publisher-template" 
                     // data-template="publisher-template" />
-                })
+                });
+                $('#libraryitemtags').kendoMultiSelect({
+                    dataSource: TagDataSource,
+                    dataTextField: "tag",
+                    dataValueField: "id",
+                    valuePrimitive: true,
+                    value: e.model.tagIds,
+                    // noDataTemplate: kendo.template($("#no-author-template").html()),
+                });
                 libraryEditItem = e.model;
                 // modifyPageSizes();
             }

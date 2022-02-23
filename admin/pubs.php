@@ -155,6 +155,9 @@ function pubs_main()
                             <label>Copy in Library:<input name="copyinlibrary" data-role="dropdownlist" data-bind="value:copyinlibrary" data-value-field="id" data-text-field="name" data-source="[ {id: 'T', name: 'True'}, {id: 'F', name: 'False'} ]" /></label>
                         </div>
                         <div class="editor-row">
+                            <label>Tags:<input name="tagIds" id="libraryitemtags" /></label>
+                        </div>
+                        <div class="editor-row">
                             <label>Keywords:<input type="text" data-role="textbox" maximumlength="200" name="keywords" /></label>
                         </div>
                         <div class="editor-row">
@@ -200,7 +203,6 @@ function pubs_main()
 
         <!-- Kendo Templates below -->
         <script type="text/html" id="no-publisher-template">
-            
             # var id = instance.element[0].id; #
             <div>
                 No data found. Do you want to add new publisher?

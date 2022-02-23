@@ -420,6 +420,7 @@ namespace PUBS {
                 'student' => $this->student,
                 'authors' => $this->authors,
                 'authorIds' => $this->authorIds,
+                'tagIds' => $this->tagIds,
                 //  'DateCreated' => $this->DateCreated,
                 //  'DateModified' => $this->DateModified
             ];

@@ -3,6 +3,7 @@
 namespace PUBS\Admin {
 
     use MeekroDB;
+    use PUBS\Library_Has_Tag;
     use PUBS\Utils as PUBSUTILS;
     use WhereClause;
 
@@ -43,7 +44,9 @@ namespace PUBS\Admin {
                 $this->email = $library->email;
                 $this->student = $library->student;
                 $this->authors = $library->authors;
+                $this->tags = $library->tags;
                 $this->authorIds = $library->authorIds;
+                $this->tagIds = $library->tagIds;
                 //   $this->DateCreated = $library->DateCreated;
                 //   $this->DateModified = $library->DateModified;
             }
@@ -157,6 +160,15 @@ namespace PUBS\Admin {
                     $libraryitem->authors = $authors; // Assign People Names to Authors in the Library item.
                     $libraryitem->authorIds = $peopleIdsArray; // Assing the poepl ids array to the library object
 
+                    $library_has_tags = \Pubs\Library_Has_Tag::GetAllByLibraryId($row['id']);
+                    
+                    $tagIdsArray = [];
+                    foreach ($library_has_tags['data']->jsonSerialize() as $library_has_tag) {
+                        array_push($tagIdsArray, $library_has_tag->tag_id);
+                    }
+                    $libraryitem->tags = $library_has_tags;
+                    $libraryitem->tagIds = $tagIdsArray;
+
                     $libraryitems->add_item($libraryitem);  // Add the publication to the collection
                 }
 
@@ -194,7 +206,7 @@ namespace PUBS\Admin {
             ];
         }
 
-        
+
         public function Create($request)
         {
             PUBSUTILS::$db->error_handler = false; // since we're catching errors, don't need error handler
@@ -235,7 +247,7 @@ namespace PUBS\Admin {
                     // 'DateCreated' => $this->DateCreatedm
                     // 'DateModified' => $this->DateModified\
                 ];
-                
+
                 PUBSUTILS::$db->insert(
                     $tableName,
                     $setArray
@@ -244,9 +256,11 @@ namespace PUBS\Admin {
                 $this->id = PUBSUTILS::$db->insertId();
                 $library = Library::Get($this->id);
 
-                 // Update the Authors Table
-                 Author::updateAuthorsByLibraryId($this->authorIds, $this->id);
+                // Update the Authors Table
+                Author::updateAuthorsByLibraryId($this->authorIds, $this->id);
 
+                // Update the library_has_tags Table
+                Library_Has_Tag::updateLibraryHasTagByLibraryId($this->tagIds, $this->id);
             } catch (\MeekroDBException $e) {
                 $query = $e->getQuery();
                 return new \WP_Error('Library_Update_Error', $e->getMessage());
@@ -300,7 +314,10 @@ namespace PUBS\Admin {
 
                 // Update the Authors Table
                 Author::updateAuthorsByLibraryId($this->authorIds, $this->id);
-                
+
+                // Update the Library_has_Tag Table
+                Library_Has_Tag::updateLibraryHasTagByLibraryId($this->tagIds, $this->id);
+
                 PUBSUTILS::$db->update(
                     $tableName,
                     $setArray,
@@ -337,6 +354,7 @@ namespace PUBS\Admin {
             $adminLibrary = new Library($library);
 
             $adminLibrary->authorIds = $row['authorIds'];
+            $adminLibrary->tagIds = $row['tagIds'];
 
             return $adminLibrary;
         }
