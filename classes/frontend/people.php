@@ -175,9 +175,9 @@ namespace PUBS {
             $person->FirstName = $row['FirstName'];
             $person->LastName = $row['LastName'];
             $person->SuffixName = $row['SuffixName'];
-            if ($row['Student'] === 'true') {
+            if ($row['Student'] === 'true' || $row['Student'] === 'on') {
                 $person->Student = 1;
-            } else if ($row['Student'] === 'false') {
+            } else if ($row['Student'] === 'false' || $row['Student'] === '') {
                 $person->Student = 0;
             } else {
                 $person->Student = $row['Student'];

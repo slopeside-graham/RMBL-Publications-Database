@@ -71,6 +71,9 @@ function pubs_main()
                             <div class="editor-row">
                                 <label>Suffix: <input type="text" data-role="textbox" id="newAuthorSuffix" /></label><br />
                             </div>
+                            <div class="editor-row">
+                                <label>Student: <input type="checkbox" data-role="checkbox" id="newAuthorStudent" /></label><br />
+                            </div>
                             <button type="submit" class="k-button k-button-solid-base k-button-solid k-button-rectangle k-button-md k-rounded-md" onclick="addNewAuthor()">Add new Author</button>
                             <button class="k-button" onclick="closeAuthorAddWindow()">Close</button>
                         </div>

@@ -286,6 +286,7 @@ function addNewAuthor() {
     var authorFirstName = $('#newAuthorFirstName').val();
     var authorLastName = $('#newAuthorLastName').val();
     var authorSuffix = $('#newAuthorSuffix').val();
+    var authorStudent = $('#newAuthorStudent').val()
 
     if (authorLastName) {
         if (confirm("Are you sure you want to add a new Author?")) {
@@ -293,6 +294,7 @@ function addNewAuthor() {
                 FirstName: authorFirstName,
                 LastName: authorLastName,
                 SuffixName: authorSuffix,
+                Student: authorStudent,
                 LibraryId: libraryEditItem.id,
                 peopleIds: libraryEditItem.authorIds
             });
@@ -314,6 +316,7 @@ function addNewAuthor() {
                 $('#newAuthorFirstName').val('');
                 $('#newAuthorLastName').val('');
                 $('#newAuthorSuffix').val('');
+                $('#newAuthorStudent').val('');
             });
         });
 
