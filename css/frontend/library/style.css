@@ -1,226 +1,253 @@
 #library-list {
-    display: grid;
-    grid-template-columns: auto;
-    column-gap: 5px;
+  display: grid;
+  grid-template-columns: auto;
+  column-gap: 5px;
 }
 
 @media only screen and (min-width: 768px) {
-    #library-list {
-        grid-template-columns: 20% 80%;
-    }
+  #library-list {
+    grid-template-columns: 20% 80%;
+  }
 }
 
 #library-list-view {
-    margin-right: 10px;
-    border: none;
-    min-height: 100px;
+  margin-right: 10px;
+  border: none;
+  min-height: 100px;
 }
 
 #library-list-view a {
-    color: blue;
+  color: blue;
 }
 
 .single-library-item {
-    padding: 15px 5px 10px 10px;
-    border: 1px solid #eee;
-    margin: 0 0 5px;
+  padding: 15px 5px 10px 10px;
+  border: 1px solid #eee;
+  margin: 0 0 5px;
 }
 
 .library-item-type {
-    text-align: right;
-    font-size: 8px;
+  text-align: right;
+  font-size: 8px;
 }
 
 .ARTICLE {
-    background-color: rgba(255, 0, 0, .1);
+  background-color: rgba(255, 0, 0, 0.1);
 }
 
 .ARTICLE .library-item-type {
-    color: rgba(255, 0, 0, .35);
+  color: rgba(255, 0, 0, 0.35);
 }
 
 .BOOK {
-    background-color: rgba(125,200,125,.1);
+  background-color: rgba(125, 200, 125, 0.1);
 }
 
 .BOOK .library-item-type {
-    color: rgba(125,200,125,.8);
+  color: rgba(125, 200, 125, 0.8);
 }
 
 .CHAPTER {
-    background-color: rgba(255,125,0,.1);
+  background-color: rgba(255, 125, 0, 0.1);
 }
 
 .CHAPTER .library-item-type {
-    color: rgba(255,125,0,.35)
+  color: rgba(255, 125, 0, 0.35);
 }
 
 .THESIS {
-    background-color: rgba(20, 20, 20, .1);
+  background-color: rgba(20, 20, 20, 0.1);
 }
 
 .THESIS .library-item-type {
-    color: rgba(20, 20, 20, .35);
+  color: rgba(20, 20, 20, 0.35);
 }
 
 .OTHER {
-    background-color: rgba(150, 50, 50, .1);
+  background-color: rgba(150, 50, 50, 0.1);
 }
 
 .OTHER .library-item-type {
-    color: rgba(150, 50, 50, .35);
+  color: rgba(150, 50, 50, 0.35);
 }
 
 .STUDENTPAPER {
-    background-color: rgba(50, 50, 150, .1);
+  background-color: rgba(50, 50, 150, 0.1);
 }
 
 .STUDENTPAPER .library-item-type {
-    color: rgba(50, 50, 150, .35);
+  color: rgba(50, 50, 150, 0.35);
 }
 
 /* Sort and Filter CSS */
 .filter-sort {
-    font-size: 80%;
-    margin-bottom: 20px;
+  font-size: 80%;
+  margin-bottom: 20px;
 }
 .filter-sort .filter {
-    float: unset;
-    margin: 0px;
+  float: unset;
+  margin: 0px;
 }
 
 .search-inputs {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 .search-inputs input {
-    width: 100%;
-    border: none;
-    background-repeat: repeat-x;
-    padding: 10px 15px;
-    border-bottom: 1px solid #ddd;
-    margin: 0px;
-    box-sizing: border-box;
-    font-size: 100%;
+  width: 100%;
+  border: none;
+  background-repeat: repeat-x;
+  padding: 10px 15px;
+  border-bottom: 1px solid #ddd;
+  margin: 0px;
+  box-sizing: border-box;
+  font-size: 100%;
 }
 .search-inputs input:focus {
-    outline-color: #2b669a;
+  outline-color: #2b669a;
 }
 .year-seperator {
-    padding-top: 10px;
-    padding-bottom: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 .years-filter input {
-    border-bottom: none;
+  border-bottom: none;
 }
 #yearStart {
-    border-right: 1px solid #ddd;
+  border-right: 1px solid #ddd;
 }
 #yearEnd {
-    border-left: 1px solid #ddd;
+  border-left: 1px solid #ddd;
 }
 
-#filter-types, #sort-type, .search-inputs {
-    border: 1px solid #ddd;
-    border-radius: 5px;
+#filter-types,
+#sort-type,
+.search-inputs {
+  border: 1px solid #ddd;
+  border-radius: 5px;
 }
 
 .filter-sort .search-item {
-    background-repeat: repeat-x;
-    padding: 10px 15px;
-    border-bottom: 1px solid #ddd;
+  background-repeat: repeat-x;
+  padding: 10px 15px;
+  border-bottom: 1px solid #ddd;
 }
 
-.filter-sort .search-item:first-child, .search-inputs:first-child {
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+.filter-sort .search-item:first-child,
+.search-inputs:first-child {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
-.filter-sort .search-item:last-child, .search-inputs:last-child {
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    border-bottom: none;
+.filter-sort .search-item:last-child,
+.search-inputs:last-child {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom: none;
 }
 
 .filter-sort .search-item:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .filter-sort .search-item.active {
-    background-image: linear-gradient(to bottom, #337ab7 0, #2b669a 100%);
-    color: white;
-    border-color: #2b669a;
+  background-image: linear-gradient(to bottom, #337ab7 0, #2b669a 100%);
+  color: white;
+  border-color: #2b669a;
 }
 
 .years-filter {
-    display: grid;
-    grid-template-columns: 45% 10% 45%;
-    text-align: center;
+  display: grid;
+  grid-template-columns: 45% 10% 45%;
+  text-align: center;
 }
 
 .sort-decending:after {
-    content: "\02191";
-    float: right;
+  content: "\02191";
+  float: right;
 }
 
 .sort-ascending:after {
-    content: "\02193";
-    float: right;
+  content: "\02193";
+  float: right;
 }
 
 #filter-types .type-total {
-    float: right;
+  float: right;
 }
-
 
 /* Admin editor css, move to an admin css file */
 .k-edit-label {
-    width: 30% !important;
+  width: 30% !important;
 }
 .k-edit-form-container {
-    display: block !important;
+  display: block !important;
 }
 .editor-section .editor-row {
-    display: flex;
-    padding: 10px;
-    gap: 30px;
-    align-items: flex-end;
-    flex-wrap: wrap;
+  display: flex;
+  padding: 10px;
+  gap: 30px;
+  align-items: flex-end;
+  flex-wrap: wrap;
 }
 .editor-section .editor-row label {
-    flex-grow: 1;
+  flex-grow: 1;
 }
 .editor-section .editor-row input {
-    width: 100%
+  width: 100%;
 }
 .editor-section .editor-row input[type="checkbox"] {
-    width: auto;
+  width: auto;
 }
 
 .editor-row .k-dropdown {
-    width: 100%
+  width: 100%;
 }
 .editor-row .k-textbox {
-    width: 100%
+  width: 100%;
 }
 
 #library-grid {
-    min-height: 400px;
+  min-height: 400px;
 }
 .add-item {
-    color: black;
+  color: black;
 }
 .add-item div {
-    padding: 10px;
+  padding: 10px;
 }
 .add-item input {
-    color: black;
+  color: black;
 }
 
-#author-add-window {
-    display: none;
+#author-add-window,
+#publisher-add-window {
+  display: none;
 }
 div.k-loading-mask {
-    z-index: 99999;
+  z-index: 99999;
 }
 .year-filter {
-    padding-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+}
+.tag-filter {
+  border-top: 1px solid #ddd;
+}
+.tag-filter .k-dropdown {
+  width: 100%;
+}
+.tag-filter .k-dropdown .k-dropdown-wrap {
+  background-color: transparent;
+  border: none;
+  padding-left: 10px;
+}
+.tag-filter .k-dropdown .k-dropdown-wrap .k-input {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.tag-filter .k-dropdown .k-dropdown-wrap .k-select {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.tag-filter .k-form-error {
+  display: none !important;
 }

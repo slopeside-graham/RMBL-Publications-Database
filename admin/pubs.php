@@ -31,6 +31,7 @@ function pubs_main()
                                         <span class="year-seperator">&nbsp;-&nbsp;</span>
                                         <input id="yearEnd" placeholder="Year End" />
                                     </div>
+                                    <div class="tag-filter"><input id="tag" /></div>
                                 </div>
                                 <button onclick="filterLibrary()">Search</button>
                             </form>

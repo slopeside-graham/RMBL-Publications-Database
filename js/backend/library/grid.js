@@ -54,7 +54,7 @@ $(function () {
                     dataValueField: "id",
                     valuePrimitive: true,
                     itemTemplate: function (dataItem) {
-                        return `${dataItem.LastName}${dataItem.FirstName ? ", " + dataItem.FirstName: ""}${dataItem.Student == 1 ? "*" : ""}`
+                        return `${dataItem.LastName}${dataItem.FirstName ? ", " + dataItem.FirstName : ""}${dataItem.Student == 1 ? "*" : ""}`
                     },
                     tagTemplate: function (dataItem) {
                         return `${dataItem.LastName}${dataItem.FirstName ? ", " + dataItem.FirstName : ""}${dataItem.Student == 1 ? "*" : ""}`
@@ -221,6 +221,7 @@ function filterLibrary() {
     keywords = document.getElementById('keywords').value;
     startYear = document.getElementById('yearStart').value;
     endYear = document.getElementById('yearEnd').value;
+    tag = document.getElementById('tag').value;
 
     LibraryDataSource.filter(
         [
@@ -229,7 +230,8 @@ function filterLibrary() {
             { field: "keywords", value: keywords, operator: "LIKE" },
             { field: "year", value: startYear, operator: ">=" },
             { field: "year", value: endYear, operator: "<=" },
-            { field: "rt.name", value: type, operator: "eq" }
+            { field: "rt.name", value: type, operator: "eq" },
+            { field: "tag", value: type, operator: "eq" }
         ]
     )
 }
