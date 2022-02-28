@@ -170,12 +170,7 @@ libraryPeopleDataSource = new kendo.data.DataSource({
                         required: false, checklength
                     }
                 },
-                Student: {
-                    type: "boolean",
-                    validation: {
-                        required: false
-                    }
-                }
+                Student: {}
             }
         }
     }

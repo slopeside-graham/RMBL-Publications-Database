@@ -555,7 +555,11 @@ namespace PUBS {
                     $peopleArray = []; // Create an array to put in the people (authors).
                     foreach ($authors->jsonSerialize() as $author) { // Loop through authors and pull People names into People array.
                         $person = People::Get($author->peopleId);
-                        array_push($peopleArray, $person['data']->LastName . " " . $person['data']->FirstName);
+                        $studentMark = '';
+                        if ($person['data']->Student === '1') {
+                            $studentMark = '*';
+                        };
+                        array_push($peopleArray, $person['data']->LastName . " " . $person['data']->FirstName . $studentMark);
                     }
                     $authorsString = implode(", ", $peopleArray); // Convert People array to String.
                     $libraryitem->authors = $authorsString; // Assign People Names to Authors in the Library item.

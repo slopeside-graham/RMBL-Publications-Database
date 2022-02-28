@@ -53,8 +53,13 @@ $(function () {
                     dataTextField: "LastName",
                     dataValueField: "id",
                     valuePrimitive: true,
-                    itemTemplate: '#: LastName #, #: FirstName#',
-                    tagTemplate: '#: LastName #, #: FirstName#',
+                    itemTemplate: function (dataItem) {
+                        return `${dataItem.LastName}, ${dataItem.FirstName}${dataItem.Student == 1 ? "*" : ""}`
+                    },
+                    // itemTemplate: '#: LastName #, #: FirstName#, # Student === 1 ? "*" : ""#',
+                    tagTemplate: function (dataItem) {
+                        return `${dataItem.LastName}, ${dataItem.FirstName}${dataItem.Student == 1 ? "*" : ""}`
+                    },
                     value: e.model.authorIds,
                     noDataTemplate: kendo.template($("#no-author-template").html()),
                     //filtering: onAuthorFiltering,

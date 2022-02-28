@@ -153,7 +153,11 @@ namespace PUBS\Admin {
                     $peopleIdsArray = []; // Create an array to hold the People Ids
                     foreach ($authors->jsonSerialize() as $author) { // Loop through authors and pull People names into People array.
                         $person = \PUBS\People::Get($author->peopleId);
-                        array_push($peopleArray, $person['data']->LastName . " " . $person['data']->FirstName);
+                        $studentMark = '';
+                        if ($person['data']->Student === '1') {
+                            $studentMark = '*';
+                        };
+                        array_push($peopleArray, $person['data']->LastName . " " . $person['data']->FirstName . $studentMark);
                         array_push($peopleIdsArray, $person['data']->id);
                     }
                     $authors = implode(", ", $peopleArray); // Convert People array to String.
