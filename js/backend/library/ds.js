@@ -39,7 +39,7 @@ LibraryDataSource = new kendo.data.DataSource({
                     hideLoading($('body'));
                 },
                 error: function (result) {
-                  //  options.error(result);
+                    //  options.error(result);
                     alert(result.responseText);
                     hideLoading($('body'));
                 }

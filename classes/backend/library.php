@@ -134,6 +134,8 @@ namespace PUBS\Admin {
                         library l
                     INNER JOIN 
                         reftype rt ON l.reftypeId = rt.id
+                    LEFT JOIN
+                        library_has_tag lht ON l.id = lht.library_id
                     WHERE %l"
                         .
                         $sqlSort // Sort Clause
@@ -183,6 +185,8 @@ namespace PUBS\Admin {
                         library l
                     INNER JOIN 
                         reftype rt ON l.reftypeId = rt.id
+                    LEFT JOIN
+                        library_has_tag lht ON l.id = lht.library_id
                     WHERE %l",
                     $searchfilterwhere
                 );
@@ -194,6 +198,8 @@ namespace PUBS\Admin {
                         library l
                     INNER JOIN 
                         reftype rt ON l.reftypeId = rt.id
+                    LEFT JOIN
+                        library_has_tag lht ON l.id = lht.library_id
                     WHERE %l
                     GROUP BY rt.name",
                     $searchwhere

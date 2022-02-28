@@ -231,7 +231,7 @@ function filterLibrary() {
             { field: "year", value: startYear, operator: ">=" },
             { field: "year", value: endYear, operator: "<=" },
             { field: "rt.name", value: type, operator: "eq" },
-            { field: "tag", value: type, operator: "eq" }
+            { field: "lht.tag_id", value: tag, operator: "eq" }
         ]
     )
 }

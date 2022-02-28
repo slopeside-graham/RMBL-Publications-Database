@@ -17,7 +17,8 @@ $(function () {
         valuePrimitive: true,
         filter: "contains",
         optionLabel: "Select a Tag",
-        rounded: null
+        rounded: null,
+        template: '#: tag# (#: records#)'
     })
 })
 
