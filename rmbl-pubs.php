@@ -14,9 +14,9 @@
 
 use PUBS\Utils as PUBSUtils;
 
-const scriptver = '1.0.2142020-4';  // Use this in register script calls to bypass cache.
+const scriptver = '1.0.2-28-22-1';  // Use this in register script calls to bypass cache.
 
- /*    Include 3rd party libraries  */
+/*    Include 3rd party libraries  */
 // Include meekrodb database library
 if (!class_exists('DB')) {
     include_once(plugin_dir_path(__FILE__) . '/lib/meekrodb.2.3.class.php');
@@ -42,7 +42,7 @@ $pubsdbport = PUBSUtils::getunencryptedsetting('pubs-dbport');
 $pubsdbuser = PUBSUtils::getunencryptedsetting('pubs-dbuser');
 $pubsdbpassword = PUBSUtils::getencryptedsetting('pubs-dbpassword');
 $pubsdbname = PUBSUtils::getunencryptedsetting('pubs-dbname');
- PUBSUtils::$db = new MeekroDB($pubsdbhost, $pubsdbuser, $pubsdbpassword, $pubsdbname, $pubsdbport);
+PUBSUtils::$db = new MeekroDB($pubsdbhost, $pubsdbuser, $pubsdbpassword, $pubsdbname, $pubsdbport);
 
 // Include Setting Pages
 include_once(plugin_dir_path(__FILE__) . '/admin/pubs.php');
