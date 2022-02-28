@@ -420,6 +420,7 @@ namespace PUBS {
                 'student' => $this->student,
                 'authors' => $this->authors,
                 'authorIds' => $this->authorIds,
+                'tagIds' => $this->tagIds,
                 //  'DateCreated' => $this->DateCreated,
                 //  'DateModified' => $this->DateModified
             ];
@@ -532,10 +533,12 @@ namespace PUBS {
                         p.city_state as publishercity_state
                     FROM 
                         library l
-                    INNER JOIN 
+                    LEFT JOIN 
                         reftype rt ON l.reftypeId = rt.id
-                    INNER JOIN
+                    LEFT JOIN
                         publisher p ON l.publisherId = p.id
+                    LEFT JOIN
+                        library_has_tag lht ON l.id = lht.library_id
                     WHERE %l"
                         .
                         $sqlSort // Sort Clause
@@ -554,7 +557,11 @@ namespace PUBS {
                     $peopleArray = []; // Create an array to put in the people (authors).
                     foreach ($authors->jsonSerialize() as $author) { // Loop through authors and pull People names into People array.
                         $person = People::Get($author->peopleId);
-                        array_push($peopleArray, $person['data']->LastName . " " . $person['data']->FirstName);
+                        $studentMark = '';
+                        if ($person['data']->Student === '1') {
+                            $studentMark = '*';
+                        };
+                        array_push($peopleArray, $person['data']->LastName . " " . $person['data']->FirstName . $studentMark);
                     }
                     $authorsString = implode(", ", $peopleArray); // Convert People array to String.
                     $libraryitem->authors = $authorsString; // Assign People Names to Authors in the Library item.
@@ -569,6 +576,8 @@ namespace PUBS {
                         library l
                     INNER JOIN 
                         reftype rt ON l.reftypeId = rt.id
+                    LEFT JOIN
+                        library_has_tag lht ON l.id = lht.library_id
                     WHERE %l",
                     $searchfilterwhere
                 );
@@ -580,6 +589,8 @@ namespace PUBS {
                         library l
                     INNER JOIN 
                         reftype rt ON l.reftypeId = rt.id
+                    LEFT JOIN
+                        library_has_tag lht ON l.id = lht.library_id
                     WHERE %l
                     GROUP BY rt.name",
                     $searchwhere

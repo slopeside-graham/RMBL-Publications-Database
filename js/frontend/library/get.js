@@ -17,6 +17,16 @@ $(function () {
         })
         attachPager();
         attachFilter();
+        $('#tag').kendoDropDownList({
+            dataSource: tagDataSource,
+            dataTextField: "tag",
+            dataValueField: "id",
+            valuePrimitive: true,
+            filter: "contains",
+            optionLabel: "Select a Tag",
+            rounded: null,
+            template: '#: tag# (#: records#)'
+        })
     })
 });
 
@@ -136,6 +146,7 @@ function filterLibrary() {
     keywords = document.getElementById('keywords').value;
     startYear = document.getElementById('yearStart').value;
     endYear = document.getElementById('yearEnd').value;
+    tag = document.getElementById('tag').value;
 
     LibraryDataSource.filter(
         [
@@ -144,7 +155,8 @@ function filterLibrary() {
             { field: "keywords", value: keywords, operator: "LIKE" },
             { field: "year", value: startYear, operator: ">=" },
             { field: "year", value: endYear, operator: "<=" },
-            { field: "rt.name", value: type, operator: "eq" }
+            { field: "rt.name", value: type, operator: "eq" },
+            { field: "lht.tag_id", value: tag, operator: "eq" }
         ]
     )
 }

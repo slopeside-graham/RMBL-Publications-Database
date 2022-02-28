@@ -10,6 +10,16 @@ $(function () {
             }
         });
     })
+    $('#tag').kendoDropDownList({
+        dataSource: tagDataSource,
+        dataTextField: "tag",
+        dataValueField: "id",
+        valuePrimitive: true,
+        filter: "contains",
+        optionLabel: "Select a Tag",
+        rounded: null,
+        template: '#: tag# (#: records#)'
+    })
 })
 
 function setPageSize(size, gridId) {
@@ -20,3 +30,4 @@ function setPageSizes() {
     $("#people-grid").getKendoGrid().dataSource.pageSize($("#people-grid").getKendoGrid().dataSource.total());
     $("#publisher-grid").getKendoGrid().dataSource.pageSize($("#people-grid").getKendoGrid().dataSource.total());
 }
+

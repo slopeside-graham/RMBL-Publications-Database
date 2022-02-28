@@ -3,7 +3,7 @@
 namespace PUBS\Admin {
 
 
-    class People_Rest extends \WP_REST_Controller
+    class Tag_Rest extends \WP_REST_Controller
     {
         /**
          * The namespace.
@@ -26,7 +26,7 @@ namespace PUBS\Admin {
         {
 
             $this->namespace = 'rmbl-pubs/v1/admin';
-            $this->rest_base = 'people';
+            $this->rest_base = 'tag';
         }
 
         /**
@@ -79,24 +79,24 @@ namespace PUBS\Admin {
             register_rest_route($this->namespace, '/' . $this->rest_base, array(
 
                 array(
-                    'methods'             => People_Rest::READABLE,
+                    'methods'             => Tag_Rest::READABLE,
                     'callback'            => array($this, 'get_item'),
                     'permission_callback' => array($this, 'get_item_permissions_check'),
                 ),
                 array(
-                    'methods'         => People_Rest::EDITABLE,
+                    'methods'         => Tag_Rest::EDITABLE,
                     'callback'        => array($this, 'update_item'),
                     'permission_callback' => array($this, 'update_item_permissions_check'),
                     'args'            => $this->get_endpoint_args_for_item_schema(false),
                 ),
                 array(
-                    'methods'         => People_Rest::CREATABLE,
+                    'methods'         => Tag_Rest::CREATABLE,
                     'callback'        => array($this, 'create_item'),
                     'permission_callback' => array($this, 'create_item_permissions_check'),
                     'args'            => $this->get_endpoint_args_for_item_schema(true),
                 ),
                 array(
-                    'methods'         => People_Rest::DELETABLE,
+                    'methods'         => Tag_Rest::DELETABLE,
                     'callback'        => array($this, 'delete_item'),
                     'permission_callback' => array($this, 'delete_item_permissions_check'),
                     'args'            => $this->get_endpoint_args_for_item_schema(true),
@@ -138,11 +138,7 @@ namespace PUBS\Admin {
          */
         public function update_item_permissions_check($request)
         {
-            if (\PUBS\PUBS_Base::UserIsAdmin()) {
-                return true;
-            } else {
-                return new \WP_Error('rest_forbidden', esc_html__('You cannot update this People item.'), array('status' => $this->authorization_status_code()));
-            }
+            return new \WP_Error('rest_forbidden', esc_html__('You cannot update this Tag item.'), array('status' => $this->authorization_status_code()));
         }
 
         /**
@@ -157,7 +153,7 @@ namespace PUBS\Admin {
             if (\PUBS\PUBS_Base::UserIsAdmin()) {
                 return true;
             } else {
-                return new \WP_Error('rest_forbidden', esc_html__('You cannot create this People item.'), array('status' => $this->authorization_status_code()));
+                return new \WP_Error('rest_forbidden', esc_html__('You cannot create this Tag item.'), array('status' => $this->authorization_status_code()));
             }
         }
 
@@ -174,7 +170,7 @@ namespace PUBS\Admin {
         }
 
         /**
-         * Get the People list.
+         * Get the Tag list.
          *
          * @param WP_REST_Request $request get data from request.
          *
@@ -185,23 +181,23 @@ namespace PUBS\Admin {
         {
             if ($request['id'] == '') {
                 // Call static function Get (use :: to reference static function)
-                $publisher = People::GetAll($request);
+                $tag = Tag::GetAll($request);
             } else {
                 // Call static function Get (use :: to reference static function)
-                $publisher = People::Get($request['id']);
+                $tag = Tag::Get($request['id']);
             }
 
-            if (!is_wp_error($publisher)) {
-                $response = rest_ensure_response($publisher);
+            if (!is_wp_error($tag)) {
+                $response = rest_ensure_response($tag);
                 return $response;
             } else {
-                $error_string = $publisher->get_error_message();
-                return new \WP_Error('People_Get_Error', 'An error occured: ' . $error_string, array('status' => 400));
+                $error_string = $tag->get_error_message();
+                return new \WP_Error('Tag_Get_Error', 'An error occured: ' . $error_string, array('status' => 400));
             }
         }
 
         /**
-         * Create Publisher
+         * Create Tag
          *
          * @param WP_REST_Request $request get data from request.
          *
@@ -210,41 +206,19 @@ namespace PUBS\Admin {
         public function create_item($request)
         {
             try {
-                $person = People::populatefromRow($request);
-                $success = $person->Create($request);
+                $tag = Tag::populatefromRow($request);
+                $success = $tag->Create($request);
 
                 if (!is_wp_error($success)) {
                     return rest_ensure_response($success);
                 } else {
                     $error_string = $success->get_error_message();
-                    error_log(" Error creating Person :" . $success->get_error_message(), 0);
-                    return new \WP_Error('Person_Create_Error', $error_string, array('status' => 500));
+                    error_log(" Error creating Tag :" . $success->get_error_message(), 0);
+                    return new \WP_Error('Tag_Create_Error', $error_string, array('status' => 500));
                 }
             } catch (\Exception $e) {
-                error_log(" Error creating Person :" . $e->getMessage(), 0);
-                return new \WP_Error('Person_Create_Error', "An error occured creating the Person.  Please try again.", array('status' => 500));
-            }
-        }
-
-        /**
-         * Update People
-         *
-         * @param WP_REST_Request $request get data from request.
-         *
-         * @return mixed|WP_Error|WP_REST_Response
-         */
-
-        public function update_item($request)
-        {
-            $person = People::populatefromRow($request);
-            $success = $person->Update();
-
-
-            if (!is_wp_error($success)) {
-                return rest_ensure_response($person);
-            } else {
-                $error_string = $success->get_error_message();
-                return new \WP_Error('Person_Update_Error', 'An error occured: ' . $error_string, array('status' => 500));
+                error_log(" Error creating Tag :" . $e->getMessage(), 0);
+                return new \WP_Error('Tag_Create_Error', "An error occured creating the Tag.  Please try again.", array('status' => 500));
             }
         }
 

@@ -31,6 +31,7 @@ function pubs_main()
                                         <span class="year-seperator">&nbsp;-&nbsp;</span>
                                         <input id="yearEnd" placeholder="Year End" />
                                     </div>
+                                    <div class="tag-filter"><input id="tag" /></div>
                                 </div>
                                 <button onclick="filterLibrary()">Search</button>
                             </form>
@@ -70,6 +71,9 @@ function pubs_main()
                             </div>
                             <div class="editor-row">
                                 <label>Suffix: <input type="text" data-role="textbox" id="newAuthorSuffix" /></label><br />
+                            </div>
+                            <div class="editor-row">
+                                <label>Student: <input type="checkbox" data-role="checkbox" id="newAuthorStudent" /></label><br />
                             </div>
                             <button type="submit" class="k-button k-button-solid-base k-button-solid k-button-rectangle k-button-md k-rounded-md" onclick="addNewAuthor()">Add new Author</button>
                             <button class="k-button" onclick="closeAuthorAddWindow()">Close</button>
@@ -155,6 +159,9 @@ function pubs_main()
                             <label>Copy in Library:<input name="copyinlibrary" data-role="dropdownlist" data-bind="value:copyinlibrary" data-value-field="id" data-text-field="name" data-source="[ {id: 'T', name: 'True'}, {id: 'F', name: 'False'} ]" /></label>
                         </div>
                         <div class="editor-row">
+                            <label>Tags:<input name="tagIds" id="libraryitemtags" /></label>
+                        </div>
+                        <div class="editor-row">
                             <label>Keywords:<input type="text" data-role="textbox" maximumlength="200" name="keywords" /></label>
                         </div>
                         <div class="editor-row">
@@ -200,7 +207,6 @@ function pubs_main()
 
         <!-- Kendo Templates below -->
         <script type="text/html" id="no-publisher-template">
-            
             # var id = instance.element[0].id; #
             <div>
                 No data found. Do you want to add new publisher?
@@ -208,6 +214,16 @@ function pubs_main()
             <div>
                 <button class="k-button k-button-solid-base k-button-solid k-button-rectangle k-button-md k-rounded-md" onclick="openAddPublisherWindow('# instance.element[0].id #')">Add New Publisher</button>
             </div>
+        </script>
+
+        <script id="no-tag-template" type="text/html">
+            # var value = instance.input.val(); #
+            # var id = instance.element[0].id; #
+            <div>
+                No tag found. Do you want to add new item - '#: value #' ?
+            </div>
+            <br />
+            <button class="k-button k-button-solid-base k-button-solid k-button-rectangle k-button-md k-rounded-md" onclick="addNewTag('#: id #', '#: value #')" ontouchend="addNewTag('#: id #', '#: value #')">Add new item</button>
         </script>
 
         <script type="text/html" id="no-author-template">

@@ -45,6 +45,24 @@ $(function () {
                         input.appendTo(container).kendoTextBox();
                     }
                 },
+                {
+                    template: '<input type="checkbox" #= Student ? \'checked="checked"\' : "" # class="chkbx k-checkbox k-checkbox-md k-rounded-md" disabled="disabled"/>',
+                    title: "Student",
+                    width: 110,
+                    attributes: {
+                        class: "k-text-center"
+                    },
+                    field: "Student",
+                    title: "Student",
+                    editor: function (container, options) {
+                        // create an input element
+                        var input = $('<input type="checkbox" #= Student ? \'checked="checked"\' : "" # class="chkbx k - checkbox k - checkbox - md k - rounded - md" />');
+                        // set its name to the field to which the column is bound ('name' in this case)
+                        input.attr("name", options.field);
+                        // append it to the container
+                        input.appendTo(container)
+                    }
+                },
                 { command: ["edit"], title: "&nbsp;", width: "100px" }
             ],
             editable: {

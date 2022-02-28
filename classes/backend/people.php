@@ -15,6 +15,7 @@ namespace PUBS\Admin {
                 $this->FirstName = $person->FirstName;
                 $this->LastName = $person->LastName;
                 $this->SuffixName = $person->SuffixName;
+                $this->Student = $person->Student;
             }
         }
 
@@ -28,7 +29,8 @@ namespace PUBS\Admin {
                     'id' => $this->id,
                     'FirstName' => $this->FirstName,
                     'LastName' => $this->LastName,
-                    'SuffixName' => $this->SuffixName
+                    'SuffixName' => $this->SuffixName,
+                    'Student' => $this->Student
                 ));
                 $this->id = PUBSUTILS::$db->insertId();
                 $person = People::Get($this->id);
@@ -46,6 +48,30 @@ namespace PUBS\Admin {
             return [
                 'data' => $person
             ];
+        }
+
+        public function Update()
+        {
+            PUBSUTILS::$db->error_handler = false; // since we're catching errors, don't need error handler
+            PUBSUTILS::$db->throw_exception_on_error = true;
+
+            try {
+                PUBSUTILS::$db->update(
+                    'people',
+                    array(
+                        'FirstName' => $this->FirstName,
+                        'LastName' => $this->LastName,
+                        'SuffixName' => $this->SuffixName,
+                        'Student' => $this->Student
+                    ),
+                    'id=%i',
+                    $this->id
+                );
+                $person = People::Get($this->id);
+            } catch (\MeekroDBException $e) {
+                return new \WP_Error('People_Update_Error', $e->getMessage());
+            }
+            return $person;
         }
 
         public static function populatefromrow($row)

@@ -6,13 +6,10 @@ namespace PUBS {
     use PUBS\Utils as PUBSUTILS;
     use WhereClause;
 
-    class People extends Pubs_Base implements \JsonSerializable
+    class Tag extends Pubs_Base implements \JsonSerializable
     {
         private $_id;
-        private $_FirstName;
-        private $_LastName;
-        private $_SuffixName;
-        private $_Student;
+        private $_tag;
         // private $_DateCreated;
         // private $_DateModified;
 
@@ -27,48 +24,15 @@ namespace PUBS {
                 return $this->_id;
             }
         }
-        protected function FirstName($value = null)
+        protected function tag($value = null)
         {
             // If value was provided, set the value
             if ($value) {
-                $this->_FirstName = $value;
+                $this->_tag = $value;
             }
             // If no value was provided return the existing value
             else {
-                return $this->_FirstName;
-            }
-        }
-        protected function LastName($value = null)
-        {
-            // If value was provided, set the value
-            if ($value) {
-                $this->_LastName = $value;
-            }
-            // If no value was provided return the existing value
-            else {
-                return $this->_LastName;
-            }
-        }
-        protected function SuffixName($value = null)
-        {
-            // If value was provided, set the value
-            if ($value) {
-                $this->_SuffixName = $value;
-            }
-            // If no value was provided return the existing value
-            else {
-                return $this->_SuffixName;
-            }
-        }
-        protected function Student($value = null)
-        {
-            // If value was provided, set the value
-            if ($value) {
-                $this->_Student = $value;
-            }
-            // If no value was provided return the existing value
-            else {
-                return $this->_Student;
+                return $this->_tag;
             }
         }
 
@@ -100,10 +64,8 @@ namespace PUBS {
         {
             return [
                 'id' => $this->id,
-                'FirstName' => $this->FirstName,
-                'LastName' => $this->LastName,
-                'SuffixName' => $this->SuffixName,
-                'Student' => $this->Student
+                'tag' => $this->tag,
+                'records' => $this->records
                 //  'DateCreated' => $this->DateCreated,
                 //  'DateModified' => $this->DateModified
             ];
@@ -120,18 +82,18 @@ namespace PUBS {
                     "SELECT
                         * 
                     From 
-                        people 
+                        tag 
                     Where 
                         id = %i",
                     $id
                 );
-                $person = People::populatefromRow($row);
+                $tag = Tag::populatefromRow($row);
             } catch (\MeekroDBException $e) {
-                return new \WP_Error('People_Get_Error', $e->getMessage());
+                return new \WP_Error('Tag_Get_Error', $e->getMessage());
             }
             return
                 [
-                    'data' => $person
+                    'data' => $tag
                 ];
         }
 
@@ -140,27 +102,31 @@ namespace PUBS {
             PUBSUTILS::$db->error_handler = false; // since we're catching errors, don't need error handler
             PUBSUTILS::$db->throw_exception_on_error = true;
 
-            $people = new NestedSerializable();
+            $tags = new NestedSerializable();
 
             try {
                 $results = PUBSUTILS::$db->query(
                     "SELECT 
                         *
                     FROM 
-                        people p"
+                        tag t
+                    Order By tag asc"
                 );
                 foreach ($results as $row) {
-                    $person = People::populatefromRow($row);
-                    $people->add_item($person);  // Add the author to the collection
+                    $tag = Tag::populatefromRow($row);
+                    $records = \PUBS\Admin\Library_Has_Tag::GetTotalByTagId($tag->id);
+                    $tag->records = $records;
+
+                    $tags->add_item($tag);  // Add the author to the collection
                 }
             } catch (\MeekroDBException $e) {
                 $query = $e->getQuery();
-                return new \WP_Error('People_GetAll_Error', $e->getMessage());
+                return new \WP_Error('Tag_GetAll_Error', $e->getMessage());
             }
 
             return
                 [
-                    'data' => $people
+                    'data' => $tags
                 ];
         }
 
@@ -169,24 +135,15 @@ namespace PUBS {
             if ($row == null)
                 return null;
 
-            $person = new People();
+            $tag = new Tag();
 
-            $person->id = $row['id'];
-            $person->FirstName = $row['FirstName'];
-            $person->LastName = $row['LastName'];
-            $person->SuffixName = $row['SuffixName'];
-            if ($row['Student'] === 'true' || $row['Student'] === 'on') {
-                $person->Student = 1;
-            } else if ($row['Student'] === 'false' || $row['Student'] === '') {
-                $person->Student = 0;
-            } else {
-                $person->Student = $row['Student'];
-            }
-
+            $tag->id = $row['id'];
+            $tag->tag = $row['tag'];
+            $tag->record = $row['records'];
             //   $libraryitem->DateCreated = $row['DateCreated'];
             //   $libraryitem->DateModified = $row['DateModified'];
 
-            return $person;
+            return $tag;
         }
     }
 }

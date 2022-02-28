@@ -53,8 +53,12 @@ $(function () {
                     dataTextField: "LastName",
                     dataValueField: "id",
                     valuePrimitive: true,
-                    itemTemplate: '#: LastName #, #: FirstName#',
-                    tagTemplate: '#: LastName #, #: FirstName#',
+                    itemTemplate: function (dataItem) {
+                        return `${dataItem.LastName}${dataItem.FirstName ? ", " + dataItem.FirstName : ""}${dataItem.Student == 1 ? "*" : ""}`
+                    },
+                    tagTemplate: function (dataItem) {
+                        return `${dataItem.LastName}${dataItem.FirstName ? ", " + dataItem.FirstName : ""}${dataItem.Student == 1 ? "*" : ""}`
+                    },
                     value: e.model.authorIds,
                     noDataTemplate: kendo.template($("#no-author-template").html()),
                     //filtering: onAuthorFiltering,
@@ -79,7 +83,16 @@ $(function () {
                     // data-select="publisherSelect" 
                     // data-value-template="publisher-template" 
                     // data-template="publisher-template" />
-                })
+                });
+                $('#libraryitemtags').kendoMultiSelect({
+                    dataSource: tagDataSource,
+                    dataTextField: "tag",
+                    dataValueField: "id",
+                    valuePrimitive: true,
+                    value: e.model.tagIds,
+                    template: '#: tag# (#: records#)',
+                    noDataTemplate: kendo.template($("#no-tag-template").html()),
+                });
                 libraryEditItem = e.model;
                 // modifyPageSizes();
             }
@@ -208,6 +221,7 @@ function filterLibrary() {
     keywords = document.getElementById('keywords').value;
     startYear = document.getElementById('yearStart').value;
     endYear = document.getElementById('yearEnd').value;
+    tag = document.getElementById('tag').value;
 
     LibraryDataSource.filter(
         [
@@ -216,7 +230,8 @@ function filterLibrary() {
             { field: "keywords", value: keywords, operator: "LIKE" },
             { field: "year", value: startYear, operator: ">=" },
             { field: "year", value: endYear, operator: "<=" },
-            { field: "rt.name", value: type, operator: "eq" }
+            { field: "rt.name", value: type, operator: "eq" },
+            { field: "lht.tag_id", value: tag, operator: "eq" }
         ]
     )
 }
@@ -277,6 +292,7 @@ function addNewAuthor() {
     var authorFirstName = $('#newAuthorFirstName').val();
     var authorLastName = $('#newAuthorLastName').val();
     var authorSuffix = $('#newAuthorSuffix').val();
+    var authorStudent = $('#newAuthorStudent').val()
 
     if (authorLastName) {
         if (confirm("Are you sure you want to add a new Author?")) {
@@ -284,6 +300,7 @@ function addNewAuthor() {
                 FirstName: authorFirstName,
                 LastName: authorLastName,
                 SuffixName: authorSuffix,
+                Student: authorStudent,
                 LibraryId: libraryEditItem.id,
                 peopleIds: libraryEditItem.authorIds
             });
@@ -305,6 +322,7 @@ function addNewAuthor() {
                 $('#newAuthorFirstName').val('');
                 $('#newAuthorLastName').val('');
                 $('#newAuthorSuffix').val('');
+                $('#newAuthorStudent').val('');
             });
         });
 
@@ -401,4 +419,25 @@ function buildEditorTabs() {
             }
         }
     });
+}
+
+function addNewTag(widgetId, value) {
+    var widget = $("#" + widgetId).getKendoMultiSelect();
+    var dataSource = widget.dataSource;
+    if (confirm("Are you sure?")) {
+        dataSource.add({
+            tag: value
+        });
+
+        dataSource.one("sync", function () {
+            dataSource.read().then(function () {
+                var newTag = dataSource.data().find(tag => tag.tag === value); // Get the new item index
+                widget.value(widget.value().concat([newTag.id]));
+                widget.trigger("change"); // Tell the editor there has been a change
+            });
+        });
+
+
+        dataSource.sync();
+    }
 }
