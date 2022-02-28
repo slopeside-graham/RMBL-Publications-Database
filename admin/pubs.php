@@ -212,6 +212,16 @@ function pubs_main()
             </div>
         </script>
 
+        <script id="no-tag-template" type="text/html">
+            # var value = instance.input.val(); #
+            # var id = instance.element[0].id; #
+            <div>
+                No tag found. Do you want to add new item - '#: value #' ?
+            </div>
+            <br />
+            <button class="k-button k-button-solid-base k-button-solid k-button-rectangle k-button-md k-rounded-md" onclick="addNewTag('#: id #', '#: value #')" ontouchend="addNewTag('#: id #', '#: value #')">Add new item</button>
+        </script>
+
         <script type="text/html" id="no-author-template">
             # var value = instance.input.val(); #
             # var id = instance.element[0].id; #

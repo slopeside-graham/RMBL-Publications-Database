@@ -27,7 +27,7 @@ namespace PUBS\Admin {
                     'tag' => $this->tag
                 ));
                 $this->id = PUBSUTILS::$db->insertId();
-                $tag = People::Get($this->id);
+                $tag = Tag::Get($this->id);
             } catch (\MeekroDBException $e) {
                 return new \WP_Error('Tag_Create_Error', $e->getMessage());
             }

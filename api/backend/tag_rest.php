@@ -197,7 +197,7 @@ namespace PUBS\Admin {
         }
 
         /**
-         * Create Publisher
+         * Create Tag
          *
          * @param WP_REST_Request $request get data from request.
          *

@@ -87,7 +87,7 @@ $(function () {
                     valuePrimitive: true,
                     value: e.model.tagIds,
                     // template: '#: tag# (#: records#)'
-                    // noDataTemplate: kendo.template($("#no-author-template").html()),
+                    noDataTemplate: kendo.template($("#no-tag-template").html()),
                 });
                 libraryEditItem = e.model;
                 // modifyPageSizes();
@@ -410,4 +410,25 @@ function buildEditorTabs() {
             }
         }
     });
+}
+
+function addNewTag(widgetId, value) {
+    var widget = $("#" + widgetId).getKendoMultiSelect();
+    var dataSource = widget.dataSource;
+    if (confirm("Are you sure?")) {
+        dataSource.add({
+            tag: value
+        });
+
+        dataSource.one("sync", function () {
+            dataSource.read().then(function () {
+                var newTag = dataSource.data().find(tag => tag.tag === value); // Get the new item index
+                widget.value(widget.value().concat([newTag.id]));
+                widget.trigger("change"); // Tell the editor there has been a change
+            });
+        });
+
+
+        dataSource.sync();
+    }
 }
