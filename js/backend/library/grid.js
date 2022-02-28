@@ -86,7 +86,7 @@ $(function () {
                     dataValueField: "id",
                     valuePrimitive: true,
                     value: e.model.tagIds,
-                    // template: '#: tag# (#: records#)'
+                    template: '#: tag# (#: records#)',
                     noDataTemplate: kendo.template($("#no-tag-template").html()),
                 });
                 libraryEditItem = e.model;
