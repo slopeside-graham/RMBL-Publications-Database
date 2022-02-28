@@ -533,10 +533,12 @@ namespace PUBS {
                         p.city_state as publishercity_state
                     FROM 
                         library l
-                    INNER JOIN 
+                    LEFT JOIN 
                         reftype rt ON l.reftypeId = rt.id
-                    INNER JOIN
+                    LEFT JOIN
                         publisher p ON l.publisherId = p.id
+                    LEFT JOIN
+                        library_has_tag lht ON l.id = lht.library_id
                     WHERE %l"
                         .
                         $sqlSort // Sort Clause
@@ -574,6 +576,8 @@ namespace PUBS {
                         library l
                     INNER JOIN 
                         reftype rt ON l.reftypeId = rt.id
+                    LEFT JOIN
+                        library_has_tag lht ON l.id = lht.library_id
                     WHERE %l",
                     $searchfilterwhere
                 );
@@ -585,6 +589,8 @@ namespace PUBS {
                         library l
                     INNER JOIN 
                         reftype rt ON l.reftypeId = rt.id
+                    LEFT JOIN
+                        library_has_tag lht ON l.id = lht.library_id
                     WHERE %l
                     GROUP BY rt.name",
                     $searchwhere

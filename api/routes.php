@@ -59,7 +59,7 @@ include_once(plugin_dir_path(__FILE__) . '/backend/report_rest.php');    // Repo
 
 //Tag FrontEnd REST CONTROLLER AND CLASS
 include_once(plugin_dir_path(__FILE__) . '/../classes/frontend/tag.php');    // Tag Class
-//include_once(plugin_dir_path(__FILE__) . '/frontend/tag_rest.php');    // Tag REST controller
+include_once(plugin_dir_path(__FILE__) . '/frontend/tag_rest.php');    // Tag REST controller
 //Tag Admin REST CONTROLLER AND CLASS
 include_once(plugin_dir_path(__FILE__) . '/../classes/backend/tag.php');    // Tag Class
 include_once(plugin_dir_path(__FILE__) . '/backend/tag_rest.php');    // Tag REST controller
@@ -97,6 +97,10 @@ function register_pubs_controllers()
 
     // RefType Admin Controller
     $controller = new PUBS\Admin\Report_Rest();
+    $controller->register_routes();
+
+    // Tag Controller
+    $controller = new PUBS\Tag_Rest();
     $controller->register_routes();
 
     // Tag Admin Controller
