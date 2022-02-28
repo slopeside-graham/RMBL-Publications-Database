@@ -12,6 +12,7 @@ namespace PUBS {
         private $_FirstName;
         private $_LastName;
         private $_SuffixName;
+        private $_Student;
         // private $_DateCreated;
         // private $_DateModified;
 
@@ -59,6 +60,17 @@ namespace PUBS {
                 return $this->_SuffixName;
             }
         }
+        protected function Student($value = null)
+        {
+            // If value was provided, set the value
+            if ($value) {
+                $this->_Student = $value;
+            }
+            // If no value was provided return the existing value
+            else {
+                return $this->_Student;
+            }
+        }
 
         /*
         protected function DateCreated($value = null)
@@ -90,7 +102,8 @@ namespace PUBS {
                 'id' => $this->id,
                 'FirstName' => $this->FirstName,
                 'LastName' => $this->LastName,
-                'SuffixName' => $this->SuffixName
+                'SuffixName' => $this->SuffixName,
+                'Student' => $this->Student
                 //  'DateCreated' => $this->DateCreated,
                 //  'DateModified' => $this->DateModified
             ];
@@ -162,6 +175,14 @@ namespace PUBS {
             $person->FirstName = $row['FirstName'];
             $person->LastName = $row['LastName'];
             $person->SuffixName = $row['SuffixName'];
+            if ($row['Student'] === 'true') {
+                $person->Student = 1;
+            } else if ($row['Student'] === 'false') {
+                $person->Student = 0;
+            } else {
+                $person->Student = $row['Student'];
+            }
+
             //   $libraryitem->DateCreated = $row['DateCreated'];
             //   $libraryitem->DateModified = $row['DateModified'];
 

@@ -43,6 +43,27 @@ peopleDataSource = new kendo.data.DataSource({
                     hideLoading($('body'));
                 }
             });
+        },
+        update: function (options) {
+            displayLoading($('body'));
+            $.ajax({
+                url: wpApiSettings.root + "rmbl-pubs/v1/admin/people",
+                dataType: "json",
+                method: "PUT",
+                data: options.data,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("X-WP-Nonce", wpApiSettings.nonce);
+                },
+                success: function (result) {
+                    options.success(result);
+                    hideLoading($('body'));
+                },
+                error: function (result) {
+                    options.error(result);
+                    alert(result.responseText);
+                    hideLoading($('body'));
+                }
+            });
         }
     },
     pageSize: 10,
@@ -147,6 +168,12 @@ libraryPeopleDataSource = new kendo.data.DataSource({
                     type: "string",
                     validation: {
                         required: false, checklength
+                    }
+                },
+                Student: {
+                    type: "boolean",
+                    validation: {
+                        required: false
                     }
                 }
             }
