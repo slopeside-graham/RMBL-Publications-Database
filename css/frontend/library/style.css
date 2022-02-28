@@ -191,6 +191,9 @@
 .editor-section .editor-row input {
     width: 100%
 }
+.editor-section .editor-row input[type="checkbox"] {
+    width: auto;
+}
 
 .editor-row .k-dropdown {
     width: 100%
