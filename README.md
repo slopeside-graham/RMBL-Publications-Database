@@ -1,2 +1,1 @@
-# RMBL Publications Database
-A WordPress PHP Plugin to display and edit RMBL Publications.
+The Publications Project was built for an organization to create and display different scientific publications to the public. This project was a rebuild of an existing project that was outdated and no longer worth updating. The goal of this project was to use the existing information in a database and create a way to view and edit it using more modern languages and tools.
