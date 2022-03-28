@@ -155,7 +155,7 @@ function pubs_main()
                             <label>Pending:<input name="pending" data-role="dropdownlist" data-bind="value:pending" data-value-field="id" data-text-field="name" data-source="[ {id: 'T', name: 'True'}, {id: 'F', name: 'False'} ]" /></label>
                         </div>
                         <div class="editor-row">
-                            <label>Student:<input name="student" data-role="dropdownlist" data-bind="value:student" data-value-field="id" data-text-field="name" data-source="[ {id: 'T', name: 'True'}, {id: 'F', name: 'False'} ]" /></label>
+                            <!-- <label>Student:<input name="student" data-role="dropdownlist" data-bind="value:student" data-value-field="id" data-text-field="name" data-source="[ {id: 'T', name: 'True'}, {id: 'F', name: 'False'} ]" /></label> -->
                             <label>Copy in Library:<input name="copyinlibrary" data-role="dropdownlist" data-bind="value:copyinlibrary" data-value-field="id" data-text-field="name" data-source="[ {id: 'T', name: 'True'}, {id: 'F', name: 'False'} ]" /></label>
                         </div>
                         <div class="editor-row">
