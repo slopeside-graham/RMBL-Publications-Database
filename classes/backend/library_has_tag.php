@@ -218,8 +218,13 @@ namespace PUBS\Admin {
                         COUNT(*) 
                     From 
                         library_has_tag 
+                    INNER JOIN library on library_has_tag.library_id = library.id
                     Where 
-                        tag_id = %i",
+                        tag_id = %i 
+                            AND
+                        library.RMBL <> 'F'",
+
+                    // Need to exclude non-RMBL records: 'RMBL <> F'
                     $tagid
                 );
             } catch (\MeekroDBException $e) {

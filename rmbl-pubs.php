@@ -14,7 +14,7 @@
 
 use PUBS\Utils as PUBSUtils;
 
-const scriptver = '1.0.2-28-22-1';  // Use this in register script calls to bypass cache.
+const scriptver = '1.0.3-28-22-1';  // Use this in register script calls to bypass cache.
 
 /*    Include 3rd party libraries  */
 // Include meekrodb database library
