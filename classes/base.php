@@ -27,6 +27,14 @@ namespace PUBS {
       return current_user_can('administrator');
     }
 
+    public static function UserIsEditor()
+    {
+      PUBS_Base::init();
+      if (current_user_can('editor')) return true;
+      if (current_user_can('administrator')) return true;
+      return false;
+    }
+
     public static function UserEmail()
     {
       PUBS_Base::init();

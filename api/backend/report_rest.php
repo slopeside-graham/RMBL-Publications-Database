@@ -114,10 +114,10 @@ namespace PUBS\Admin {
          */
         public function get_items_permissions_check($request)
         {
-            if (\PUBS\PUBS_Base::UserIsAdmin()) {
+            if (\PUBS\PUBS_Base::UserIsEditor()) {
                 return true;
             } else {
-                return new \WP_Error('rest_forbidden', esc_html__('You cannot update this Report item.'), array('status' => $this->authorization_status_code()));
+                return new \WP_Error('rest_forbidden', esc_html__('You cannot get these Report items.'), array('status' => $this->authorization_status_code()));
             }
         }
         /**
@@ -130,10 +130,10 @@ namespace PUBS\Admin {
 
         public function get_item_permissions_check($request)
         {
-            if (\PUBS\PUBS_Base::UserIsAdmin()) {
+            if (\PUBS\PUBS_Base::UserIsEditor()) {
                 return true;
             } else {
-                return new \WP_Error('rest_forbidden', esc_html__('You cannot update this Report item.'), array('status' => $this->authorization_status_code()));
+                return new \WP_Error('rest_forbidden', esc_html__('You cannot get this Report item.'), array('status' => $this->authorization_status_code()));
             }
         }
 

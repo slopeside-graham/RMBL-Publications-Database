@@ -150,7 +150,7 @@ namespace PUBS\Admin {
          */
         public function create_item_permissions_check($request)
         {
-            if (\PUBS\PUBS_Base::UserIsAdmin()) {
+            if (\PUBS\PUBS_Base::UserIsEditor()) {
                 return true;
             } else {
                 return new \WP_Error('rest_forbidden', esc_html__('You cannot create this Tag item.'), array('status' => $this->authorization_status_code()));
