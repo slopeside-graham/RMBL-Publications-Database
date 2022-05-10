@@ -93,11 +93,6 @@ $(function () {
                 });
                 libraryEditItem = e.model;
                 // modifyPageSizes();
-            },
-            save: function (e) {
-                console.log(`New Item:`);
-                console.log(e);
-                
             }
         });
         attachPager();
@@ -429,7 +424,8 @@ function addNewTag(widgetId, value) {
     var dataSource = widget.dataSource;
     if (confirm("Are you sure?")) {
         dataSource.add({
-            tag: value
+            tag: value,
+            records: 0
         });
 
         dataSource.one("sync", function () {

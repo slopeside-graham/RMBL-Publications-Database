@@ -13,6 +13,7 @@ namespace PUBS\Admin {
             if ($tag != null) {
                 $this->id = $tag->id;
                 $this->tag = $tag->tag;
+                $this->records = $tag->records;
             }
         }
 
@@ -28,6 +29,7 @@ namespace PUBS\Admin {
                 ));
                 $this->id = PUBSUTILS::$db->insertId();
                 $tag = Tag::Get($this->id);
+                $tag->records = 0;
             } catch (\MeekroDBException $e) {
                 return new \WP_Error('Tag_Create_Error', $e->getMessage());
             }
