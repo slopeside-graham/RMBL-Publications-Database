@@ -21,13 +21,11 @@ $(function () {
             columns: [
                 { field: "id", title: "ID", width: "60px" },
                 {
-                    field: "reftypeId", title: "Type", template: function (dataItem) {
-                        if (dataItem.reftypename) {
-                            return dataItem.reftypename;
-                        } else {
-                            return '';
-                        }
-                    },
+                    field: "reftypeId",
+                    title: "Type",
+                    dataSource: reftypeDataSource,
+                    dataTextField: "name",
+                    dataValueField: "id",
                     width: "100px"
                 },
                 { field: "title", title: "Title", encoded: false },
@@ -95,6 +93,11 @@ $(function () {
                 });
                 libraryEditItem = e.model;
                 // modifyPageSizes();
+            },
+            save: function (e) {
+                console.log(`New Item:`);
+                console.log(e);
+                
             }
         });
         attachPager();

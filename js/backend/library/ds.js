@@ -35,6 +35,7 @@ LibraryDataSource = new kendo.data.DataSource({
                     xhr.setRequestHeader("X-WP-Nonce", wpApiSettings.nonce);
                 },
                 success: function (result) {
+                    $("#library-grid").data('kendoGrid').dataSource.read();
                     options.success(result);
                     hideLoading($('body'));
                 },
@@ -56,6 +57,7 @@ LibraryDataSource = new kendo.data.DataSource({
                     xhr.setRequestHeader("X-WP-Nonce", wpApiSettings.nonce);
                 },
                 success: function (result) {
+                    $("#library-grid").data('kendoGrid').dataSource.read();
                     options.success(result);
                     hideLoading($('body'));
                 },

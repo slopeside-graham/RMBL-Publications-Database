@@ -49,6 +49,10 @@ function pubs_admin_register_localize()
     wp_register_script('pubs-utils-js', plugins_url('rmbl-pubs/js/frontend/utils.js'), dirname(__FILE__), ['pubs-kendo-js'], scriptver, true);
     wp_localize_script('pubs-utils-js', 'wpApiSettings', array('root' => esc_url_raw(rest_url()), 'nonce' => wp_create_nonce('wp_rest')));
 
+    // RefType Admin
+    wp_register_script('reftype-be-ds-js', plugins_url('rmbl-pubs/js/backend/reftype/ds.js'), dirname(__FILE__), ['pubs-utils-js'], scriptver, true);
+    wp_localize_script('reftype-be-ds-js', 'wpApiSettings', array('root' => esc_url_raw(rest_url()), 'nonce' => wp_create_nonce('wp_rest')));
+
     // Library Admin
     wp_register_script('library-be-js', plugins_url('rmbl-pubs/js/backend/pubs.js'), dirname(__FILE__), ['pubs-utils-js'], scriptver, true);
     wp_localize_script('library-be-js', 'wpApiSettings', array('root' => esc_url_raw(rest_url()), 'nonce' => wp_create_nonce('wp_rest')));
@@ -56,14 +60,12 @@ function pubs_admin_register_localize()
     wp_register_script('library-be-ds-js', plugins_url('rmbl-pubs/js/backend/library/ds.js'), dirname(__FILE__), ['pubs-utils-js'], scriptver, true);
     wp_localize_script('library-be-ds-js', 'wpApiSettings', array('root' => esc_url_raw(rest_url()), 'nonce' => wp_create_nonce('wp_rest')));
 
-    wp_register_script('library-be-grid-js', plugins_url('rmbl-pubs/js/backend/library/grid.js'), dirname(__FILE__), ['library-be-ds-js'], scriptver, true);
+    wp_register_script('library-be-grid-js', plugins_url('rmbl-pubs/js/backend/library/grid.js'), dirname(__FILE__), ['pubs-utils-js'], scriptver, true);
     wp_localize_script('library-be-grid-js', 'wpApiSettings', array('root' => esc_url_raw(rest_url()), 'nonce' => wp_create_nonce('wp_rest')));
 
     wp_register_style('library-be-style', plugins_url('rmbl-pubs/css/frontend/library/style.css'));
 
-    // RefType Admin
-    wp_register_script('reftype-be-ds-js', plugins_url('rmbl-pubs/js/backend/reftype/ds.js'), dirname(__FILE__), ['pubs-utils-js'], scriptver, true);
-    wp_localize_script('reftype-be-ds-js', 'wpApiSettings', array('root' => esc_url_raw(rest_url()), 'nonce' => wp_create_nonce('wp_rest')));
+
 
     // Publisher Admin
     wp_register_script('publisher-be-ds-js', plugins_url('rmbl-pubs/js/backend/publisher/ds.js'), dirname(__FILE__), ['pubs-utils-js'], scriptver, true);
@@ -138,9 +140,6 @@ function pubs_enqueue_backend_library()
 
     wp_enqueue_script('pubs-kendo-js');
     wp_enqueue_script('pubs-utils-js');
-    wp_enqueue_script('library-be-js');
-    wp_enqueue_script('library-be-ds-js');
-    wp_enqueue_script('library-be-grid-js');
 
     wp_enqueue_script('reftype-be-ds-js');
 
@@ -156,6 +155,9 @@ function pubs_enqueue_backend_library()
     wp_enqueue_script('tag-be-editor-js');
 
     wp_enqueue_style('library-be-style');
+    wp_enqueue_script('library-be-js');
+    wp_enqueue_script('library-be-ds-js');
+    wp_enqueue_script('library-be-grid-js');
 }
 
 function pubs_enqueue_backend_people()
