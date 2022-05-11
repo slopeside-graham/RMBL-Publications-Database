@@ -45,24 +45,86 @@ $(function () {
                 template: kendo.template($("#library-popup-editor").html())
             },
             edit: function (e) {
+                libraryEditItem = e.model;
+
+                let id = e.model.id === 0 ? -1 : e.model.id; // If we are adding a new record, set the ID to -1, so it wont find any records, 0 is nullish which returns all authors.
+
+                authorDataSource.filter([{ field: "libraryId", value: id, operator: "eq" },]);
                 buildEditorTabs();
-                $('#libraryitemauthors').kendoMultiSelect({
+                $('#libraryitemauthors').kendoAutoComplete({
                     dataSource: libraryPeopleDataSource,
                     dataTextField: "LastName",
                     dataValueField: "id",
                     valuePrimitive: true,
-                    itemTemplate: function (dataItem) {
+                    filter: "startswith",
+                    placeholder: "Search by Last Name...",
+                    template: function (dataItem) {
                         return `${dataItem.LastName}${dataItem.FirstName ? ", " + dataItem.FirstName : ""}${dataItem.Student == 1 ? "*" : ""}`
                     },
-                    tagTemplate: function (dataItem) {
-                        return `${dataItem.LastName}${dataItem.FirstName ? ", " + dataItem.FirstName : ""}${dataItem.Student == 1 ? "*" : ""}`
-                    },
-                    value: e.model.authorIds,
+                    // value: e.model.authorIds,
                     noDataTemplate: kendo.template($("#no-author-template").html()),
                     //filtering: onAuthorFiltering,
                     //close: authorDDLclose,
                     //select: authorSelect
+                    select: function (e) {
+                        e.preventDefault();
+
+                        console.log(e);
+                        e.sender.value("")
+                        authorDataSource.add({
+                            peopleId: e.dataItem.id,
+                            libraryId: libraryEditItem.id,
+                            LastName: e.dataItem.LastName,
+                            FirstName: e.dataItem.FirstName,
+                            SuffixName: e.dataItem.SuffixName,
+                            authornumber: 1
+                        });
+                        authorDataSource.sync();
+                        // Use the selected item or its text
+                    },
                 });
+                var authorsGrid = $('#libraryitemauthorsgrid').kendoGrid({
+                    dataSource: authorDataSource,
+                    pageable: true,
+                    sortable: true,
+                    editable: {
+                        mode: "inline"
+                    },
+                    columns: [
+                        {
+                            field: "authornumber",
+                            title: "&nbsp;",
+                            width: "30px"
+                        },
+                        {
+                            field: "id",
+                            title: "&nbsp;",
+                            template: "#:LastName #, #:FirstName #"
+                        },
+                        { command: "destroy" }
+                    ]
+                }).data("kendoGrid");
+
+                // authorsGrid.table.kendoSortable({
+                //     filter: ">tbody >tr",
+                //     hint: $.noop,
+                //     cursor: "move",
+                //     placeholder: function (element) {
+                //         return element.clone().addClass("k-state-hover").css("opacity", 0.65);
+                //     },
+                //     container: "#grid tbody",
+                //     change: function (e) {
+                //         var skip = grid.dataSource.skip(),
+                //             oldIndex = e.oldIndex + skip,
+                //             newIndex = e.newIndex + skip,
+                //             data = grid.dataSource.data(),
+                //             dataItem = grid.dataSource.getByUid(e.item.data("uid"));
+
+                //         grid.dataSource.remove(dataItem);
+                //         grid.dataSource.insert(newIndex, dataItem);
+                //     }
+                // });
+
                 $('#publisherId').kendoDropDownList({
                     dataSource: libraryPublisherDataSource,
                     dataTextField: "name",
@@ -91,7 +153,6 @@ $(function () {
                     template: '#: tag# (#: records#)',
                     noDataTemplate: kendo.template($("#no-tag-template").html()),
                 });
-                libraryEditItem = e.model;
                 // modifyPageSizes();
             }
         });
@@ -285,7 +346,7 @@ function openAddPublisherWindow(widgetId) {
 
 function addNewAuthor() {
     event.preventDefault();
-    var widget = $("#libraryitemauthors").getKendoMultiSelect();
+    var widget = $("#libraryitemauthors").getKendoAutoComplete();
     var dataSource = widget.dataSource;
     var authorFirstName = $('#newAuthorFirstName').val();
     var authorLastName = $('#newAuthorLastName').val();
@@ -306,16 +367,23 @@ function addNewAuthor() {
 
         dataSource.one("sync", function () {
             dataSource.read().then(function () {
-                var newAuthor = dataSource.data().length - 1; // Get the new item index
-                var newAuthorId = parseInt(dataSource.data()[newAuthor].id); // Get the id of the new item
+                var newAuthor = dataSource.data()[dataSource.data().length - 1]; // Get the new item
                 var addAuthorWindow = $("#author-add-window");
-                var newAuthors = widget.value();
-                newAuthors.push(newAuthorId);
 
-                widget.value(newAuthors);
+                // widget.value(newAuthorId);
 
                 addAuthorWindow.data("kendoWindow").close();
-                widget.trigger("change"); // Tell the editor there has been a change
+                // widget.trigger("change"); // Tell the editor there has been a change
+
+                authorDataSource.add({
+                    peopleId: newAuthor.id,
+                    libraryId: libraryEditItem.id,
+                    LastName: newAuthor.LastName,
+                    FirstName: newAuthor.FirstName,
+                    SuffixName: newAuthor.SuffixName,
+                    authornumber: 1
+                });
+                authorDataSource.sync();
 
                 $('#newAuthorFirstName').val('');
                 $('#newAuthorLastName').val('');
@@ -323,7 +391,7 @@ function addNewAuthor() {
                 $('#newAuthorStudent').val('');
             });
         });
-
+        widget.value("");
         dataSource.sync();
     } else {
         alert("Author Last Name is Required.");

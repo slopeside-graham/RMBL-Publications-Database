@@ -12,6 +12,10 @@ namespace PUBS {
         private $_peopleId;
         private $_authornumber;
         private $_libraryId;
+        private $_FirstName;
+        private $_LastName;
+        private $_SuffixName;
+        private $_Student;
         // private $_DateCreated;
         // private $_DateModified;
 
@@ -59,6 +63,50 @@ namespace PUBS {
                 return $this->_libraryId;
             }
         }
+        protected function FirstName($value = null)
+        {
+            // If value was provided, set the value
+            if ($value) {
+                $this->_FirstName = $value;
+            }
+            // If no value was provided return the existing value
+            else {
+                return $this->_FirstName;
+            }
+        }
+        protected function LastName($value = null)
+        {
+            // If value was provided, set the value
+            if ($value) {
+                $this->_LastName = $value;
+            }
+            // If no value was provided return the existing value
+            else {
+                return $this->_LastName;
+            }
+        }
+        protected function SuffixName($value = null)
+        {
+            // If value was provided, set the value
+            if ($value) {
+                $this->_SuffixName = $value;
+            }
+            // If no value was provided return the existing value
+            else {
+                return $this->_SuffixName;
+            }
+        }
+        protected function Student($value = null)
+        {
+            // If value was provided, set the value
+            if ($value) {
+                $this->_Student = $value;
+            }
+            // If no value was provided return the existing value
+            else {
+                return $this->_Student;
+            }
+        }
 
         /*
         protected function DateCreated($value = null)
@@ -90,7 +138,11 @@ namespace PUBS {
                 'id' => $this->id,
                 'peopleId' => $this->peopleId,
                 'authornumber' => $this->authornumber,
-                'libraryId' => $this->libraryId
+                'libraryId' => $this->libraryId,
+                'FirstName' => $this->FirstName,
+                'LastName' => $this->LastName,
+                'SuffixName' => $this->SuffixName,
+                'Student' => $this->Student
                 //  'DateCreated' => $this->DateCreated,
                 //  'DateModified' => $this->DateModified
             ];
@@ -104,12 +156,19 @@ namespace PUBS {
             try {
 
                 $row = PUBSUTILS::$db->queryFirstRow(
-                    "SELECT
-                        * 
+                    "SELECT DISTINCT
+                        a.*,
+                        p.id as peopleRecordID,
+                        p.FirstName,
+                        p.LastName,
+                        p.SuffixName,
+                        p.Student
                     From 
-                        author 
+                        author a
+                    INNER JOIN
+	                    people p on a.peopleId = p.id
                     Where 
-                        id = %i",
+                       a.id = %i",
                     $id
                 );
                 $author = Author::populatefromRow($row);
@@ -124,14 +183,61 @@ namespace PUBS {
             PUBSUTILS::$db->error_handler = false; // since we're catching errors, don't need error handler
             PUBSUTILS::$db->throw_exception_on_error = true;
 
+            // Create the filter:
+            $filtersLogic = 'AND';
+            $filterWhereStatement = new WhereClause($filtersLogic);
+            if ($request['filter']) {
+                $filters = $request['filter']['filters'];
+                $filtersLogic = $request['filter']['logic'];
+                // Build the sql statemont for the where clause.
+
+                foreach ($filters as $filter) {
+                    $field = $filter['field'];
+                    $value = $filter['value'];
+                    $operator = $filter['operator'];
+                    $searchType = '%ss'; // Search String set as default
+                    // Only continue if the filter has any value, filters can exist with no value.
+                    if ($value) {
+                        // Convert operators to SQL
+                        if ($operator == 'contains' || $operator == 'LIKE') {
+                            $operator = 'LIKE';
+                            $searchType = '%ss';
+                        } else if ($operator == 'eq') {
+                            $operator = '=';
+                            $searchType = '%s';
+                        } else if ($operator == 'gte') {
+                            $operator = '>=';
+                            $searchType = '%s';
+                        } else if ($operator == 'lte') {
+                            $operator = '<=';
+                            $searchType = '%s';
+                        } else {
+                            $operator = $operator;
+                            $searchType = '%s';
+                        }
+
+                        $filterWhereStatement->add($field .  " " . $operator . " " . $searchType, $value);
+                    }
+                }
+            }
+
             $authors = new NestedSerializable();
 
             try {
                 $results = PUBSUTILS::$db->query(
-                    "SELECT 
-                        *
+                    "SELECT DISTINCT
+                        a.*,
+                        p.id as peopleRecordID,
+                        p.FirstName,
+                        p.LastName,
+                        p.SuffixName,
+                        p.Student
                     FROM 
-                        author a"
+                        author a
+                    INNER JOIN
+	                    people p on a.peopleId = p.id
+                    WHERE %l",
+                    $filterWhereStatement
                 );
                 foreach ($results as $row) {
                     $author = Author::populatefromRow($row);
@@ -142,7 +248,9 @@ namespace PUBS {
                 return new \WP_Error('Author_GetAll_Error', $e->getMessage());
             }
 
-            return $authors;
+            return [
+                'data' => $authors
+            ];
         }
 
         public static function GetAllByLibraryId($id)
@@ -154,7 +262,7 @@ namespace PUBS {
 
             try {
                 $results = PUBSUTILS::$db->query(
-                    "SELECT 
+                    "SELECT DISTINCT
                         *
                     FROM 
                         author a
@@ -186,6 +294,16 @@ namespace PUBS {
             $author->peopleId = $row['peopleId'];
             $author->authornumber = $row['authornumber'];
             $author->libraryId = $row['libraryId'];
+            $author->FirstName = $row['FirstName'];
+            $author->LastName = $row['LastName'];
+            $author->SuffixName = $row['SuffixName'];
+            if ($row['Student'] === 'true' || $row['Student'] === 'on') {
+                $author->Student = 1;
+            } else if ($row['Student'] === 'false' || $row['Student'] === '') {
+                $author->Student = 0;
+            } else {
+                $author->Student = $row['Student'];
+            }
             //   $libraryitem->DateCreated = $row['DateCreated'];
             //   $libraryitem->DateModified = $row['DateModified'];
 

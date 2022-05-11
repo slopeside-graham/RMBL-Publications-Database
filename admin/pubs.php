@@ -189,8 +189,13 @@ function pubs_main()
                     </div>
                     <div id="author-section" class="editor-section">
                         <div class="editor-row">
-                            <label>Select Authors:
-                                <input name="authorIds" id="libraryitemauthors" />
+                            <label>Select Author to Add:
+                                <input id="libraryitemauthors" style="width: 100%;" />
+                            </label>
+                        </div>
+                        <div class="editor-row">
+                            <label>Selected Authors:
+                                <div id="libraryitemauthorsgrid"></div>
                             </label>
                         </div>
                     </div>
@@ -227,7 +232,6 @@ function pubs_main()
         </script>
 
         <script type="text/html" id="no-author-template">
-            # var value = instance.input.val(); #
             # var id = instance.element[0].id; #
             <div>
                 No data found. Do you want to add new author?

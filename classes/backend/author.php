@@ -18,15 +18,6 @@ namespace PUBS\Admin {
             }
         }
 
-        public static function Get($row): ?Author
-        {
-            $author = \PUBS\Author::Get($row);
-
-            $adminAuthor = new Author($author);
-
-            return $adminAuthor;
-        }
-
         public static function updateAuthorsByLibraryId($peopleIds, $libraryid)
         {
             $authors = \PUBS\Author::GetAllByLibraryId($libraryid);
@@ -48,7 +39,7 @@ namespace PUBS\Admin {
                 $adminAuthor->Create();
             };
         }
-        
+
         public function Create()
         {
             PUBSUTILS::$db->error_handler = false; // since we're catching errors, don't need error handler

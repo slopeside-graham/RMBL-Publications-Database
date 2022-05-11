@@ -23,7 +23,7 @@ include_once(plugin_dir_path(__FILE__) . '/../classes/frontend/author.php');  //
 
 // Include Author Admin REST controller and class 
 include_once(plugin_dir_path(__FILE__) . '/../classes/backend/author.php');  // Library class
-// include_once(plugin_dir_path(__FILE__) . '/backend/author_rest.php');    // Library REST controller
+include_once(plugin_dir_path(__FILE__) . '/backend/author_rest.php');    // Library REST controller
 
 
 //PEOPLE REST CONTROLLER
@@ -93,6 +93,10 @@ function register_pubs_controllers()
 
     // RefType Admin Controller
     $controller = new PUBS\Admin\People_Rest();
+    $controller->register_routes();
+
+    // RefType Admin Controller
+    $controller = new PUBS\Admin\Author_Rest();
     $controller->register_routes();
 
     // RefType Admin Controller

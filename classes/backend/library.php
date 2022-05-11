@@ -127,7 +127,7 @@ namespace PUBS\Admin {
 
             try {
                 $results = PUBSUTILS::$db->query(
-                    "SELECT 
+                    "SELECT DISTINCT
                         l.*,
                         rt.name as reftypename
                     FROM 
@@ -179,7 +179,7 @@ namespace PUBS\Admin {
                 }
 
                 $total = PUBSUTILS::$db->query(
-                    "SELECT 
+                    "SELECT DISTINCT
                         COUNT(*)
                     FROM 
                         library l
@@ -192,7 +192,8 @@ namespace PUBS\Admin {
                 );
 
                 $totalTypes = PUBSUTILS::$db->query(
-                    "SELECT rt.name AS Type,
+                    "SELECT DISTINCT
+                        rt.name AS Type,
                         COUNT(l.id) AS Total
                     FROM 
                         library l
