@@ -15,7 +15,7 @@ namespace PUBS\Admin {
                 $this->FirstName = $person->FirstName;
                 $this->LastName = $person->LastName;
                 $this->SuffixName = $person->SuffixName;
-                $this->Student = $person->Student;
+                // $this->Student = $person->Student;
             }
         }
 
@@ -30,7 +30,7 @@ namespace PUBS\Admin {
                     'FirstName' => $this->FirstName,
                     'LastName' => $this->LastName,
                     'SuffixName' => $this->SuffixName,
-                    'Student' => $this->Student
+                    // 'Student' => $this->Student
                 ));
                 $this->id = PUBSUTILS::$db->insertId();
                 $person = People::Get($this->id);
@@ -62,7 +62,7 @@ namespace PUBS\Admin {
                         'FirstName' => $this->FirstName,
                         'LastName' => $this->LastName,
                         'SuffixName' => $this->SuffixName,
-                        'Student' => $this->Student
+                        // 'Student' => $this->Student
                     ),
                     'id=%i',
                     $this->id

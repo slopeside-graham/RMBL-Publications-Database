@@ -15,7 +15,6 @@ namespace PUBS {
         private $_FirstName;
         private $_LastName;
         private $_SuffixName;
-        private $_Student;
         // private $_DateCreated;
         // private $_DateModified;
 
@@ -96,17 +95,6 @@ namespace PUBS {
                 return $this->_SuffixName;
             }
         }
-        protected function Student($value = null)
-        {
-            // If value was provided, set the value
-            if ($value) {
-                $this->_Student = $value;
-            }
-            // If no value was provided return the existing value
-            else {
-                return $this->_Student;
-            }
-        }
 
         /*
         protected function DateCreated($value = null)
@@ -141,8 +129,7 @@ namespace PUBS {
                 'libraryId' => $this->libraryId,
                 'FirstName' => $this->FirstName,
                 'LastName' => $this->LastName,
-                'SuffixName' => $this->SuffixName,
-                'Student' => $this->Student
+                'SuffixName' => $this->SuffixName
                 //  'DateCreated' => $this->DateCreated,
                 //  'DateModified' => $this->DateModified
             ];
@@ -161,8 +148,7 @@ namespace PUBS {
                         p.id as peopleRecordID,
                         p.FirstName,
                         p.LastName,
-                        p.SuffixName,
-                        p.Student
+                        p.SuffixName
                     From 
                         author a
                     INNER JOIN
@@ -230,8 +216,7 @@ namespace PUBS {
                         p.id as peopleRecordID,
                         p.FirstName,
                         p.LastName,
-                        p.SuffixName,
-                        p.Student
+                        p.SuffixName
                     FROM 
                         author a
                     INNER JOIN
@@ -297,13 +282,7 @@ namespace PUBS {
             $author->FirstName = $row['FirstName'];
             $author->LastName = $row['LastName'];
             $author->SuffixName = $row['SuffixName'];
-            if ($row['Student'] === 'true' || $row['Student'] === 'on') {
-                $author->Student = 1;
-            } else if ($row['Student'] === 'false' || $row['Student'] === '') {
-                $author->Student = 0;
-            } else {
-                $author->Student = $row['Student'];
-            }
+
             //   $libraryitem->DateCreated = $row['DateCreated'];
             //   $libraryitem->DateModified = $row['DateModified'];
 
