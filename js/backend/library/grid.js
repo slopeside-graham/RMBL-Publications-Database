@@ -77,7 +77,8 @@ $(function () {
                             LastName: e.dataItem.LastName,
                             FirstName: e.dataItem.FirstName,
                             SuffixName: e.dataItem.SuffixName,
-                            authornumber: 1
+                            authornumber: 1,
+                            student: 0
                         });
                         authorDataSource.sync();
                         // Use the selected item or its text
