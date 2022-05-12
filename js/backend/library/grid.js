@@ -136,7 +136,21 @@ $(function () {
                                 class: "k-text-center"
                             }
                         },
-                        { command: "destroy", width: "100px" }
+                        {
+                            command: [
+                                {
+                                    name: "delete",
+                                    text: "Delete",
+                                    className: "btn-destroy",
+                                    click: function (e) {
+                                        this.dataSource.sync().then(function () {
+                                            this.dataSource.read();
+                                        })
+                                    },
+                                    width: "100px"
+                                }
+                            ]
+                        }
                     ]
                 }).data("kendoGrid");
 
