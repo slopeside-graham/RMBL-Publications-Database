@@ -80,7 +80,9 @@ $(function () {
                             authornumber: 1,
                             student: 0
                         });
-                        authorDataSource.sync();
+                        authorDataSource.sync().then(function () {
+                            authorDataSource.read();
+                        });
                         // Use the selected item or its text
                     },
                 });
