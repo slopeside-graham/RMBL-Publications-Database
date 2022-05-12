@@ -268,7 +268,7 @@ namespace PUBS\Admin {
                 $library = Library::Get($this->id);
 
                 // Update the Authors Table
-                Author::updateAuthorsByLibraryId($this->authorIds, $this->id);
+                // Author::updateAuthorsByLibraryId($this->authorIds, $this->id);
 
                 // Update the library_has_tags Table
                 \PUBS\Admin\Library_Has_Tag::updateLibraryHasTagByLibraryId($this->tagIds, $this->id);
@@ -324,7 +324,7 @@ namespace PUBS\Admin {
                 ];
 
                 // Update the Authors Table
-                Author::updateAuthorsByLibraryId($this->authorIds, $this->id);
+                // Author::updateAuthorsByLibraryId($this->authorIds, $this->id);
 
                 // Update the Library_has_Tag Table
                 \PUBS\Admin\Library_Has_Tag::updateLibraryHasTagByLibraryId($this->tagIds, $this->id);

@@ -15,30 +15,32 @@ namespace PUBS\Admin {
                 $this->peopleId = $author->peopleId;
                 $this->authornumber = $author->authornumber;
                 $this->libraryId = $author->libraryId;
+                $this->student = $author->student;
             }
         }
 
-        public static function updateAuthorsByLibraryId($peopleIds, $libraryid)
-        {
-            $authors = \PUBS\Author::GetAllByLibraryId($libraryid);
-            //TODO: Does this actually need to delete entry individually or just do a DeleteAllByLibraryId()?
-            foreach ($authors->jsonSerialize() as $author) {
-                // Get the admin version of the Author and delete it
-                $adminAuthor = new Author($author);
-                $adminAuthor->Delete();
-            };
+        // public static function updateAuthorsByLibraryId($peopleIds, $libraryid)
+        // {
+        //     $authors = \PUBS\Author::GetAllByLibraryId($libraryid);
+        //     //TODO: Does this actually need to delete entry individually or just do a DeleteAllByLibraryId()?
+        //     foreach ($authors->jsonSerialize() as $author) {
+        //         // Get the admin version of the Author and delete it
+        //         $adminAuthor = new Author($author);
+        //         $adminAuthor->Delete();
+        //     };
 
-            $authorNumber = 0;
-            foreach ($peopleIds as $personId) {
-                $authorNumber++;
-                $adminAuthor = new Author;
-                $adminAuthor->peopleId = $personId;
-                $adminAuthor->authornumber = $authorNumber;
-                $adminAuthor->libraryId = $libraryid;
+        //     $authorNumber = 0;
+        //     foreach ($peopleIds as $personId) {
+        //         $authorNumber++;
+        //         $adminAuthor = new Author;
+        //         $adminAuthor->peopleId = $personId;
+        //         $adminAuthor->authornumber = $authorNumber;
+        //         $adminAuthor->libraryId = $libraryid;
+        //         $adminAuthor->student = $student;
 
-                $adminAuthor->Create();
-            };
-        }
+        //         $adminAuthor->Create();
+        //     };
+        // }
 
         public function Create()
         {
@@ -50,7 +52,8 @@ namespace PUBS\Admin {
                     'id' => $this->id,
                     'peopleId' => $this->peopleId,
                     'authornumber' => $this->authornumber,
-                    'libraryId' => $this->libraryId
+                    'libraryId' => $this->libraryId,
+                    'student' => $this->student
                 ));
                 $this->id = PUBSUTILS::$db->insertId();
                 $author = Author::Get($this->id);
@@ -59,6 +62,31 @@ namespace PUBS\Admin {
             }
             return $author;
         }
+
+        public function Update()
+        {
+            PUBSUTILS::$db->error_handler = false; // since we're catching errors, don't need error handler
+            PUBSUTILS::$db->throw_exception_on_error = true;
+
+            try {
+                PUBSUTILS::$db->update(
+                    'author',
+                    array(
+                        'peopleId' => $this->peopleId,
+                        'authornumber' => $this->authornumber,
+                        'libraryId' => $this->libraryId,
+                        'student' => $this->student
+                    ),
+                    'id=%i',
+                    $this->id
+                );
+                $author = Author::Get($this->id);
+            } catch (\MeekroDBException $e) {
+                return new \WP_Error('Author_Update_Error', $e->getMessage());
+            }
+            return $author;
+        }
+
         public function Delete()
         {
             PUBSUTILS::$db->error_handler = false; // since we're catching errors, don't need error handler

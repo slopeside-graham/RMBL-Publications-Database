@@ -87,21 +87,55 @@ $(function () {
                     dataSource: authorDataSource,
                     pageable: true,
                     sortable: true,
-                    editable: {
-                        mode: "inline"
+                    editable: "incell",
+                    // navigatable: true,
+                    cellClose: function (e) {
+                        if (e.type === "save" && e.model.dirty) {
+                            e.sender.dataSource.sync().then(function () {
+                                console.log("Author Updated");
+                                e.sender.dataSource.read();
+                            });
+                        }
                     },
                     columns: [
                         {
                             field: "authornumber",
-                            title: "&nbsp;",
-                            width: "30px"
+                            title: "Order",
+                            width: "80px"
                         },
                         {
                             field: "id",
-                            title: "&nbsp;",
+                            title: "Name",
                             template: "#:LastName #, #:FirstName #"
                         },
-                        { command: "destroy" }
+                        {
+                            field: "student",
+                            title: "Student",
+                            template: '#= student ? "Yes" : "No" #',
+                            editor: function (container, options) {
+                                // create an input element
+                                var input = $("<input/>");
+                                // set its name to the field to which the column is bound ('name' in this case)
+                                input.attr("name", options.field);
+                                // append it to the container
+                                input.appendTo(container);
+                                // initialize a Kendo UI AutoComplete
+                                input.kendoDropDownList({
+                                    dataTextField: "text",
+                                    dataValueField: "value",
+                                    valuePrimitive: true,
+                                    dataSource: [
+                                        { text: "Yes", value: 1 },
+                                        { text: "No", value: 0 }
+                                    ],
+                                });
+                            },
+                            width: 110,
+                            attributes: {
+                                class: "k-text-center"
+                            }
+                        },
+                        { command: "destroy", width: "100px" }
                     ]
                 }).data("kendoGrid");
 

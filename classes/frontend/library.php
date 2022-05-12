@@ -558,14 +558,10 @@ namespace PUBS {
                     foreach ($authors->jsonSerialize() as $author) { // Loop through authors and pull People names into People array.
                         $person = People::Get($author->peopleId);
                         $studentMark = '';
-                        // if ($person['data']->Student === '1') {
-                        //     $studentMark = '*';
-                        // };
-                        // array_push($peopleArray, $person['data']->LastName . " " . $person['data']->FirstName . $studentMark);
 
-                        // if ($author['data']->student === '1') {
-                        //     $studentMark = '*';
-                        // };
+                        if ($author->student) {
+                            $studentMark = '*';
+                        };
                         array_push($peopleArray, $person['data']->LastName . " " . $person['data']->FirstName . $studentMark);
                     }
                     $authorsString = implode(", ", $peopleArray); // Convert People array to String.

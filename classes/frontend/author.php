@@ -12,6 +12,9 @@ namespace PUBS {
         private $_peopleId;
         private $_authornumber;
         private $_libraryId;
+        private $_student;
+
+        // The following come from the People Table
         private $_FirstName;
         private $_LastName;
         private $_SuffixName;
@@ -62,6 +65,19 @@ namespace PUBS {
                 return $this->_libraryId;
             }
         }
+
+        protected function student($value = null)
+        {
+            // If value was provided, set the value
+            if ($value) {
+                $this->_student = $value;
+            }
+            // If no value was provided return the existing value
+            else {
+                return $this->_student;
+            }
+        }
+
         protected function FirstName($value = null)
         {
             // If value was provided, set the value
@@ -127,6 +143,7 @@ namespace PUBS {
                 'peopleId' => $this->peopleId,
                 'authornumber' => $this->authornumber,
                 'libraryId' => $this->libraryId,
+                'student' => $this->student,
                 'FirstName' => $this->FirstName,
                 'LastName' => $this->LastName,
                 'SuffixName' => $this->SuffixName
@@ -221,7 +238,8 @@ namespace PUBS {
                         author a
                     INNER JOIN
 	                    people p on a.peopleId = p.id
-                    WHERE %l",
+                    WHERE %l
+                    ORDER BY a.authornumber asc",
                     $filterWhereStatement
                 );
                 foreach ($results as $row) {
@@ -248,12 +266,18 @@ namespace PUBS {
             try {
                 $results = PUBSUTILS::$db->query(
                     "SELECT DISTINCT
-                        *
+                        a.*,
+                        p.id as peopleRecordID,
+                        p.FirstName,
+                        p.LastName,
+                        p.SuffixName
                     FROM 
                         author a
+                    INNER JOIN
+	                    people p on a.peopleId = p.id
                     WHERE
-                        libraryId = %i
-                    ORDER BY authornumber asc",
+                        a.libraryId = %i
+                    ORDER BY a.authornumber asc",
                     $id
                 );
                 foreach ($results as $row) {
@@ -279,6 +303,14 @@ namespace PUBS {
             $author->peopleId = $row['peopleId'];
             $author->authornumber = $row['authornumber'];
             $author->libraryId = $row['libraryId'];
+            // $author->student = $row['student'];
+            if ($row['student'] === 'true' || $row['student'] === 'on') {
+                $author->student = 1;
+            } else if ($row['student'] === 'false' || $row['student'] === '') {
+                $author->student = 0;
+            } else {
+                $author->student = $row['student'];
+            }
             $author->FirstName = $row['FirstName'];
             $author->LastName = $row['LastName'];
             $author->SuffixName = $row['SuffixName'];

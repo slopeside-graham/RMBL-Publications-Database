@@ -238,19 +238,19 @@ namespace PUBS\Admin {
          * @return mixed|WP_Error|WP_REST_Response
          */
 
-        // public function update_item($request)
-        // {
-        //     $author = Author::populatefromRow($request);
-        //     $success = $author->Update();
+        public function update_item($request)
+        {
+            $author = Author::populatefromRow($request);
+            $success = $author->Update();
 
 
-        //     if (!is_wp_error($success)) {
-        //         return rest_ensure_response($author);
-        //     } else {
-        //         $error_string = $success->get_error_message();
-        //         return new \WP_Error('Author_Update_Error', 'An error occured: ' . $error_string, array('status' => 500));
-        //     }
-        // }
+            if (!is_wp_error($success)) {
+                return rest_ensure_response($author);
+            } else {
+                $error_string = $success->get_error_message();
+                return new \WP_Error('Author_Update_Error', 'An error occured: ' . $error_string, array('status' => 500));
+            }
+        }
 
         /**
          * Delete Author
