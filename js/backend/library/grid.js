@@ -205,6 +205,12 @@ $(function () {
                     noDataTemplate: kendo.template($("#no-tag-template").html()),
                 });
                 // modifyPageSizes();
+                // Set the default for new records of RMBL to be True.
+                let rmblDropDownList = $("[name='RMBL']").data("kendoDropDownList");
+                if (rmblDropDownList.value() === '' && e.model.id === 0) {
+                    rmblDropDownList.value("T");
+                    rmblDropDownList.trigger("change");
+                }
             }
         });
         attachPager();
