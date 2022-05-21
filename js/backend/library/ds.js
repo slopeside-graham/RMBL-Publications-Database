@@ -1,5 +1,5 @@
 $ = jQuery;
-
+let newItem;
 LibraryDataSource = new kendo.data.DataSource({
     transport: {
         read: function (options) {
@@ -57,9 +57,24 @@ LibraryDataSource = new kendo.data.DataSource({
                     xhr.setRequestHeader("X-WP-Nonce", wpApiSettings.nonce);
                 },
                 success: function (result) {
-                    $("#library-grid").data('kendoGrid').dataSource.read();
+                    newItem = result.data.data;
+
+                    $("#library-grid").data('kendoGrid').dataSource.read().then(function () {
+                        if (preventCloseOnSave) {
+                            $("#library-grid").data("kendoGrid").editRow($(`#library-grid tr td:contains('${newItem.id}')`).parent());
+                            preventCloseOnSave = false;
+                        }
+                    });
+
                     options.success(result);
                     hideLoading($('body'));
+                    if ($("#libraryitemauthors") && $("#searchAuthors") && $("#saveItemOverlay")) {
+                        $("#libraryitemauthors").prop('disabled', false); // Disable the Author Search
+                        $("#searchAuthors").show() // Hide the author search.
+                        // Hide the author search label
+                        // Show Save Record Overlay
+                        $("#saveItemOverlay").hide()
+                    }
                 },
                 error: function (result) {
                     options.error(result);

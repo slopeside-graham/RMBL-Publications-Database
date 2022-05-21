@@ -191,9 +191,14 @@ function pubs_main()
                     </div>
                     <div id="author-section" class="editor-section">
                         <div class="editor-row">
-                            <label>Select Author to Add:
-                                <input id="libraryitemauthors" style="width: 100%;" />
-                            </label>
+                            <div id="searchAuthors">
+                                <label>Select Author to Add:
+                                    <input id="libraryitemauthors" style="width: 100%;" />
+                                </label>
+                            </div>
+                            <div id="saveItemOverlay">
+                                <h4>You must save your entry before adding authors. <button onClick="saveItemWithoutClosing()">Save</button></h4>
+                            </div>
                         </div>
                         <div class="editor-row">
                             <label>Selected Authors:

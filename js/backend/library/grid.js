@@ -12,6 +12,8 @@ var editortabs;
 var libraryEditItem;
 var libraryEditorValidator;
 
+var preventCloseOnSave;
+
 $(function () {
     $(document).ready(function () {
         var libraryGrid = $("#library-grid").kendoGrid({
@@ -205,14 +207,26 @@ $(function () {
                     noDataTemplate: kendo.template($("#no-tag-template").html()),
                 });
                 // modifyPageSizes();
-                // Set the default for new records of RMBL to be True.
-                let rmblDropDownList = $("[name='RMBL']").data("kendoDropDownList");
-                if (rmblDropDownList.value() === '' && e.model.id === 0) {
-                    rmblDropDownList.value("T");
-                    rmblDropDownList.trigger("change");
+                // Logic for if it is a new record:
+                $("#saveItemOverlay").hide()
+                if (e.model.id === 0) {
+                    // Force the record to be saved before selecting authors.
+                    $("#libraryitemauthors").prop('disabled', true); // Disable the Author Search
+                    $("#searchAuthors").hide() // Hide the author search.
+                    // Hide the author search label
+                    // Show Save Record Overlay
+                    $("#saveItemOverlay").show()
+
+                    // Set the default for new records of RMBL to be True.
+                    let rmblDropDownList = $("[name='RMBL']").data("kendoDropDownList");
+                    if (rmblDropDownList.value() === '') {
+                        rmblDropDownList.value("T");
+                        rmblDropDownList.trigger("change");
+                    }
                 }
-            }
+            },
         });
+
         attachPager();
         attachFilter();
         buildEditorTabs();
@@ -564,4 +578,10 @@ function addNewTag(widgetId, value) {
 
         dataSource.sync();
     }
+}
+
+function saveItemWithoutClosing() {
+    console.log("Save item without closing.");
+    preventCloseOnSave = true;
+    $('#library-grid').data('kendoGrid').saveChanges();
 }
